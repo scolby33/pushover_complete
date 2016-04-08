@@ -1,3 +1,3 @@
-TEST_TOKEN = 'abcdef'
-TEST_USER = 'ubcdef'
-TEST_DEVICE = 'my-phone'
+TEST_TOKEN = 'azGDORePK8gMaC0QOYAMyEEuzJnyUi'
+TEST_USER = 'uQiRzpo4DXghDmr9QzzfQu27cmVRsG'
+TEST_DEVICE = 'droid2'
