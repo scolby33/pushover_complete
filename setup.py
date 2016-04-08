@@ -17,7 +17,7 @@ CLASSIFIERS = [
     'Programming Language :: Python :: 3.5',
     'Topic :: Communications'
 ]
-INSTALL_REQUIRES = []
+INSTALL_REQUIRES = ['requests']
 EXTRAS_REQUIRE = {}
 TESTS_REQUIRE = ['tox']
 
