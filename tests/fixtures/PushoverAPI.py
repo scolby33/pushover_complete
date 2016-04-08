@@ -2,9 +2,9 @@ import pytest
 
 from tests.constants import *
 
-from pushover_complete.pushover_api import PushoverAPI
+from pushover_complete import pushover_api
 
 
 @pytest.fixture()
 def PushoverAPI():
-    return PushoverAPI(TEST_TOKEN)
+    return pushover_api.PushoverAPI(TEST_TOKEN)
