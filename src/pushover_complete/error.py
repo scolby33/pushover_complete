@@ -1,0 +1,2 @@
+class PushoverCompleteError(Exception):
+    pass
