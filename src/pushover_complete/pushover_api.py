@@ -31,5 +31,16 @@ class PushoverAPI(object):
             'https://api.pushover.net/1/messages.json',
             data=payload,
             headers=headers
+    def get_sounds(self):
+        resp = requests.get(
+            urljoin(PUSHOVER_API_URL, 'sounds.json'),
+            data={'token': self.token}
         )
-        return r
+        sounds = resp.json().get('sounds', None)
+        if sounds:
+            return sounds
+        else:
+            raise PushoverCompleteError('Could not retrieve sounds')
+
+
+
