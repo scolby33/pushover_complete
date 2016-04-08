@@ -1,0 +1,6 @@
+include *.rst
+include tox.ini
+
+include .coveragerc
+
+recursive-include tests *.py

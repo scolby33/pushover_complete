@@ -1,0 +1,11 @@
+[run]
+branch = True
+source = pushover_complete
+
+[paths]
+source =
+    src/pushover_complete
+    .tox/*/lib/python*/site-packages/pushover_complete
+
+[report]
+show_missing = True
