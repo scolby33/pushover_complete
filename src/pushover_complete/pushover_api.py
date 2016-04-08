@@ -64,6 +64,3 @@ class PushoverAPI(object):
             return sounds
         else:
             raise PushoverCompleteError('Could not retrieve sounds')
-
-
-
