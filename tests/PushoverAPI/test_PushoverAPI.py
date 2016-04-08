@@ -22,3 +22,8 @@ def test_PushoverAPI_sends_message(PushoverAPI):
     assert request_body['message'][0] == TEST_MESSAGE
     assert request_body['html'][0] == 'False'
 
+    assert resp.json() == {
+        'status': 1,
+        'request': TEST_REQUEST_ID
+    }
+
