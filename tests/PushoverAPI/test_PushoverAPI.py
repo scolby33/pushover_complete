@@ -4,7 +4,7 @@ import responses
 
 from tests.constants import *
 from tests.fixtures import PushoverAPI
-from tests.util import messages_callback
+from tests.util import messages_callback, validate_callback
 
 
 @responses.activate
@@ -66,12 +66,19 @@ def test_PushoverAPI_gets_sounds(PushoverAPI):
     sounds = PushoverAPI.get_sounds()
 
     assert sounds == {'incoming': 'Incoming', 'updown': 'Up Down (long)', 'mechanical': 'Mechanical', 'spacealarm': 'Space Alarm', 'none': 'None (silent)', 'siren': 'Siren', 'gamelan': 'Gamelan', 'cashregister': 'Cash Register', 'intermission': 'Intermission', 'climb': 'Climb (long)', 'tugboat': 'Tug Boat', 'classical': 'Classical', 'alien': 'Alien Alarm (long)', 'magic': 'Magic', 'bike': 'Bike', 'persistent': 'Persistent (long)', 'bugle': 'Bugle', 'pushover': 'Pushover (default)', 'pianobar': 'Piano Bar', 'cosmic': 'Cosmic', 'falling': 'Falling', 'echo': 'Pushover Echo (long)'}
-#
-#
-# def test_PushoverAPI_validates_user_or_group(PushoverAPI):
-#     PushoverAPI.validate()
-#
-#
+
+
+@responses.activate
+def test_PushoverAPI_validates_user(PushoverAPI):
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'users/validate.json'),
+        callback=validate_callback,
+        content_type='application/json'
+    )
+    PushoverAPI.validate(TEST_USER)
+
+
 # def test_PushoverAPI_gets_receipt(PushoverAPI):
 #     PushoverAPI.check_receipt()
 #
