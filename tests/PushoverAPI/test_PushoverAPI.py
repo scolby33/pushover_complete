@@ -28,6 +28,10 @@ def test_PushoverAPI_sends_simple_message(PushoverAPI):
     }
 
 
+def test_PushoverAPI_sends_complex_message(PushoverAPI):
+    assert False
+
+
 @responses.activate
 def test_PushoverAPI_sends_multiple_simple_messages(PushoverAPI):
     responses.add_callback(
@@ -54,6 +58,10 @@ def test_PushoverAPI_sends_multiple_simple_messages(PushoverAPI):
         'status': 1,
         'request': TEST_REQUEST_ID
     } for resp in resps)
+
+
+def test_PushoverAPI_sends_multiple_complex_messages(PushoverAPI):
+    assert False
 
 
 @responses.activate
