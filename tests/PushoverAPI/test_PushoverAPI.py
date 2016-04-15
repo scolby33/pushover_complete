@@ -27,6 +27,35 @@ def test_PushoverAPI_sends_simple_message(PushoverAPI):
         'request': TEST_REQUEST_ID
     }
 
+
+@responses.activate
+def test_PushoverAPI_sends_multiple_simple_messages(PushoverAPI):
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'messages.json'),
+        callback=messages_callback,
+        content_type='application/json'
+    )
+
+    messages = [
+        {
+            'user': TEST_USER,
+            'message': TEST_MESSAGE
+        }
+    ] * 3
+    resps = PushoverAPI.send_messages(messages)
+    request_bodies = [parse_qs(resp.request.body) for resp in resps]
+    assert all(request_body['token'][0] == TEST_TOKEN for request_body in request_bodies)
+    assert all(request_body['user'][0] == TEST_USER for request_body in request_bodies)
+    assert all(request_body['message'][0] == TEST_MESSAGE for request_body in request_bodies)
+    assert all(request_body['html'][0] == 'False' for request_body in request_bodies)
+
+    assert all(resp.json() == {
+        'status': 1,
+        'request': TEST_REQUEST_ID
+    } for resp in resps)
+
+
 @responses.activate
 def test_PushoverAPI_gets_sounds(PushoverAPI):
     responses.add(
@@ -37,3 +66,15 @@ def test_PushoverAPI_gets_sounds(PushoverAPI):
     sounds = PushoverAPI.get_sounds()
 
     assert sounds == {'incoming': 'Incoming', 'updown': 'Up Down (long)', 'mechanical': 'Mechanical', 'spacealarm': 'Space Alarm', 'none': 'None (silent)', 'siren': 'Siren', 'gamelan': 'Gamelan', 'cashregister': 'Cash Register', 'intermission': 'Intermission', 'climb': 'Climb (long)', 'tugboat': 'Tug Boat', 'classical': 'Classical', 'alien': 'Alien Alarm (long)', 'magic': 'Magic', 'bike': 'Bike', 'persistent': 'Persistent (long)', 'bugle': 'Bugle', 'pushover': 'Pushover (default)', 'pianobar': 'Piano Bar', 'cosmic': 'Cosmic', 'falling': 'Falling', 'echo': 'Pushover Echo (long)'}
+#
+#
+# def test_PushoverAPI_validates_user_or_group(PushoverAPI):
+#     PushoverAPI.validate()
+#
+#
+# def test_PushoverAPI_gets_receipt(PushoverAPI):
+#     PushoverAPI.check_receipt()
+#
+#
+# def test_PushoverAPI_cancels_receipt(PushoverAPI):
+#     PushoverAPI.cancel_receipt()

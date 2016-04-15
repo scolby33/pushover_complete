@@ -54,6 +54,13 @@ class PushoverAPI(object):
                                   sound, html)
         return resp
 
+    def send_messages(self, messages):
+        sess = requests.Session()
+        resps = []
+        for message in messages:
+            resps.append(self._send_message(session=sess, **message))
+        return resps
+
     def get_sounds(self):
         resp = requests.get(
             urljoin(PUSHOVER_API_URL, 'sounds.json'),
