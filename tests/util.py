@@ -16,6 +16,6 @@ def messages_callback(request):
     if getattr(qs, 'priority', None) != 2:
         return 200, headers, json.dumps(resp_body)
     else:
-        resp_body['receipt'] = 'rLqVuqTRh62UzxtmqiaLzQmVcPgiCy'
+        resp_body['receipt'] = TEST_RECEIPT_ID
         return 200, headers, json.dumps(resp_body)
 
