@@ -8,7 +8,7 @@ from tests.util import messages_callback
 
 
 @responses.activate
-def test_PushoverAPI_sends_message(PushoverAPI):
+def test_PushoverAPI_sends_simple_message(PushoverAPI):
     responses.add_callback(
         responses.POST,
         urljoin(PUSHOVER_API_URL, 'messages.json'),
