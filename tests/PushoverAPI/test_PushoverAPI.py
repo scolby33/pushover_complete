@@ -78,6 +78,7 @@ def test_PushoverAPI_raises_error_on_bad_message(PushoverAPI):
     with pytest.raises(BadAPIRequestError):
         PushoverAPI.send_message(TEST_MESSAGE, TEST_BAD_USER)
 
+
 @responses.activate
 def test_PushoverAPI_sends_multiple_simple_messages(PushoverAPI):
     responses.add_callback(
@@ -105,8 +106,43 @@ def test_PushoverAPI_sends_multiple_simple_messages(PushoverAPI):
     } for resp in resps)
 
 
+@responses.activate
 def test_PushoverAPI_sends_multiple_complex_messages(PushoverAPI):
-    assert False
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'messages.json'),
+        callback=messages_callback,
+        content_type='application/json'
+    )
+
+    messages = [{
+        'user': TEST_USER,
+        'message': TEST_MESSAGE,
+        'device': TEST_DEVICES[0],
+        'title': TEST_TITLE,
+        'url': TEST_URL,
+        'url_title': TEST_URL_TITLE,
+        'priority': 1,
+        'timestamp': 100,
+        'sound': 'gamelan'
+    }] * 3
+    resps = PushoverAPI.send_messages(messages)
+    request_bodies = [parse_qs(resp.request.body) for resp in resps]
+    assert len(resps) == 3
+    assert all(request_body['token'][0] == TEST_TOKEN for request_body in request_bodies)
+    assert all(request_body['user'][0] == TEST_USER for request_body in request_bodies)
+    assert all(request_body['device'][0] == TEST_DEVICES[0] for request_body in request_bodies)
+    assert all(request_body['title'][0] == TEST_TITLE for request_body in request_bodies)
+    assert all(request_body['url'][0] == TEST_URL for request_body in request_bodies)
+    assert all(request_body['url_title'][0] == TEST_URL_TITLE for request_body in request_bodies)
+    assert all(int(request_body['priority'][0]) == 1 for request_body in request_bodies)
+    assert all(int(request_body['timestamp'][0]) == 100 for request_body in request_bodies)
+    assert all(request_body['sound'][0] == 'gamelan' for request_body in request_bodies)
+
+    assert all(resp.json() == {
+        'status': 1,
+        'request': TEST_REQUEST_ID
+    } for resp in resps)
 
 
 @responses.activate
