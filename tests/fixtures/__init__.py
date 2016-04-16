@@ -1,1 +1,1 @@
-from .PushoverAPI import PushoverAPI
+from .PushoverAPI import PushoverAPI, BadTokenPushoverAPI

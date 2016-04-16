@@ -66,11 +66,12 @@ class PushoverAPI(object):
             urljoin(PUSHOVER_API_URL, 'sounds.json'),
             data={'token': self.token}
         )
-        sounds = resp.json().get('sounds', None)
-        if sounds:
-            return sounds
-        else:
-            raise PushoverCompleteError('Could not retrieve sounds')
+
+        resp_body = resp.json()
+
+        if resp_body.get('status', None) != 1:
+            raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
+        return resp_body.get('sounds', None)
 
     def validate(self, user, device=None):
         payload = {

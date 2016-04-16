@@ -43,6 +43,27 @@ def messages_callback(request):
     return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
 
 
+def sounds_callback(request):
+    resp_body = {
+        'request': TEST_REQUEST_ID
+    }
+    headers = {'X-Request-Id': TEST_REQUEST_ID}
+
+    req_body = getattr(request, 'body', None)
+    qs = parse_qs(req_body)
+    qs = {k: v[0] for k, v in qs.items()}
+
+    if qs.get('token', None) != TEST_TOKEN:
+        resp_body['token'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['application token is invalid']
+    else:
+        resp_body['status'] = 1
+        resp_body['sounds'] = SOUNDS
+
+    return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
+
+
 def validate_callback(request):
     resp_body = {
         'request': TEST_REQUEST_ID

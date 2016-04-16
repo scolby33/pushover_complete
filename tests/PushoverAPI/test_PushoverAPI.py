@@ -6,8 +6,8 @@ import pytest
 from pushover_complete.error import BadAPIRequestError
 
 from tests.constants import *
-from tests.fixtures import PushoverAPI
-from tests.util import messages_callback, validate_callback
+from tests.fixtures import *
+from tests.util import *
 
 
 @responses.activate
@@ -79,14 +79,28 @@ def test_PushoverAPI_sends_multiple_complex_messages(PushoverAPI):
 
 @responses.activate
 def test_PushoverAPI_gets_sounds(PushoverAPI):
-    responses.add(
+    responses.add_callback(
         responses.GET,
         urljoin(PUSHOVER_API_URL, 'sounds.json'),
-        json={'request': '287da71f5add007a511a9a019d46e371', 'status': 1, 'sounds': {'incoming': 'Incoming', 'updown': 'Up Down (long)', 'mechanical': 'Mechanical', 'spacealarm': 'Space Alarm', 'none': 'None (silent)', 'siren': 'Siren', 'gamelan': 'Gamelan', 'cashregister': 'Cash Register', 'intermission': 'Intermission', 'climb': 'Climb (long)', 'tugboat': 'Tug Boat', 'classical': 'Classical', 'alien': 'Alien Alarm (long)', 'magic': 'Magic', 'bike': 'Bike', 'persistent': 'Persistent (long)', 'bugle': 'Bugle', 'pushover': 'Pushover (default)', 'pianobar': 'Piano Bar', 'cosmic': 'Cosmic', 'falling': 'Falling', 'echo': 'Pushover Echo (long)'}}
+        callback=sounds_callback,
+        content_type='application/json'
     )
     sounds = PushoverAPI.get_sounds()
 
-    assert sounds == {'incoming': 'Incoming', 'updown': 'Up Down (long)', 'mechanical': 'Mechanical', 'spacealarm': 'Space Alarm', 'none': 'None (silent)', 'siren': 'Siren', 'gamelan': 'Gamelan', 'cashregister': 'Cash Register', 'intermission': 'Intermission', 'climb': 'Climb (long)', 'tugboat': 'Tug Boat', 'classical': 'Classical', 'alien': 'Alien Alarm (long)', 'magic': 'Magic', 'bike': 'Bike', 'persistent': 'Persistent (long)', 'bugle': 'Bugle', 'pushover': 'Pushover (default)', 'pianobar': 'Piano Bar', 'cosmic': 'Cosmic', 'falling': 'Falling', 'echo': 'Pushover Echo (long)'}
+    assert sounds == SOUNDS
+
+
+@responses.activate
+def test_PushoverAPI_rasies_error_on_getting_sounds_with_bad_token(BadTokenPushoverAPI):
+    responses.add_callback(
+        responses.GET,
+        urljoin(PUSHOVER_API_URL, 'sounds.json'),
+        callback=sounds_callback,
+        content_type='application/json'
+    )
+
+    with pytest.raises(BadAPIRequestError):
+        BadTokenPushoverAPI.get_sounds()
 
 
 @responses.activate
