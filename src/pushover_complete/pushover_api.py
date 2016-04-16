@@ -8,11 +8,52 @@ PUSHOVER_API_URL = 'https://api.pushover.net/1/'
 
 
 class PushoverAPI(object):
+    """The object representing an application interacting with the Pushover API.
+    Instantiated with a Pushover application token.
+    All API calls made via that instance will use the provided application token.
+
+    :param token: A Pushover application token
+    :type token: str
+    """
     def __init__(self, token):
         self.token = token
 
     def _send_message(self, user, message, device=None, title=None, url=None, url_title=None,
                       priority=None, retry=None, expire=None, timestamp=None, sound=None, html=False, session=None):
+        """The internal function used to send messages via the Pushover API.
+        Used to abstract the differences between :meth:`pushover_api.PushoverAPI.send_message` and :meth:`pushover_api.PushoverAPI.send_messages`.
+        Feel free to call directly if your use case isn't fulfilled by the more public methods.
+
+        :param user: A Pushover user token representing the user or group to whom the message will be sent
+        :param message: The message to be sent
+        :param device: A string or iterable representing the device(s) to which the message will be sent
+        :param title: The title of the message
+        :param url: A URL to be included with the message
+        :param url_title: The link text to be displayed for the URL. If omitted, the URL itself is displayed.
+        :param priority: An integer representing the priority of the message, from -2 (least important) to 2 (emergency). Default is 0.
+        :param retry: How often the Pushover server will re-send an emergency-priority message in seconds. Required with priority 2 messages.
+        :param expire: How long an emergency-priority message will be re-sent for in seconds
+        :param timestamp: A Unix timestamp of the message's date and time to be displayed instead of the time the message is received by the Pushover servers
+        :param sound: A string representing a sound to be played with the message instead of the user's default
+        :param html: An integer representing if HTML formatting will be enabled for the message text. Set to 1 to enable.
+        :param session: A :class:`requests.sessions.Session` object to be used to send HTTP requests. Useful to send multiple messages without opening multiple HTTP sessions.
+        :type user: str
+        :type message: str
+        :type device: str or list
+        :type title: str
+        :type url: str
+        :type url_title: str
+        :type priority: int
+        :type retry: int
+        :type expire: int
+        :type timestamp: int
+        :type sound: str
+        :type html: int
+        :type session: requests.sessions.Session
+
+        :returns:
+        :rtype:
+        """
         # TODO: callback url
         payload = {
             'token': self.token,
@@ -53,11 +94,50 @@ class PushoverAPI(object):
 
     def send_message(self, user, message, device=None, title=None, url=None, url_title=None,
                      priority=None, retry=None, expire=None, timestamp=None, sound=None, html=False):
+        """The internal function used to send messages via the Pushover API.
+        Used to abstract the differences between :meth:`pushover_api.PushoverAPI.send_message` and :meth:`pushover_api.PushoverAPI.send_messages`.
+        Feel free to call directly if your use case isn't fulfilled by the more public methods.
+
+        :param user: A Pushover user token representing the user or group to whom the message will be sent
+        :param message: The message to be sent
+        :param device: A string or iterable representing the device(s) to which the message will be sent
+        :param title: The title of the message
+        :param url: A URL to be included with the message
+        :param url_title: The link text to be displayed for the URL. If omitted, the URL itself is displayed.
+        :param priority: An integer representing the priority of the message, from -2 (least important) to 2 (emergency). Default is 0.
+        :param retry: How often the Pushover server will re-send an emergency-priority message in seconds. Required with priority 2 messages.
+        :param expire: How long an emergency-priority message will be re-sent for in seconds
+        :param timestamp: A Unix timestamp of the message's date and time to be displayed instead of the time the message is received by the Pushover servers
+        :param sound: A string representing the sound to be played with the message instead of the user's default. Available sounds can be retreived using :meth:`pushover_complete.pushover_api.PushoverAPI.get_sounds`.
+        :param html: An integer representing if HTML formatting will be enabled for the message text. Set to 1 to enable.
+        :type user: str
+        :type message: str
+        :type device: str or list
+        :type title: str
+        :type url: str
+        :type url_title: str
+        :type priority: int
+        :type retry: int
+        :type expire: int
+        :type timestamp: int
+        :type sound: str
+        :type html: int
+
+        :returns:
+        :rtype:
+        """
         resp = self._send_message(user, message, device, title, url, url_title, priority, retry, expire, timestamp,
                                   sound, html)
         return resp
 
     def send_messages(self, messages):
+        """Send multiple messages with one call. Utilizes a single HTTP session to decrease overhead.
+
+        :param messages: An iterable of messages to be sent. Each item in the iterable must be expandable using the `**kwargs` syntax with the keys matching the parameters of :meth:`pushover_complete.pushover_api.PushoverAPI.send_message`.
+
+        :returns:
+        :rtype:
+        """
         sess = requests.Session()
         resps = []
         for message in messages:
@@ -65,6 +145,11 @@ class PushoverAPI(object):
         return resps
 
     def get_sounds(self):
+        """Get the current list of supported sounds from the Pushover servers.
+
+        :return: A :class:`dict` of sounds, with keys representing the identifier and values a human-readable name.
+        :rtype: dict
+        """
         resp = requests.get(
             urljoin(PUSHOVER_API_URL, 'sounds.json'),
             data={'token': self.token}
@@ -77,6 +162,16 @@ class PushoverAPI(object):
         return resp_body.get('sounds', None)
 
     def validate(self, user, device=None):
+        """Validate a user or group token or a user device.
+
+        :param user: A Pushover user or group token to validate
+        :param device: A string representing a device name to validate
+        :type user: str
+        :type device: str
+
+        :returns:
+        :rtype:
+        """
         payload = {
             'token': self.token,
             'user': user,
@@ -91,6 +186,14 @@ class PushoverAPI(object):
         return resp
 
     def check_receipt(self, receipt):
+        """Check a receipt issued after sending an emergency-priority message.
+
+        :param receipt: The receipt id
+        :type receipt: str
+
+        :returns:
+        :rtype:
+        """
         payload = {
             'token': self.token
         }
@@ -103,6 +206,14 @@ class PushoverAPI(object):
         return resp
 
     def cancel_receipt(self, receipt):
+        """Cancel a receipt (and thus further re-sends of the message).
+
+        :param receipt: The id of the receipt id to be cancelled
+        :type receipt: str
+
+        :returns:
+        :rtype:
+        """
         payload = {
             'token': self.token
         }

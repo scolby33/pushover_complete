@@ -1,3 +1,13 @@
+"""A Python 3 package for interacting with *all* aspects of the Pushover API"""
+
+from .error import PushoverCompleteError, BadAPIRequestError
+from .pushover_api import PushoverAPI
+
+__all__ = [
+    'PushoverCompleteError', 'BadAPIRequestError',
+    'PushoverAPI'
+]
+
 __version__ = '0.0.1'
 
 __title__ = 'pushover_complete'
