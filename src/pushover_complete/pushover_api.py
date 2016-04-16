@@ -13,6 +13,7 @@ class PushoverAPI(object):
 
     def _send_message(self, user, message, device=None, title=None, url=None, url_title=None,
                       priority=None, retry=None, expire=None, timestamp=None, sound=None, html=False, session=None):
+        # TODO: callback url
         payload = {
             'token': self.token,
             'user': user,
