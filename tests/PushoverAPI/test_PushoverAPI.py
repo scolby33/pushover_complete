@@ -179,7 +179,41 @@ def test_PushoverAPI_validates_user(PushoverAPI):
         callback=validate_callback,
         content_type='application/json'
     )
-    PushoverAPI.validate(TEST_USER)
+    resp = PushoverAPI.validate(TEST_USER)
+
+    request_body = parse_qs(resp.request.body)
+    assert request_body['token'][0] == TEST_TOKEN
+    assert request_body['user'][0] == TEST_USER
+
+    assert resp.json() == {
+        'status': 1,
+        'request': TEST_REQUEST_ID,
+        'group': 0,
+        'devices': TEST_DEVICES
+    }
+
+
+@responses.activate
+def test_PushoverAPI_validates_group(PushoverAPI):
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'users/validate.json'),
+        callback=validate_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI.validate(TEST_GROUP)
+
+    request_body = parse_qs(resp.request.body)
+    assert request_body['token'][0] == TEST_TOKEN
+    assert request_body['user'][0] == TEST_GROUP
+
+    assert resp.json() == {
+        'status': 1,
+        'request': TEST_REQUEST_ID,
+        'group': 1,
+        'devices': []
+    }
+
 
 
 # def test_PushoverAPI_gets_receipt(PushoverAPI):
