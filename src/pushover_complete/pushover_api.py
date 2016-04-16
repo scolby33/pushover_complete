@@ -45,7 +45,9 @@ class PushoverAPI(object):
 
         resp_body = resp.json()
         if resp_body.get('status', None) != 1:
-            raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
+            raise BadAPIRequestError('HTTP Status {}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
+        elif resp.status_code != 200:
+            raise BadAPIRequestError('HTTP Status {}').format(resp.status_code)
         return resp
 
     def send_message(self, user, message, device=None, title=None, url=None, url_title=None,
