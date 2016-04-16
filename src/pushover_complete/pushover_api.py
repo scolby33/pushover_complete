@@ -2,7 +2,7 @@ from urllib.parse import urljoin
 
 import requests
 
-from .error import PushoverCompleteError
+from .error import BadAPIRequestError
 
 PUSHOVER_API_URL = 'https://api.pushover.net/1/'
 
@@ -13,10 +13,6 @@ class PushoverAPI(object):
 
     def _send_message(self, user, message, device=None, title=None, url=None, url_title=None,
                       priority=None, retry=None, expire=None, timestamp=None, sound=None, html=False, session=None):
-        if priority == 2:
-            if retry is None or expire is None:
-                raise PushoverCompleteError('Must specify `retry` and `expire` with priority 2.')
-
         payload = {
             'token': self.token,
             'user': user,
@@ -46,6 +42,10 @@ class PushoverAPI(object):
                 data=payload,
                 headers=headers
             )
+
+        resp_body = resp.json()
+        if resp_body.get('status', None) != 1:
+            raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
         return resp
 
     def send_message(self, user, message, device=None, title=None, url=None, url_title=None,

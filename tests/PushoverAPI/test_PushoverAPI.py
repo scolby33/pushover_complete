@@ -1,6 +1,9 @@
 from urllib.parse import urljoin, parse_qs
 
 import responses
+import pytest
+
+from pushover_complete.error import BadAPIRequestError
 
 from tests.constants import *
 from tests.fixtures import PushoverAPI
@@ -31,6 +34,16 @@ def test_PushoverAPI_sends_simple_message(PushoverAPI):
 def test_PushoverAPI_sends_complex_message(PushoverAPI):
     assert False
 
+@responses.activate
+def test_PushoverAPI_raises_error_on_bad_message(PushoverAPI):
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'messages.json'),
+        callback=messages_callback,
+        content_type='application/json'
+    )
+    with pytest.raises(BadAPIRequestError):
+        PushoverAPI.send_message(TEST_MESSAGE, TEST_BAD_USER)
 
 @responses.activate
 def test_PushoverAPI_sends_multiple_simple_messages(PushoverAPI):
