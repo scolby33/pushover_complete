@@ -87,14 +87,13 @@ def test_PushoverAPI_sends_multiple_simple_messages(PushoverAPI):
         content_type='application/json'
     )
 
-    messages = [
-        {
-            'user': TEST_USER,
-            'message': TEST_MESSAGE
-        }
-    ] * 3
+    messages = [{
+        'user': TEST_USER,
+        'message': TEST_MESSAGE
+    }] * 3
     resps = PushoverAPI.send_messages(messages)
     request_bodies = [parse_qs(resp.request.body) for resp in resps]
+    assert len(resps) == 3
     assert all(request_body['token'][0] == TEST_TOKEN for request_body in request_bodies)
     assert all(request_body['user'][0] == TEST_USER for request_body in request_bodies)
     assert all(request_body['message'][0] == TEST_MESSAGE for request_body in request_bodies)
