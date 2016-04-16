@@ -1,3 +1,5 @@
+"""Constants used for test cases."""
+
 TEST_TOKEN = 'azGDORePK8gMaC0QOYAMyEEuzJnyUi'
 TEST_BAD_GENERAL_ID = '1234'
 TEST_USER = 'uQiRzpo4DXghDmr9QzzfQu27cmVRsG'

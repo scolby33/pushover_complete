@@ -1,3 +1,5 @@
+"""Tests for the :mod:`pushover_complete.pushover_api.PushoverAPI` class."""
+
 import re
 from urllib.parse import urljoin, parse_qs
 
@@ -8,11 +10,12 @@ from pushover_complete.error import BadAPIRequestError
 
 from tests.constants import *
 from tests.fixtures import *
-from tests.util import *
+from tests.responses_callbacks import *
 
 
 @responses.activate
 def test_PushoverAPI_sends_simple_message(PushoverAPI):
+    """Test the sending of a simple message."""
     responses.add_callback(
         responses.POST,
         urljoin(PUSHOVER_API_URL, 'messages.json'),
@@ -34,6 +37,7 @@ def test_PushoverAPI_sends_simple_message(PushoverAPI):
 
 @responses.activate
 def test_PushoverAPI_sends_complex_message(PushoverAPI):
+    """Test sending a more complex message."""
     responses.add_callback(
         responses.POST,
         urljoin(PUSHOVER_API_URL, 'messages.json'),
@@ -70,6 +74,7 @@ def test_PushoverAPI_sends_complex_message(PushoverAPI):
 
 @responses.activate
 def test_PushoverAPI_raises_error_on_bad_message(PushoverAPI):
+    """Test proper error behavior when a malformed message is sent."""
     responses.add_callback(
         responses.POST,
         urljoin(PUSHOVER_API_URL, 'messages.json'),
@@ -82,6 +87,7 @@ def test_PushoverAPI_raises_error_on_bad_message(PushoverAPI):
 
 @responses.activate
 def test_PushoverAPI_sends_multiple_simple_messages(PushoverAPI):
+    """Test sending multiple simple messages through one HTTP session."""
     responses.add_callback(
         responses.POST,
         urljoin(PUSHOVER_API_URL, 'messages.json'),
@@ -109,6 +115,7 @@ def test_PushoverAPI_sends_multiple_simple_messages(PushoverAPI):
 
 @responses.activate
 def test_PushoverAPI_sends_multiple_complex_messages(PushoverAPI):
+    """Test sending multiple complex messages through one HTTP session."""
     responses.add_callback(
         responses.POST,
         urljoin(PUSHOVER_API_URL, 'messages.json'),
@@ -148,6 +155,7 @@ def test_PushoverAPI_sends_multiple_complex_messages(PushoverAPI):
 
 @responses.activate
 def test_PushoverAPI_gets_sounds(PushoverAPI):
+    """Test the retrieval of sounds."""
     responses.add_callback(
         responses.GET,
         urljoin(PUSHOVER_API_URL, 'sounds.json'),
@@ -161,6 +169,7 @@ def test_PushoverAPI_gets_sounds(PushoverAPI):
 
 @responses.activate
 def test_PushoverAPI_rasies_error_on_getting_sounds_with_bad_token(BadTokenPushoverAPI):
+    """Test proper error behavior when a malformed request to get sounds is sent."""
     responses.add_callback(
         responses.GET,
         urljoin(PUSHOVER_API_URL, 'sounds.json'),
@@ -174,6 +183,7 @@ def test_PushoverAPI_rasies_error_on_getting_sounds_with_bad_token(BadTokenPusho
 
 @responses.activate
 def test_PushoverAPI_validates_user(PushoverAPI):
+    """Test validation of a user token."""
     responses.add_callback(
         responses.POST,
         urljoin(PUSHOVER_API_URL, 'users/validate.json'),
@@ -196,6 +206,7 @@ def test_PushoverAPI_validates_user(PushoverAPI):
 
 @responses.activate
 def test_PushoverAPI_validates_group(PushoverAPI):
+    """Test validation of a group token."""
     responses.add_callback(
         responses.POST,
         urljoin(PUSHOVER_API_URL, 'users/validate.json'),
@@ -219,6 +230,7 @@ def test_PushoverAPI_validates_group(PushoverAPI):
 
 @responses.activate
 def test_PushoverAPI_gets_receipt(PushoverAPI):
+    """Test the retrieval of receipt details."""
     url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*\.json')
     responses.add_callback(
         responses.GET,
@@ -248,6 +260,7 @@ def test_PushoverAPI_gets_receipt(PushoverAPI):
 
 @responses.activate
 def test_PushoverAPI_cancels_receipt(PushoverAPI):
+    """Test cancelling a receipt."""
     url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
     responses.add_callback(
         responses.GET,
