@@ -76,7 +76,7 @@ def test_PushoverAPI_raises_error_on_bad_message(PushoverAPI):
         content_type='application/json'
     )
     with pytest.raises(BadAPIRequestError):
-        PushoverAPI.send_message(TEST_MESSAGE, TEST_BAD_USER)
+        PushoverAPI.send_message(TEST_MESSAGE, TEST_BAD_GENERAL_ID)
 
 
 @responses.activate

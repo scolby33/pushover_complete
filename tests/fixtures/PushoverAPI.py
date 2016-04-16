@@ -12,4 +12,4 @@ def PushoverAPI():
 
 @pytest.fixture()
 def BadTokenPushoverAPI():
-    return pushover_api.PushoverAPI(TEST_BAD_TOKEN)
+    return pushover_api.PushoverAPI(TEST_BAD_GENERAL_ID)

@@ -1,7 +1,6 @@
 TEST_TOKEN = 'azGDORePK8gMaC0QOYAMyEEuzJnyUi'
-TEST_BAD_TOKEN = '1234'
+TEST_BAD_GENERAL_ID = '1234'
 TEST_USER = 'uQiRzpo4DXghDmr9QzzfQu27cmVRsG'
-TEST_BAD_USER = '1234'
 TEST_GROUP = 'gznej3rKEVAvPUxu9vvNnqpmZpokzF'
 TEST_DEVICES = ['droid2', 'iPhone']
 TEST_TITLE = 'Backup finished - SQL1'
