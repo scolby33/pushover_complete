@@ -45,19 +45,33 @@ def messages_callback(request):
 
 def validate_callback(request):
     resp_body = {
-        'status': 1,
-        'request': TEST_REQUEST_ID,
-        'devices': []
+        'request': TEST_REQUEST_ID
     }
-
-    body = getattr(request, 'body', None)
     headers = {'X-Request-Id': TEST_REQUEST_ID}
-    qs = parse_qs(body)
 
-    if getattr(qs, 'user', str()).startswith('u'):
-        resp_body['group'] = 0
-    elif getattr(qs, 'user', str()).startswith('g'):
+    req_body = getattr(request, 'body', None)
+    qs = parse_qs(req_body)
+    qs = {k: v[0] for k, v in qs.items()}
+
+    if qs.get('token', None) != TEST_TOKEN:
+        resp_body['token'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['application token is invalid']
+
+    user = qs.get('user', None)
+    if user == TEST_USER:
+        device = qs.get('device', None)
+        if device and device.lower() not in TEST_DEVICES:
+            resp_body['device'] = 'invalid for this user'
+            resp_body['status'] = 0
+            resp_body['errors'] = ['device name is not valid for this user']
+        else:
+            resp_body['status'] = 1
+            resp_body['group'] = 0
+            resp_body['devices'] = TEST_DEVICES
+    elif user == TEST_GROUP:
+        resp_body['status'] = 1
         resp_body['group'] = 1
+        resp_body['devices'] = []
 
-    return 200, headers, json.dumps(resp_body)
-
+    return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
