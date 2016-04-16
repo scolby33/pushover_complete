@@ -1,7 +1,7 @@
 from urllib.parse import urljoin, parse_qs
 
-import responses
 import pytest
+import responses
 
 from pushover_complete.error import BadAPIRequestError
 
