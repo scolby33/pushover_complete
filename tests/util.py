@@ -96,3 +96,60 @@ def validate_callback(request):
         resp_body['devices'] = []
 
     return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
+
+
+def receipt_callback(request):
+    resp_body = {
+        'request': TEST_REQUEST_ID
+    }
+    headers = {'X-Request-Id': TEST_REQUEST_ID}
+
+    req_body = getattr(request, 'body', None)
+    qs = parse_qs(req_body)
+    qs = {k: v[0] for k, v in qs.items()}
+
+    if qs.get('token', None) != TEST_TOKEN:
+        resp_body['token'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['application token is invalid']
+    elif request.path_url.split('/')[-1].split('.')[0] != TEST_RECEIPT_ID:  # get the receipt from a url of the form /1/receipts/{receipt}.json
+        resp_body['receipt'] = 'not found'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['receipt not found; may be invalid or expired']
+    else:
+        resp_body['status'] = 1
+        resp_body['acknowledged'] = 1
+        resp_body['acknowledged_at'] = 100
+        resp_body['acknowledged_by'] = TEST_USER
+        resp_body['acknowledged_by_device'] = TEST_DEVICES[0]
+        resp_body['last_delivered_at'] = 100
+        resp_body['expired'] = 1
+        resp_body['expires_at'] = 100
+        resp_body['called_back'] = 0
+        resp_body['called_back_at'] = 100
+
+    return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
+
+
+def receipt_cancel_callback(request):
+    resp_body = {
+        'request': TEST_REQUEST_ID
+    }
+    headers = {'X-Request-Id': TEST_REQUEST_ID}
+
+    req_body = getattr(request, 'body', None)
+    qs = parse_qs(req_body)
+    qs = {k: v[0] for k, v in qs.items()}
+
+    if qs.get('token', None) != TEST_TOKEN:
+        resp_body['token'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['application token is invalid']
+    elif request.path_url.split('/')[-2] != TEST_RECEIPT_ID:  # get the receipt from a url of the form /1/receipts/{receipt}/cancel.json
+        resp_body['receipt'] = 'not found'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['receipt not found; may be invalid or expired']
+    else:
+        resp_body['status'] = 1
+
+    return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)

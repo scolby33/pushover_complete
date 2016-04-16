@@ -1,3 +1,4 @@
+import re
 from urllib.parse import urljoin, parse_qs
 
 import pytest
@@ -216,9 +217,50 @@ def test_PushoverAPI_validates_group(PushoverAPI):
 
 
 
-# def test_PushoverAPI_gets_receipt(PushoverAPI):
-#     PushoverAPI.check_receipt()
-#
-#
-# def test_PushoverAPI_cancels_receipt(PushoverAPI):
-#     PushoverAPI.cancel_receipt()
+@responses.activate
+def test_PushoverAPI_gets_receipt(PushoverAPI):
+    url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*\.json')
+    responses.add_callback(
+        responses.GET,
+        url_re,
+        callback=receipt_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI.check_receipt(TEST_RECEIPT_ID)
+    request_body = parse_qs(resp.request.body)
+    assert request_body['token'][0] == TEST_TOKEN
+    assert resp.request.path_url.split('/')[-1].split('.')[0] == TEST_RECEIPT_ID
+
+    assert resp.json() == {
+        'status': 1,
+        'request': TEST_REQUEST_ID,
+        'acknowledged': 1,
+        'acknowledged_at': 100,
+        'acknowledged_by': TEST_USER,
+        'acknowledged_by_device': TEST_DEVICES[0],
+        'last_delivered_at': 100,
+        'expired': 1,
+        'expires_at': 100,
+        'called_back': 0,
+        'called_back_at': 100
+    }
+
+
+@responses.activate
+def test_PushoverAPI_cancels_receipt(PushoverAPI):
+    url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
+    responses.add_callback(
+        responses.GET,
+        url_re,
+        callback=receipt_cancel_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI.cancel_receipt(TEST_RECEIPT_ID)
+    request_body = parse_qs(resp.request.body)
+    assert request_body['token'][0] == TEST_TOKEN
+    assert resp.request.path_url.split('/')[-2] == TEST_RECEIPT_ID
+
+    assert resp.json() == {
+        'status': 1,
+        'request': TEST_REQUEST_ID
+    }
