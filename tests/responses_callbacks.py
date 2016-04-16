@@ -1,3 +1,5 @@
+"""Callbacks used by the :mod:`responses` module for mocking out API requests."""
+
 import json
 from urllib.parse import parse_qs
 
@@ -5,6 +7,7 @@ from tests.constants import *
 
 
 def messages_callback(request):
+    """A callback mocking the `/messages.json` endpoint."""
     resp_body = {
         'request': TEST_REQUEST_ID
     }
@@ -65,6 +68,7 @@ def sounds_callback(request):
 
 
 def validate_callback(request):
+    """A callback mocking the `/users/validate.json` endpoint."""
     resp_body = {
         'request': TEST_REQUEST_ID
     }
@@ -99,6 +103,20 @@ def validate_callback(request):
 
 
 def receipt_callback(request):
+    """A callback mocking the /receipts/{receipt}.json endpoint.
+
+    Best used like so::
+
+        url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*\.json')
+        responses.add_callback(
+            responses.GET,
+            url_re,
+            callback=receipt_callback,
+            content_type='application/json'
+        )
+
+    in order to capture all calls to the endpoint.
+    """
     resp_body = {
         'request': TEST_REQUEST_ID
     }
@@ -132,6 +150,20 @@ def receipt_callback(request):
 
 
 def receipt_cancel_callback(request):
+    """A callback to mock the /receipts/{receipt}/cancel.json endpoint.
+
+    Best used like so::
+
+            url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
+        responses.add_callback(
+            responses.GET,
+            url_re,
+            callback=receipt_cancel_callback,
+            content_type='application/json'
+        )
+
+    in order to capture all calls to the endpoint.
+    """
     resp_body = {
         'request': TEST_REQUEST_ID
     }
