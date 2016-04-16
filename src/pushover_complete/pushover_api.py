@@ -83,4 +83,30 @@ class PushoverAPI(object):
             urljoin(PUSHOVER_API_URL, 'users/validate.json'),
             data=payload
         )
+        if resp.json().get('status', None) != 1:
+            raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
+        return resp
+
+    def check_receipt(self, receipt):
+        payload = {
+            'token': self.token
+        }
+        resp = requests.get(
+            urljoin(PUSHOVER_API_URL, 'receipts/{}.json'.format(receipt)),
+            data=payload
+        )
+        if resp.json().get('status', None) != 1:
+            raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
+        return resp
+
+    def cancel_receipt(self, receipt):
+        payload = {
+            'token': self.token
+        }
+        resp = requests.get(
+            urljoin(PUSHOVER_API_URL, 'receipts/{}/cancel.json'.format(receipt)),
+            data = payload
+        )
+        if resp.json().get('status', None) != 1:
+            raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
         return resp
