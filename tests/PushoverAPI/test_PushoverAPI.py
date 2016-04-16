@@ -31,8 +31,41 @@ def test_PushoverAPI_sends_simple_message(PushoverAPI):
     }
 
 
+@responses.activate
 def test_PushoverAPI_sends_complex_message(PushoverAPI):
-    assert False
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'messages.json'),
+        callback=messages_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI.send_message(
+        TEST_USER,
+        TEST_MESSAGE,
+        device=TEST_DEVICES[0],
+        title=TEST_TITLE,
+        url=TEST_URL,
+        url_title=TEST_URL_TITLE,
+        priority=1,
+        timestamp=100,
+        sound='gamelan'
+    )
+    request_body = parse_qs(resp.request.body)
+    assert request_body['token'][0] == TEST_TOKEN
+    assert request_body['user'][0] == TEST_USER
+    assert request_body['device'][0] == TEST_DEVICES[0]
+    assert request_body['title'][0] == TEST_TITLE
+    assert request_body['url'][0] == TEST_URL
+    assert request_body['url_title'][0] == TEST_URL_TITLE
+    assert int(request_body['priority'][0]) == 1
+    assert int(request_body['timestamp'][0]) == 100
+    assert request_body['sound'][0] == 'gamelan'
+
+    assert resp.json() == {
+        'status': 1,
+        'request': TEST_REQUEST_ID
+    }
+
 
 @responses.activate
 def test_PushoverAPI_raises_error_on_bad_message(PushoverAPI):
