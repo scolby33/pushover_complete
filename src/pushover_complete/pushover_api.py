@@ -233,7 +233,7 @@ class PushoverAPI(object):
             raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
         return resp
 
-    def migrate_to_subscription(self, user, subscription_code, device=None, sound=None):
+    def _migrate_to_subscription(self, user, subscription_code, device=None, sound=None, session=None):
         payload = {
             'token': self.token,
             'user': user,
@@ -241,11 +241,31 @@ class PushoverAPI(object):
             'device_name': device,
             'sound': sound
         }
-        resp = requests.post(
-            urljoin(PUSHOVER_API_URL, 'subscriptions/migrate.json'),
-            data=payload
-        )
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+        if session is None:
+            resp = requests.post(
+                urljoin(PUSHOVER_API_URL, 'subscriptions/migrate.json'),
+                data=payload,
+                headers=headers
+            )
+        else:
+            resp = session.post(
+                urljoin(PUSHOVER_API_URL, 'subscriptions/migrate.json'),
+                data=payload,
+                headers=headers
+            )
         resp_body = resp.json()
         if resp_body.get('status', None) != 1:
             raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
         return resp
+
+    def migrate_to_subscription(self, user, subscription_code, device=None, sound=None):
+        resp = self._migrate_to_subscription(user, subscription_code, device, sound)
+        return resp
+
+    def migrate_multiple_to_subscription(self, users, subscription_code):
+        sess = requests.Session()
+        resps = []
+        for user in users:
+            resps.append(self._migrate_to_subscription(session=sess, subscription_code=subscription_code, **user))
+        return resps
