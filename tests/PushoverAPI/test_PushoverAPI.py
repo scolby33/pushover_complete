@@ -340,3 +340,16 @@ def test_PushoverAPI_migrates_subscription(PushoverAPI):
         'request': TEST_REQUEST_ID,
         'subscribed_user_key': TEST_SUBSCRIBED_USER_KEY
     }
+
+
+@responses.activate
+def test_PushoverAPI_raises_error_on_subscription_migration_with_bad_user(PushoverAPI):
+    """Test a migration of a bad user key."""
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'subscriptions/migrate.json'),
+        callback=subscription_migrate_callback,
+        content_type='application/json'
+    )
+    with pytest.raises(BadAPIRequestError):
+        PushoverAPI.migrate_to_subscription(TEST_BAD_GENERAL_ID, TEST_SUBSCRIPTION_CODE)
