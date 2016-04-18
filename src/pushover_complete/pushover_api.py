@@ -181,7 +181,8 @@ class PushoverAPI(object):
             urljoin(PUSHOVER_API_URL, 'users/validate.json'),
             data=payload
         )
-        if resp.json().get('status', None) != 1:
+        resp_body = resp.json()
+        if resp_body.get('status', None) != 1:
             raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
         return resp
 
@@ -201,7 +202,8 @@ class PushoverAPI(object):
             urljoin(PUSHOVER_API_URL, 'receipts/{}.json'.format(receipt)),
             data=payload
         )
-        if resp.json().get('status', None) != 1:
+        resp_body = resp.json()
+        if resp_body.get('status', None) != 1:
             raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
         return resp
 
@@ -221,6 +223,9 @@ class PushoverAPI(object):
             urljoin(PUSHOVER_API_URL, 'receipts/{}/cancel.json'.format(receipt)),
             data = payload
         )
-        if resp.json().get('status', None) != 1:
+        resp_body = resp.json()
+        if resp_body.get('status', None) != 1:
+            raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
+        return resp
             raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
         return resp
