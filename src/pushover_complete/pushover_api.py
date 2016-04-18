@@ -221,7 +221,7 @@ class PushoverAPI(object):
         }
         resp = requests.get(
             urljoin(PUSHOVER_API_URL, 'receipts/{}/cancel.json'.format(receipt)),
-            data = payload
+            data=payload
         )
         resp_body = resp.json()
         if resp_body.get('status', None) != 1:
