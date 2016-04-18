@@ -99,6 +99,10 @@ def validate_callback(request):
         resp_body['status'] = 1
         resp_body['group'] = 1
         resp_body['devices'] = []
+    else:
+        resp_body['user'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['user identifier is not a valid user, group, or subscribed user key']
 
     return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
 

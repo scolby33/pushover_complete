@@ -227,6 +227,19 @@ def test_PushoverAPI_validates_group(PushoverAPI):
     }
 
 
+@responses.activate
+def test_PushoverAPI_raises_error_on_bad_user_validation(PushoverAPI):
+    """Test failed validation of a token."""
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'users/validate.json'),
+        callback=validate_callback,
+        content_type='application/json'
+    )
+
+    with pytest.raises(BadAPIRequestError):
+        PushoverAPI.validate(TEST_BAD_GENERAL_ID)
+
 
 @responses.activate
 def test_PushoverAPI_gets_receipt(PushoverAPI):
