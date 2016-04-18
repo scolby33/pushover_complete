@@ -272,6 +272,20 @@ def test_PushoverAPI_gets_receipt(PushoverAPI):
 
 
 @responses.activate
+def test_PushoverAPI_raises_error_on_bad_receipt(PushoverAPI):
+    """Test the getting of a bad receipt value."""
+    url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*\.json')
+    responses.add_callback(
+        responses.GET,
+        url_re,
+        callback=receipt_callback,
+        content_type='application/json'
+    )
+    with pytest.raises(BadAPIRequestError):
+        PushoverAPI.check_receipt('r' + TEST_BAD_GENERAL_ID)  # needs to start with 'r' for the regex url match
+
+
+@responses.activate
 def test_PushoverAPI_cancels_receipt(PushoverAPI):
     """Test cancelling a receipt."""
     url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
