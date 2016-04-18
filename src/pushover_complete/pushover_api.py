@@ -234,6 +234,24 @@ class PushoverAPI(object):
         return resp
 
     def _migrate_to_subscription(self, user, subscription_code, device=None, sound=None, session=None):
+        """The internal function to migrate a user key to a subscription key.
+        Used to abstract the differences between :meth:`pushover_api.PushoverAPI.migrate_to_subscription` and :meth:`pushover_api.PushoverAPI.migrate_multiple_to_subscription`.
+        Feel free to call directly if your use case isn't fulfilled by the more public methods.
+
+        :param user: The user key to migrate
+        :param subscription_code: The subscription code to migrate the user to
+        :param device: The user's device that the subscription will be limited to
+        :param sound: The user's preferred sound
+        :param session: A :class:`requests.sessions.Session` object to be used to send HTTP requests. Useful to send multiple messages without opening multiple HTTP sessions.
+        :type user: str
+        :type subscription_code: str
+        :type device: str
+        :type sound: str
+        :type session: requests.session.Session
+
+        :returns:
+        :rtype:
+        """
         payload = {
             'token': self.token,
             'user': user,
@@ -260,10 +278,33 @@ class PushoverAPI(object):
         return resp
 
     def migrate_to_subscription(self, user, subscription_code, device=None, sound=None):
+        """Migrate a user key to a subscription key.
+
+            :param user: The user key to migrate
+            :param subscription_code: The subscription code to migrate the user to
+            :param device: The user's device that the subscription will be limited to
+            :param sound: The user's preferred sound
+            :type user: str
+            :type subscription_code: str
+            :type device: str
+            :type sound: str
+
+            :returns:
+            :rtype:
+            """
         resp = self._migrate_to_subscription(user, subscription_code, device, sound)
         return resp
 
     def migrate_multiple_to_subscription(self, users, subscription_code):
+        """Migrate multiple users to subscriptions with one call. Utilizes a single HTTP session to decrease overhead.
+
+        :param users: An iterable of messages to be sent. Each item in the iterable must be expandable using the `**kwargs` syntax with keys matching `user` and, optionally, `device` and `sound`. Compare to :meth:`pushover_complete.PushoverAPI.migrate_to_subscription`.
+        :param subscription_code: The subscription code to migrate the user to
+        :type subscription_code: str
+
+        :returns:
+        :rtype:
+        """
         sess = requests.Session()
         resps = []
         for user in users:
