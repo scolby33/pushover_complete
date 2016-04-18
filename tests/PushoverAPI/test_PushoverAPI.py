@@ -289,5 +289,13 @@ def test_PushoverAPI_migrates_subscription(PushoverAPI):
         content_type='application/json'
     )
     resp = PushoverAPI.migrate_to_subscription(TEST_USER, TEST_SUBSCRIPTION_CODE)
+    request_body = parse_qs(resp.request.body)
+    assert request_body['token'][0] == TEST_TOKEN
+    assert request_body['user'][0] == TEST_USER
+    assert request_body['subscription'][0] == TEST_SUBSCRIPTION_CODE
 
-    assert resp
+    assert resp.json() == {
+        'status': 1,
+        'request': TEST_REQUEST_ID,
+        'subscribed_user_key': TEST_SUBSCRIBED_USER_KEY
+    }
