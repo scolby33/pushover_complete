@@ -38,7 +38,7 @@ class PushoverAPI(object):
         :param timestamp: A Unix timestamp of the message's date and time to be displayed instead of the time the message is received by the Pushover servers
         :param sound: A string representing a sound to be played with the message instead of the user's default
         :param html: An integer representing if HTML formatting will be enabled for the message text. Set to 1 to enable.
-        :param session: A :class:`requests.sessions.Session` object to be used to send HTTP requests. Useful to send multiple messages without opening multiple HTTP sessions.
+        :param session: A :class:`requests.Session` object to be used to send HTTP requests. Useful to send multiple messages without opening multiple HTTP sessions.
         :type user: str
         :type message: str
         :type device: str or list
@@ -52,7 +52,7 @@ class PushoverAPI(object):
         :type timestamp: int
         :type sound: str
         :type html: int
-        :type session: requests.sessions.Session
+        :type session: requests.Session
 
         :returns:
         :rtype:
@@ -242,12 +242,12 @@ class PushoverAPI(object):
         :param subscription_code: The subscription code to migrate the user to
         :param device: The user's device that the subscription will be limited to
         :param sound: The user's preferred sound
-        :param session: A :class:`requests.sessions.Session` object to be used to send HTTP requests. Useful to send multiple messages without opening multiple HTTP sessions.
+        :param session: A :class:`requests.Session` object to be used to send HTTP requests. Useful to send multiple messages without opening multiple HTTP sessions.
         :type user: str
         :type subscription_code: str
         :type device: str
         :type sound: str
-        :type session: requests.session.Session
+        :type session: requests.Session
 
         :returns:
         :rtype:
