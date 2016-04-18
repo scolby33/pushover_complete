@@ -307,6 +307,20 @@ def test_PushoverAPI_cancels_receipt(PushoverAPI):
 
 
 @responses.activate
+def test_PushoverAPI_raises_error_on_bad_receipt_cancel(PushoverAPI):
+    """Test the cancelling of a bad receipt value."""
+    url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
+    responses.add_callback(
+        responses.GET,
+        url_re,
+        callback=receipt_cancel_callback,
+        content_type='application/json'
+    )
+    with pytest.raises(BadAPIRequestError):
+        PushoverAPI.cancel_receipt('r' + TEST_BAD_GENERAL_ID)
+
+
+@responses.activate
 def test_PushoverAPI_migrates_subscription(PushoverAPI):
     """Test migrating a user key to a subscription key."""
     responses.add_callback(
