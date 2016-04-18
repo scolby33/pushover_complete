@@ -25,7 +25,7 @@ def messages_callback(request):
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
-    elif qs.get('user', None) != TEST_USER:
+    elif qs.get('user', None) != TEST_USER and qs.get('user', None) != TEST_GROUP:  # allow TEST_USER or TEST_GROUP
         resp_body['user'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['user identifier is not a valid user, group, or subscribed user key']
