@@ -353,3 +353,29 @@ def test_PushoverAPI_raises_error_on_subscription_migration_with_bad_user(Pushov
     )
     with pytest.raises(BadAPIRequestError):
         PushoverAPI.migrate_to_subscription(TEST_BAD_GENERAL_ID, TEST_SUBSCRIPTION_CODE)
+
+
+@responses.activate
+def test_PushoverAPI_migrates_multiple_subscriptions(PushoverAPI):
+    """Test a migration of multiple user keys at once."""
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'subscriptions/migrate.json'),
+        callback=subscription_migrate_callback,
+        content_type='application/json'
+    )
+    users = [{
+        'user': TEST_USER
+    }] * 3
+    resps = PushoverAPI.migrate_multiple_to_subscription(users, TEST_SUBSCRIPTION_CODE)
+    request_bodies = [parse_qs(resp.request.body) for resp in resps]
+    assert len(resps) == 3
+    assert all(request_body['token'][0] == TEST_TOKEN for request_body in request_bodies)
+    assert all(request_body['user'][0] == TEST_USER for request_body in request_bodies)
+    assert all(request_body['subscription'][0] == TEST_SUBSCRIPTION_CODE for request_body in request_bodies)
+
+    assert all(resp.json() == {
+        'status': 1,
+        'request': TEST_REQUEST_ID,
+        'subscribed_user_key': TEST_SUBSCRIBED_USER_KEY
+    } for resp in resps)
