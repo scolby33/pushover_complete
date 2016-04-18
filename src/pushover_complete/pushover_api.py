@@ -19,7 +19,8 @@ class PushoverAPI(object):
         self.token = token
 
     def _send_message(self, user, message, device=None, title=None, url=None, url_title=None,
-                      priority=None, retry=None, expire=None, timestamp=None, sound=None, html=False, session=None):
+                      priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False,
+                      session=None):
         """The internal function used to send messages via the Pushover API.
         Used to abstract the differences between :meth:`pushover_api.PushoverAPI.send_message` and :meth:`pushover_api.PushoverAPI.send_messages`.
         Feel free to call directly if your use case isn't fulfilled by the more public methods.
@@ -33,6 +34,7 @@ class PushoverAPI(object):
         :param priority: An integer representing the priority of the message, from -2 (least important) to 2 (emergency). Default is 0.
         :param retry: How often the Pushover server will re-send an emergency-priority message in seconds. Required with priority 2 messages.
         :param expire: How long an emergency-priority message will be re-sent for in seconds
+        :param callback_url: A url to be visited by the Pushover servers upon acknowledgement of an emergency-priority message
         :param timestamp: A Unix timestamp of the message's date and time to be displayed instead of the time the message is received by the Pushover servers
         :param sound: A string representing a sound to be played with the message instead of the user's default
         :param html: An integer representing if HTML formatting will be enabled for the message text. Set to 1 to enable.
@@ -46,6 +48,7 @@ class PushoverAPI(object):
         :type priority: int
         :type retry: int
         :type expire: int
+        :type callback_url: str
         :type timestamp: int
         :type sound: str
         :type html: int
@@ -54,7 +57,6 @@ class PushoverAPI(object):
         :returns:
         :rtype:
         """
-        # TODO: callback url
         payload = {
             'token': self.token,
             'user': user,
@@ -66,6 +68,7 @@ class PushoverAPI(object):
             'priority': priority,
             'retry': retry,
             'expire': expire,
+            'callback': callback_url,
             'timestamp': timestamp,
             'sound': sound,
             'html': html
@@ -93,7 +96,7 @@ class PushoverAPI(object):
         return resp
 
     def send_message(self, user, message, device=None, title=None, url=None, url_title=None,
-                     priority=None, retry=None, expire=None, timestamp=None, sound=None, html=False):
+                     priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False):
         """The internal function used to send messages via the Pushover API.
         Used to abstract the differences between :meth:`pushover_api.PushoverAPI.send_message` and :meth:`pushover_api.PushoverAPI.send_messages`.
         Feel free to call directly if your use case isn't fulfilled by the more public methods.
@@ -107,6 +110,7 @@ class PushoverAPI(object):
         :param priority: An integer representing the priority of the message, from -2 (least important) to 2 (emergency). Default is 0.
         :param retry: How often the Pushover server will re-send an emergency-priority message in seconds. Required with priority 2 messages.
         :param expire: How long an emergency-priority message will be re-sent for in seconds
+        :param callback_url: A url to be visited by the Pushover servers upon acknowledgement of an emergency-priority message
         :param timestamp: A Unix timestamp of the message's date and time to be displayed instead of the time the message is received by the Pushover servers
         :param sound: A string representing the sound to be played with the message instead of the user's default. Available sounds can be retreived using :meth:`pushover_complete.pushover_api.PushoverAPI.get_sounds`.
         :param html: An integer representing if HTML formatting will be enabled for the message text. Set to 1 to enable.
@@ -119,6 +123,7 @@ class PushoverAPI(object):
         :type priority: int
         :type retry: int
         :type expire: int
+        :type callback_url: str
         :type timestamp: int
         :type sound: str
         :type html: int
@@ -126,8 +131,8 @@ class PushoverAPI(object):
         :returns:
         :rtype:
         """
-        resp = self._send_message(user, message, device, title, url, url_title, priority, retry, expire, timestamp,
-                                  sound, html)
+        resp = self._send_message(user, message, device, title, url, url_title, priority, retry, expire, callback_url,
+                                  timestamp, sound, html)
         return resp
 
     def send_messages(self, messages):
