@@ -186,3 +186,33 @@ def receipt_cancel_callback(request):
         resp_body['status'] = 1
 
     return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
+
+
+def subscription_migrate_callback(request):
+    """A callback to mock the `/subscriptions/migrate.json` endpoint."""
+    resp_body = {
+        'request': TEST_REQUEST_ID
+    }
+    headers = {'X-Request-Id': TEST_REQUEST_ID}
+
+    req_body = getattr(request, 'body', None)
+    qs = parse_qs(req_body)
+    qs = {k: v[0] for k, v in qs.items()}
+
+    if qs.get('token', None) != TEST_TOKEN:
+        resp_body['token'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['application token is invalid']
+    elif qs.get('subscription', None) != TEST_SUBSCRIPTION_CODE:
+        resp_body['subscription'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['subscription token is invalid']
+    elif qs.get('user', None) != TEST_USER:
+        resp_body['user'] = 'is not a valid user'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['user key is not valid for any active user']
+    else:
+        resp_body['status'] = 1
+        resp_body['subscribed_user_key'] = TEST_SUBSCRIBED_USER_KEY
+
+    return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)

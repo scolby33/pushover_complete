@@ -277,3 +277,17 @@ def test_PushoverAPI_cancels_receipt(PushoverAPI):
         'status': 1,
         'request': TEST_REQUEST_ID
     }
+
+
+@responses.activate
+def test_PushoverAPI_migrates_subscription(PushoverAPI):
+    """Test migrating a user key to a subscription key."""
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'subscriptions/migrate.json'),
+        callback=subscription_migrate_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI.migrate_to_subscription(TEST_USER, TEST_SUBSCRIPTION_CODE)
+
+    assert resp

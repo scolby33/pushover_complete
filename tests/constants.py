@@ -11,6 +11,8 @@ TEST_REQUEST_ID = 'e460545a8b333d0da2f3602aff3133d6'
 TEST_RECEIPT_ID = 'rLqVuqTRh62UzxtmqiaLzQmVcPgiCy'
 TEST_URL = 'twitter://direct_message?screen_name=someuser'
 TEST_URL_TITLE = 'Reply to @someuser'
+TEST_SUBSCRIPTION_CODE = 'Forum-f504h08fhlasdfj'
+TEST_SUBSCRIBED_USER_KEY = 'sPfjsD2fGzEd9TR52DU31Hv4A61Vvk'
 
 SOUNDS = {
     'pushover': 'Pushover (default)',
