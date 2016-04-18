@@ -7,7 +7,7 @@ from tests.constants import *
 
 
 def messages_callback(request):
-    """A callback mocking the `/messages.json` endpoint."""
+    """A callback to mock the `/messages.json` endpoint."""
     resp_body = {
         'request': TEST_REQUEST_ID
     }
@@ -47,6 +47,7 @@ def messages_callback(request):
 
 
 def sounds_callback(request):
+    """A callback to mock the `/sounds.json` endpoint."""
     resp_body = {
         'request': TEST_REQUEST_ID
     }
@@ -68,7 +69,7 @@ def sounds_callback(request):
 
 
 def validate_callback(request):
-    """A callback mocking the `/users/validate.json` endpoint."""
+    """A callback to mock the `/users/validate.json` endpoint."""
     resp_body = {
         'request': TEST_REQUEST_ID
     }
@@ -103,7 +104,7 @@ def validate_callback(request):
 
 
 def receipt_callback(request):
-    """A callback mocking the /receipts/{receipt}.json endpoint.
+    """A callback to mock the /receipts/{receipt}.json endpoint.
 
     Best used like so::
 
