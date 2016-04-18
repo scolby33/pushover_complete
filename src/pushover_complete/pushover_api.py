@@ -227,5 +227,20 @@ class PushoverAPI(object):
         if resp_body.get('status', None) != 1:
             raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
         return resp
+
+    def migrate_to_subscription(self, user, subscription_code, device=None, sound=None):
+        payload = {
+            'token': self.token,
+            'user': user,
+            'subscription': subscription_code,
+            'device_name': device,
+            'sound': sound
+        }
+        resp = requests.post(
+            urljoin(PUSHOVER_API_URL, 'subscriptions/migrate.json'),
+            data=payload
+        )
+        resp_body = resp.json()
+        if resp_body.get('status', None) != 1:
             raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
         return resp
