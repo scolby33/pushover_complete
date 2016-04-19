@@ -1,5 +1,11 @@
+.. _license:
+
+License
+=======
+
+This software is licensed under the MIT License. The full text of this license is below.
+
 MIT License
-===========
 
 Copyright (c) 2016 Scott Colby
 

@@ -13,7 +13,7 @@ KEYWORDS = ['']
 CLASSIFIERS = [
     'Development Status :: 1 - Planning',
     'Intended Audience :: Developers',
-    'License :: Other/Proprietary License',
+    'License :: OSI Approved :: MIT License',
     'Programming Language :: Python :: 3.5',
     'Topic :: Communications'
 ]
