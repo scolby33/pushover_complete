@@ -9,3 +9,5 @@ include docs/Makefile
 include docs/make.bat
 include docs/source/conf.py
 recursive-include docs/source *.rst
+
+recursive-exclude * .DS_Store
