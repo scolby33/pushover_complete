@@ -22,7 +22,8 @@ class PushoverAPI(object):
                       priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False,
                       session=None):
         """The internal function used to send messages via the Pushover API.
-        Used to abstract the differences between :meth:`pushover_api.PushoverAPI.send_message` and :meth:`pushover_api.PushoverAPI.send_messages`.
+        Takes a ``session`` parameter to use for sending HTTP requests, allowing the re-use of sessions to decrease overhead.
+        Used to abstract the differences between :meth:`PushoverAPI.send_message` and :meth:`PushoverAPI.send_messages`.
         Feel free to call directly if your use case isn't fulfilled by the more public methods.
 
         :param user: A Pushover user token representing the user or group to whom the message will be sent
@@ -97,9 +98,7 @@ class PushoverAPI(object):
 
     def send_message(self, user, message, device=None, title=None, url=None, url_title=None,
                      priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False):
-        """The internal function used to send messages via the Pushover API.
-        Used to abstract the differences between :meth:`pushover_api.PushoverAPI.send_message` and :meth:`pushover_api.PushoverAPI.send_messages`.
-        Feel free to call directly if your use case isn't fulfilled by the more public methods.
+        """Send a message via the Pushover API.
 
         :param user: A Pushover user token representing the user or group to whom the message will be sent
         :param message: The message to be sent
@@ -112,7 +111,7 @@ class PushoverAPI(object):
         :param expire: How long an emergency-priority message will be re-sent for in seconds
         :param callback_url: A url to be visited by the Pushover servers upon acknowledgement of an emergency-priority message
         :param timestamp: A Unix timestamp of the message's date and time to be displayed instead of the time the message is received by the Pushover servers
-        :param sound: A string representing the sound to be played with the message instead of the user's default. Available sounds can be retreived using :meth:`pushover_complete.pushover_api.PushoverAPI.get_sounds`.
+        :param sound: A string representing the sound to be played with the message instead of the user's default. Available sounds can be retreived using :meth:`PushoverAPI.get_sounds`.
         :param html: An integer representing if HTML formatting will be enabled for the message text. Set to 1 to enable.
         :type user: str
         :type message: str
@@ -138,7 +137,7 @@ class PushoverAPI(object):
     def send_messages(self, messages):
         """Send multiple messages with one call. Utilizes a single HTTP session to decrease overhead.
 
-        :param messages: An iterable of messages to be sent. Each item in the iterable must be expandable using the `**kwargs` syntax with the keys matching the parameters of :meth:`pushover_complete.pushover_api.PushoverAPI.send_message`.
+        :param messages: An iterable of messages to be sent. Each item in the iterable must be expandable using the ``**kwargs`` syntax with the keys matching the parameters of :meth:`PushoverAPI.send_message`.
 
         :returns:
         :rtype:
@@ -235,7 +234,8 @@ class PushoverAPI(object):
 
     def _migrate_to_subscription(self, user, subscription_code, device=None, sound=None, session=None):
         """The internal function to migrate a user key to a subscription key.
-        Used to abstract the differences between :meth:`pushover_api.PushoverAPI.migrate_to_subscription` and :meth:`pushover_api.PushoverAPI.migrate_multiple_to_subscription`.
+        Takes a ``session`` parameter to use for sending HTTP requests, allowing the re-use of sessions to decrease overhead.
+        Used to abstract the differences between :meth:`PushoverAPI.migrate_to_subscription` and :meth:`PushoverAPI.migrate_multiple_to_subscription`.
         Feel free to call directly if your use case isn't fulfilled by the more public methods.
 
         :param user: The user key to migrate
@@ -298,7 +298,7 @@ class PushoverAPI(object):
     def migrate_multiple_to_subscription(self, users, subscription_code):
         """Migrate multiple users to subscriptions with one call. Utilizes a single HTTP session to decrease overhead.
 
-        :param users: An iterable of messages to be sent. Each item in the iterable must be expandable using the `**kwargs` syntax with keys matching `user` and, optionally, `device` and `sound`. Compare to :meth:`pushover_complete.PushoverAPI.migrate_to_subscription`.
+        :param users: An iterable of messages to be sent. Each item in the iterable must be expandable using the ``**kwargs`` syntax with keys matching ``user`` and, optionally, ``device`` and ``sound``. Compare to :meth:`PushoverAPI.migrate_to_subscription`.
         :param subscription_code: The subscription code to migrate the user to
         :type subscription_code: str
 
