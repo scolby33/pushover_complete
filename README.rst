@@ -1,5 +1,5 @@
 pushover_complete
------------------
+=================
 A Python 3 package for interacting with *all* aspects of the Pushover API.
 
 .. image:: https://travis-ci.org/scolby33/pushover_complete.svg?branch=master
