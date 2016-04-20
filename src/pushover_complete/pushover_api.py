@@ -76,18 +76,13 @@ class PushoverAPI(object):
         }
         headers = {'Content-type': 'application/x-www-form-urlencoded'}
 
-        if session is None:
-            resp = requests.post(
-                urljoin(PUSHOVER_API_URL, 'messages.json'),
-                data=payload,
-                headers=headers
-            )
-        else:
-            resp = session.post(
-                urljoin(PUSHOVER_API_URL, 'messages.json'),
-                data=payload,
-                headers=headers
-            )
+        post = session.post if session else requests.post
+
+        resp = post(
+            urljoin(PUSHOVER_API_URL, 'messages.json'),
+            data=payload,
+            headers=headers
+        )
 
         resp_body = resp.json()
         if resp_body.get('status', None) != 1:
@@ -260,18 +255,15 @@ class PushoverAPI(object):
             'sound': sound
         }
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-        if session is None:
-            resp = requests.post(
-                urljoin(PUSHOVER_API_URL, 'subscriptions/migrate.json'),
-                data=payload,
-                headers=headers
-            )
-        else:
-            resp = session.post(
-                urljoin(PUSHOVER_API_URL, 'subscriptions/migrate.json'),
-                data=payload,
-                headers=headers
-            )
+
+        post = session.post if session else requests.post
+
+        resp = post(
+            urljoin(PUSHOVER_API_URL, 'subscriptions/migrate.json'),
+            data=payload,
+            headers=headers
+        )
+
         resp_body = resp.json()
         if resp_body.get('status', None) != 1:
             raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
