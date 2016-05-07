@@ -18,6 +18,34 @@ class PushoverAPI(object):
     def __init__(self, token):
         self.token = token
 
+    def _generic_get(self, endpoint, url_parameter=None, payload=None):
+        if payload is None:
+            payload = {}
+        payload['token'] = self.token
+        resp = requests.get(
+            urljoin(PUSHOVER_API_URL, endpoint.format(url_parameter)),
+            data=payload
+        )
+        resp_body = resp.json()
+        if resp_body.get('status', None) != 1:
+            raise BadAPIRequestError('{}: {}'.format(resp.status_code, ': '.join(resp_body.get('errors'))))
+        return resp
+
+    def _generic_post(self, endpoint, url_parameter=None, payload=None):
+        if payload is None:
+            payload = {}
+        payload['token'] = self.token
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+        resp = requests.post(
+            urljoin(PUSHOVER_API_URL, endpoint.format(url_parameter)),
+            data=payload,
+            headers=headers
+        )
+        resp_body = resp.json()
+        if resp_body.get('status', None) != 1:
+            raise BadAPIRequestError('{}: {}'.format(resp.status_code, ': '.join(resp_body.get('errors'))))
+        return resp
+
     def _send_message(self, user, message, device=None, title=None, url=None, url_title=None,
                       priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False,
                       session=None):
@@ -149,16 +177,7 @@ class PushoverAPI(object):
         :return: A :class:`dict` of sounds, with keys representing the identifier and values a human-readable name.
         :rtype: dict
         """
-        resp = requests.get(
-            urljoin(PUSHOVER_API_URL, 'sounds.json'),
-            data={'token': self.token}
-        )
-
-        resp_body = resp.json()
-
-        if resp_body.get('status', None) != 1:
-            raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
-        return resp_body.get('sounds', None)
+        return self._generic_get('sounds.json').json().get('sounds')
 
     def validate(self, user, device=None):
         """Validate a user or group token or a user device.
@@ -172,18 +191,10 @@ class PushoverAPI(object):
         :rtype:
         """
         payload = {
-            'token': self.token,
             'user': user,
             'device': device
         }
-        resp = requests.post(
-            urljoin(PUSHOVER_API_URL, 'users/validate.json'),
-            data=payload
-        )
-        resp_body = resp.json()
-        if resp_body.get('status', None) != 1:
-            raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
-        return resp
+        return self._generic_post('users/validate.json', payload=payload)
 
     def check_receipt(self, receipt):
         """Check a receipt issued after sending an emergency-priority message.
@@ -194,17 +205,7 @@ class PushoverAPI(object):
         :returns:
         :rtype:
         """
-        payload = {
-            'token': self.token
-        }
-        resp = requests.get(
-            urljoin(PUSHOVER_API_URL, 'receipts/{}.json'.format(receipt)),
-            data=payload
-        )
-        resp_body = resp.json()
-        if resp_body.get('status', None) != 1:
-            raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
-        return resp
+        return self._generic_get('receipts/{}.json', receipt)
 
     def cancel_receipt(self, receipt):
         """Cancel a receipt (and thus further re-sends of the message).
@@ -215,17 +216,7 @@ class PushoverAPI(object):
         :returns:
         :rtype:
         """
-        payload = {
-            'token': self.token
-        }
-        resp = requests.get(
-            urljoin(PUSHOVER_API_URL, 'receipts/{}/cancel.json'.format(receipt)),
-            data=payload
-        )
-        resp_body = resp.json()
-        if resp_body.get('status', None) != 1:
-            raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
-        return resp
+        return self._generic_get('receipts/{}/cancel.json', receipt)
 
     def _migrate_to_subscription(self, user, subscription_code, device=None, sound=None, session=None):
         """The internal function to migrate a user key to a subscription key.
@@ -309,17 +300,6 @@ class PushoverAPI(object):
         :param group_key: A Pushover group key
         :type group_key: str
 
-        :returns:
         :rtype:
         """
-        payload = {
-            'token': self.token
-        }
-        resp = requests.get(
-            urljoin(PUSHOVER_API_URL, 'groups/{}.json'.format(group_key)),
-            data=payload
-        )
-        resp_body = resp.json()
-        if resp_body.get('status', None) != 1:
-            raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
-        return resp
+        return self._generic_get('groups/{}.json', group_key)
