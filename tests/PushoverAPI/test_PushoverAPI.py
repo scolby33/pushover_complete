@@ -417,3 +417,19 @@ def test_PushoverAPI_gets_group_info(PushoverAPI):
         ]
     }
 
+@responses.activate
+def test_PushoverAPI_adds_user_to_group(PushoverAPI):
+    """Test adding a user to a group"""
+    url_re = re.compile('https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/add_user\.json')
+    responses.add_callback(
+        responses.POST,
+        url_re,
+        callback=groups_add_user_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI.group_add_user(TEST_GROUP, TEST_USER)
+
+    assert resp == {
+        'status': 1,
+        'request': TEST_REQUEST_ID
+    }

@@ -280,3 +280,25 @@ class PushoverAPI(object):
         """
         return self._generic_get('groups/{}.json', group_key)
 
+    def group_add_user(self, group_key, user, device=None, memo=None):
+        """Add a user to a group.
+
+        :param group_key: A Pushover group key
+        :param user: The user key to be added to the group
+        :param device: A string representing the device name to add to the group
+        :param memo: A memo to store with the user's group membership (max 200 characters)
+        :type group_key: str
+        :type user: str
+        :type device: str
+        :type memo: str
+
+        :returns:
+        :rtype:
+        """
+        payload = {
+            'user': user,
+            'device': device,
+            'memo': memo
+        }
+        return self._generic_post('groups/{}/add_user.json', group_key, payload)
+
