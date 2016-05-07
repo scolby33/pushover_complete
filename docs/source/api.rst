@@ -31,6 +31,8 @@ circumstances, particularly when many requests are to be made at one time.
 
    .. automethod:: _send_message
    .. automethod:: _migrate_to_subscription
+   .. automethod:: _generic_get
+   .. automethod:: _generic_post
 
 
 Exceptions and Errors
