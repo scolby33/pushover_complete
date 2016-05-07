@@ -302,3 +302,64 @@ class PushoverAPI(object):
         }
         return self._generic_post('groups/{}/add_user.json', group_key, payload)
 
+    def group_delete_user(self, group_key, user):
+        """Remove user from a group.
+
+        :param group_key: A Pushover group key
+        :param user: The user key to remove from the group
+        :type group_key: str
+        :type user: str
+
+        :returns:
+        :rtype:
+        """
+        payload = {
+            'user': user
+        }
+        return self._generic_post('groups/{}/delete_user.json', group_key, payload)
+
+    def group_disable_user(self, group_key, user):
+        """Temporarily disable a user in a group.
+
+        :param group_key: A Pushover group key
+        :param user: The user key to disable
+        :type group_key: str
+        :type user: str
+
+        :returns:
+        :rtype:
+        """
+        payload = {
+            'user': user
+        }
+        return self._generic_post('groups/{}/disable_user.json', group_key, payload)
+
+    def group_enable_user(self, group_key, user):
+        """Re-enable a user in a group.
+
+        :param group_key: A Pushover group key
+        :param user: The user key to enable
+        :type group_key: str
+        :type user: str
+
+        :returns:
+        :rtype:
+        """
+        payload = {
+            'user': user
+        }
+        return self._generic_post('groups/{}/enable_user.json', group_key, payload)
+
+    def group_rename(self, group_key, new_name):
+        """Change the name of a group.
+
+        :param group_key: A Pushover group key
+        :param new_name: The new name for the group
+        :type group_key: str
+        :type new_name: str
+        """
+        payload = {
+            'name': new_name
+        }
+        return self._generic_post('groups/{}/rename.json', group_key, payload)
+

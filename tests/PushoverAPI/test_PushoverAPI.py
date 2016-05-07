@@ -417,6 +417,7 @@ def test_PushoverAPI_gets_group_info(PushoverAPI):
         ]
     }
 
+
 @responses.activate
 def test_PushoverAPI_adds_user_to_group(PushoverAPI):
     """Test adding a user to a group"""
@@ -428,6 +429,78 @@ def test_PushoverAPI_adds_user_to_group(PushoverAPI):
         content_type='application/json'
     )
     resp = PushoverAPI.group_add_user(TEST_GROUP, TEST_USER)
+
+    assert resp == {
+        'status': 1,
+        'request': TEST_REQUEST_ID
+    }
+
+
+@responses.activate
+def test_PushoverAPI_deletes_user_from_group(PushoverAPI):
+    """Test removing a user from a group"""
+    url_re = re.compile('https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/delete_user\.json')
+    responses.add_callback(
+        responses.POST,
+        url_re,
+        callback=groups_delete_user_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI.group_delete_user(TEST_GROUP, TEST_USER)
+
+    assert resp == {
+        'status': 1,
+        'request': TEST_REQUEST_ID
+    }
+
+
+@responses.activate
+def test_PushoverAPI_disables_user_in_group(PushoverAPI):
+    """Test disabling a user in a group."""
+    url_re = re.compile('https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/disable_user\.json')
+    responses.add_callback(
+        responses.POST,
+        url_re,
+        callback=groups_disable_user_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI.group_disable_user(TEST_GROUP, TEST_USER)
+
+    assert resp == {
+        'status': 1,
+        'request': TEST_REQUEST_ID
+    }
+
+
+@responses.activate
+def test_PushoverAPI_enables_user_in_group(PushoverAPI):
+    """Test enabling a user in a group."""
+    url_re = re.compile('https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/enable_user\.json')
+    responses.add_callback(
+        responses.POST,
+        url_re,
+        callback=groups_enable_user_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI.group_enable_user(TEST_GROUP, TEST_USER)
+
+    assert resp == {
+        'status': 1,
+        'request': TEST_REQUEST_ID
+    }
+
+
+@responses.activate
+def test_PushoverAPI_changes_group_name(PushoverAPI):
+    """Test changing group name."""
+    url_re = re.compile('https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/rename\.json')
+    responses.add_callback(
+        responses.POST,
+        url_re,
+        callback=groups_rename_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI.group_rename(TEST_GROUP, TEST_GROUP_NAME + 'New')
 
     assert resp == {
         'status': 1,

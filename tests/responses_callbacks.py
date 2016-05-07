@@ -289,3 +289,115 @@ def groups_add_user_callback(request):
         resp_body['status'] = 1
 
     return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
+
+
+def groups_delete_user_callback(request):
+    """A callback to mock the `/groups/{group_id}/delete_user.json` endpoint."""
+    resp_body = {
+        'request': TEST_REQUEST_ID
+    }
+    headers = {'X-Request-Id': TEST_REQUEST_ID}
+
+    req_body = getattr(request, 'body', None)
+    qs = parse_qs(req_body)
+    qs = {k: v[0] for k, v in qs.items()}
+
+    if qs.get('token', None) != TEST_TOKEN:
+        resp_body['token'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['application token is invalid']
+    elif request.path_url.split('/')[-2] != TEST_GROUP:
+        resp_body['group'] = 'not found'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['group not found or you are not authorized to edit it']
+    elif qs.get('user', None) != TEST_USER:
+        resp_body['user'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['user is not a member of this group']
+    else:
+        resp_body['status'] = 1
+
+    return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
+
+
+def groups_disable_user_callback(request):
+    """A callback to mock the `/groups/{group_id}/disable_user.json` endpoint."""
+    resp_body = {
+        'request': TEST_REQUEST_ID
+    }
+    headers = {'X-Request-Id': TEST_REQUEST_ID}
+
+    req_body = getattr(request, 'body', None)
+    qs = parse_qs(req_body)
+    qs = {k: v[0] for k, v in qs.items()}
+
+    if qs.get('token', None) != TEST_TOKEN:
+        resp_body['token'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['application token is invalid']
+    elif request.path_url.split('/')[-2] != TEST_GROUP:
+        resp_body['group'] = 'not found'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['group not found or you are not authorized to edit it']
+    elif qs.get('user', None) != TEST_USER:
+        resp_body['user'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['user is not a member of this group']
+    else:
+        resp_body['status'] = 1
+
+    return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
+
+
+def groups_enable_user_callback(request):
+    """A callback to mock the `/groups/{group_id}/enable_user.json` endpoint."""
+    resp_body = {
+        'request': TEST_REQUEST_ID
+    }
+    headers = {'X-Request-Id': TEST_REQUEST_ID}
+
+    req_body = getattr(request, 'body', None)
+    qs = parse_qs(req_body)
+    qs = {k: v[0] for k, v in qs.items()}
+
+    if qs.get('token', None) != TEST_TOKEN:
+        resp_body['token'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['application token is invalid']
+    elif request.path_url.split('/')[-2] != TEST_GROUP:
+        resp_body['group'] = 'not found'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['group not found or you are not authorized to edit it']
+    elif qs.get('user', None) != TEST_USER:
+        resp_body['user'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['user is not a member of this group']
+    else:
+        resp_body['status'] = 1
+
+    return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
+
+
+def groups_rename_callback(request):
+    """A callback to mock the `/groups/{group_id}/rename.json` endpoint."""
+    resp_body = {
+        'request': TEST_REQUEST_ID
+    }
+    headers = {'X-Request-Id': TEST_REQUEST_ID}
+
+    req_body = getattr(request, 'body', None)
+    qs = parse_qs(req_body)
+    qs = {k: v[0] for k, v in qs.items()}
+
+    if qs.get('token', None) != TEST_TOKEN:
+        resp_body['token'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['application token is invalid']
+    elif request.path_url.split('/')[-2] != TEST_GROUP:
+        resp_body['group'] = 'not found'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['group not found or you are not authorized to edit it']
+    else:
+        resp_body['status'] = 1
+
+    return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
