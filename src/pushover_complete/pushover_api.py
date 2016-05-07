@@ -19,7 +19,20 @@ class PushoverAPI(object):
         self.token = token
 
     def _generic_get(self, endpoint, url_parameter=None, payload=None, session=None):
-        # TODO DOCSTRING
+        """A method for abstracting GET requests to the Pushover API.
+
+        :param endpoint: The endpoint of the API to hit. Will be joined with "https://api.pushover.net/1/". Example value: "groups/{}.json"
+        :param url_parameter: A parameter to replace in the endpoint string provided. Example value: "g123456". Combined with the above example value, would result in a final URL of "https://api.pushover.net/1/groups/g123456.json"
+        :param payload: A dict of parameters to be appended to the URL, e.g. :code:`{'test-param': False}` would result in the URL having :code:`?test-param=false` appended. Do not include the application token in this dict, as it is added by the function.
+        :param session: A :class:`requests.Session` object to be used to send HTTP requests.
+        :type endpoint: str
+        :type url_parameter: str
+        :type payload: dict
+        :type session: requests.Session
+
+        :returns: Response body interpreted as JSON
+        :rtype: dict
+        """
         if payload is None:
             payload = {}
         payload['token'] = self.token
@@ -35,7 +48,20 @@ class PushoverAPI(object):
         return resp_body
 
     def _generic_post(self, endpoint, url_parameter=None, payload=None, session=None):
-        # TODO DOCSTRING
+        """A method for abstracting POST requests to the Pushover API.
+
+        :param endpoint: The endpoint of the API to hit. Will be joined with "https://api.pushover.net/1/". Example value: "groups/{}.json"
+        :param url_parameter: A parameter to replace in the endpoint string provided. Example value: "g123456". Combined with the above example value, would result in a final URL of "https://api.pushover.net/1/groups/g123456.json"
+        :param payload: A dict of parameters to be appended to the URL, e.g. :code:`{'test-param': False}` would result in the URL having :code:`?test-param=false` appended. Do not include the application token in this dict, as it is added by the function.
+        :param session: A :class:`requests.Session` object to be used to send HTTP requests.
+        :type endpoint: str
+        :type url_parameter: str
+        :type payload: dict
+        :type session: requests.Session
+
+        :returns: Response body interpreted as JSON
+        :rtype: dict
+        """
         if payload is None:
             payload = {}
         payload['token'] = self.token
@@ -89,8 +115,8 @@ class PushoverAPI(object):
         :type html: int
         :type session: requests.Session
 
-        :returns:
-        :rtype:
+        :returns: Response body interpreted as JSON
+        :rtype: dict
         """
         payload = {
             'user': user,
@@ -141,8 +167,8 @@ class PushoverAPI(object):
         :type sound: str
         :type html: int
 
-        :returns:
-        :rtype:
+        :returns: Response body interpreted as JSON
+        :rtype: dict
         """
         return self._send_message(user, message, device, title, url, url_title, priority, retry, expire, callback_url,
                                   timestamp, sound, html)
@@ -152,8 +178,8 @@ class PushoverAPI(object):
 
         :param messages: An iterable of messages to be sent. Each item in the iterable must be expandable using the ``**kwargs`` syntax with the keys matching the parameters of :meth:`PushoverAPI.send_message`.
 
-        :returns:
-        :rtype:
+        :returns: Response body interpreted as JSON
+        :rtype: dict
         """
         sess = requests.Session()
         resp_bodies = []
@@ -177,8 +203,8 @@ class PushoverAPI(object):
         :type user: str
         :type device: str
 
-        :returns:
-        :rtype:
+        :returns: Response body interpreted as JSON
+        :rtype: dict
         """
         payload = {
             'user': user,
@@ -192,8 +218,8 @@ class PushoverAPI(object):
         :param receipt: The receipt id
         :type receipt: str
 
-        :returns:
-        :rtype:
+        :returns: Response body interpreted as JSON
+        :rtype: dict
         """
         return self._generic_get('receipts/{}.json', receipt)
 
@@ -203,8 +229,8 @@ class PushoverAPI(object):
         :param receipt: The id of the receipt id to be cancelled
         :type receipt: str
 
-        :returns:
-        :rtype:
+        :returns: Response body interpreted as JSON
+        :rtype: dict
         """
         return self._generic_get('receipts/{}/cancel.json', receipt)
 
@@ -225,8 +251,8 @@ class PushoverAPI(object):
         :type sound: str
         :type session: requests.Session
 
-        :returns:
-        :rtype:
+        :returns: Response body interpreted as JSON
+        :rtype: dict
         """
         payload = {
             'user': user,
@@ -240,18 +266,18 @@ class PushoverAPI(object):
     def migrate_to_subscription(self, user, subscription_code, device=None, sound=None):
         """Migrate a user key to a subscription key.
 
-            :param user: The user key to migrate
-            :param subscription_code: The subscription code to migrate the user to
-            :param device: The user's device that the subscription will be limited to
-            :param sound: The user's preferred sound
-            :type user: str
-            :type subscription_code: str
-            :type device: str
-            :type sound: str
+        :param user: The user key to migrate
+        :param subscription_code: The subscription code to migrate the user to
+        :param device: The user's device that the subscription will be limited to
+        :param sound: The user's preferred sound
+        :type user: str
+        :type subscription_code: str
+        :type device: str
+        :type sound: str
 
-            :returns:
-            :rtype:
-            """
+        :returns: Response body interpreted as JSON
+        :rtype: dict
+        """
         return self._migrate_to_subscription(user, subscription_code, device, sound)
 
     def migrate_multiple_to_subscription(self, users, subscription_code):
@@ -261,8 +287,8 @@ class PushoverAPI(object):
         :param subscription_code: The subscription code to migrate the user to
         :type subscription_code: str
 
-        :returns:
-        :rtype:
+        :returns: Response body interpreted as JSON
+        :rtype: dict
         """
         sess = requests.Session()
         resps = []
@@ -276,7 +302,8 @@ class PushoverAPI(object):
         :param group_key: A Pushover group key
         :type group_key: str
 
-        :rtype:
+        :returns: Response body interpreted as JSON
+        :rtype: dict
         """
         return self._generic_get('groups/{}.json', group_key)
 
@@ -292,8 +319,8 @@ class PushoverAPI(object):
         :type device: str
         :type memo: str
 
-        :returns:
-        :rtype:
+        :returns: Response body interpreted as JSON
+        :rtype: dict
         """
         payload = {
             'user': user,
@@ -310,8 +337,8 @@ class PushoverAPI(object):
         :type group_key: str
         :type user: str
 
-        :returns:
-        :rtype:
+        :returns: Response body interpreted as JSON
+        :rtype: dict
         """
         payload = {
             'user': user
@@ -326,8 +353,8 @@ class PushoverAPI(object):
         :type group_key: str
         :type user: str
 
-        :returns:
-        :rtype:
+        :returns: Response body interpreted as JSON
+        :rtype: dict
         """
         payload = {
             'user': user
@@ -342,8 +369,8 @@ class PushoverAPI(object):
         :type group_key: str
         :type user: str
 
-        :returns:
-        :rtype:
+        :returns: Response body interpreted as JSON
+        :rtype: dict
         """
         payload = {
             'user': user
@@ -357,6 +384,9 @@ class PushoverAPI(object):
         :param new_name: The new name for the group
         :type group_key: str
         :type new_name: str
+
+        :returns: Response body interpreted as JSON
+        :rtype: dict
         """
         payload = {
             'name': new_name
@@ -364,6 +394,16 @@ class PushoverAPI(object):
         return self._generic_post('groups/{}/rename.json', group_key, payload)
 
     def assign_license(self, user_identifier, os=None):
+        """Assign a Pushover license to a user.
+
+        :param user_identifier: A Pushover user key or email identifying the user to assign the license to
+        :param os: An OS to limit the license. Available options are :code:`Android`, :code:`iOS`, or :code:`Desktop`
+        :type user_identifier: str
+        :type os: str
+
+        :returns: Response body interpreted as JSON
+        :rtype: dict
+        """
         payload = {
             'os': os
         }
