@@ -18,11 +18,13 @@ class PushoverAPI(object):
     def __init__(self, token):
         self.token = token
 
-    def _generic_get(self, endpoint, url_parameter=None, payload=None):
+    def _generic_get(self, endpoint, url_parameter=None, payload=None, session=None):
         if payload is None:
             payload = {}
         payload['token'] = self.token
-        resp = requests.get(
+
+        get = session.get if session else requests.get
+        resp = get(
             urljoin(PUSHOVER_API_URL, endpoint.format(url_parameter)),
             data=payload
         )
@@ -31,12 +33,14 @@ class PushoverAPI(object):
             raise BadAPIRequestError('{}: {}'.format(resp.status_code, ': '.join(resp_body.get('errors'))))
         return resp
 
-    def _generic_post(self, endpoint, url_parameter=None, payload=None):
+    def _generic_post(self, endpoint, url_parameter=None, payload=None, session=None):
         if payload is None:
             payload = {}
         payload['token'] = self.token
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-        resp = requests.post(
+
+        post = session.post if session else requests.post
+        resp = post(
             urljoin(PUSHOVER_API_URL, endpoint.format(url_parameter)),
             data=payload,
             headers=headers
@@ -87,7 +91,6 @@ class PushoverAPI(object):
         :rtype:
         """
         payload = {
-            'token': self.token,
             'user': user,
             'message': message,
             'device': device,
@@ -102,22 +105,8 @@ class PushoverAPI(object):
             'sound': sound,
             'html': html
         }
-        headers = {'Content-type': 'application/x-www-form-urlencoded'}
 
-        post = session.post if session else requests.post
-
-        resp = post(
-            urljoin(PUSHOVER_API_URL, 'messages.json'),
-            data=payload,
-            headers=headers
-        )
-
-        resp_body = resp.json()
-        if resp_body.get('status', None) != 1:
-            raise BadAPIRequestError('HTTP Status {}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
-        elif resp.status_code != 200:
-            raise BadAPIRequestError('HTTP Status {}').format(resp.status_code)
-        return resp
+        return self._generic_post('messages.json', payload=payload, session=session)
 
     def send_message(self, user, message, device=None, title=None, url=None, url_title=None,
                      priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False):
@@ -239,26 +228,13 @@ class PushoverAPI(object):
         :rtype:
         """
         payload = {
-            'token': self.token,
             'user': user,
             'subscription': subscription_code,
             'device_name': device,
             'sound': sound
         }
-        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
-        post = session.post if session else requests.post
-
-        resp = post(
-            urljoin(PUSHOVER_API_URL, 'subscriptions/migrate.json'),
-            data=payload,
-            headers=headers
-        )
-
-        resp_body = resp.json()
-        if resp_body.get('status', None) != 1:
-            raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
-        return resp
+        return self._generic_post('subscriptions/migrate.json', payload=payload, session=session)
 
     def migrate_to_subscription(self, user, subscription_code, device=None, sound=None):
         """Migrate a user key to a subscription key.
