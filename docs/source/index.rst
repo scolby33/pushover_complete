@@ -109,8 +109,6 @@ License Information
 
 The full text of the license is available :ref:`here <license>` and in the root of the source code repository.
 
-.. todo:: Choose a license
-
 .. note:: This package is not written by or associated with Superblock, the creators of Pushover.
    The use of the name "Pushover" in the package name is authorized per Superblock's attribution rules.
    See the `logos section <https://pushover.net/press/logos>`_ of the Pushover website for more information.
