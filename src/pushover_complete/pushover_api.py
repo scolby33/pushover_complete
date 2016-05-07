@@ -302,3 +302,24 @@ class PushoverAPI(object):
         for user in users:
             resps.append(self._migrate_to_subscription(session=sess, subscription_code=subscription_code, **user))
         return resps
+
+    def group_info(self, group_key):
+        """Retreive information about a delivery group.
+
+        :param group_key: A Pushover group key
+        :type group_key: str
+
+        :returns:
+        :rtype:
+        """
+        payload = {
+            'token': self.token
+        }
+        resp = requests.get(
+            urljoin(PUSHOVER_API_URL, 'groups/{}.json'.format(group_key)),
+            data=payload
+        )
+        resp_body = resp.json()
+        if resp_body.get('status', None) != 1:
+            raise BadAPIRequestError('{}: {}'.format(resp.status_code, '; '.join(resp_body.get('errors'))))
+        return resp

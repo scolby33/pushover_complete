@@ -220,3 +220,44 @@ def subscription_migrate_callback(request):
         resp_body['subscribed_user_key'] = TEST_SUBSCRIBED_USER_KEY
 
     return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
+
+
+def groups_callback(request):
+    """A callback to mock the `/groups/{group_key}.json` endpoint."""
+    resp_body = {
+        'request': TEST_REQUEST_ID
+    }
+    headers = {'X-Request-Id': TEST_REQUEST_ID}
+
+    req_body = getattr(request, 'body', None)
+    qs = parse_qs(req_body)
+    qs = {k: v[0] for k, v in qs.items()}
+
+    if qs.get('token', None) != TEST_TOKEN:
+        resp_body['token'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['application token is invalid']
+    elif request.path_url.split('/')[-1].split('.')[0] != TEST_GROUP:
+        resp_body['group'] = 'not found'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['group not found or you are not authorized to edit it']
+    else:
+        resp_body['status'] = 1
+        resp_body['name'] = TEST_GROUP_NAME
+        resp_body['users'] = [
+            {
+                'user': TEST_USER,
+                'device': TEST_DEVICES[0],
+                'memo': '',
+                'disabled': False
+            },
+            {
+                'user': TEST_USER,
+                'device': TEST_DEVICES[1],
+                'memo': '',
+                'disabled': False
+            }
+        ]
+
+    return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
+

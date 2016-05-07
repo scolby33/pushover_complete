@@ -379,3 +379,41 @@ def test_PushoverAPI_migrates_multiple_subscriptions(PushoverAPI):
         'request': TEST_REQUEST_ID,
         'subscribed_user_key': TEST_SUBSCRIBED_USER_KEY
     } for resp in resps)
+
+
+@responses.activate
+def test_PushoverAPI_gets_group_info(PushoverAPI):
+    """Test getting group info"""
+    url_re = re.compile('https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*\.json')
+    responses.add_callback(
+        responses.GET,
+        url_re,
+        callback=groups_callback,
+        content_type='application/json'
+    )
+
+    resp = PushoverAPI.group_info(TEST_GROUP)
+    request_body = parse_qs(resp.request.body)
+    assert request_body['token'][0] == TEST_TOKEN
+    assert resp.request.path_url.split('/')[-1].split('.')[0] == TEST_GROUP
+
+    assert resp.json() == {
+        'status': 1,
+        'request': TEST_REQUEST_ID,
+        'name': TEST_GROUP_NAME,
+        'users': [
+            {
+                'user': TEST_USER,
+                'device': TEST_DEVICES[0],
+                'memo': '',
+                'disabled': False
+            },
+            {
+                'user': TEST_USER,
+                'device': TEST_DEVICES[1],
+                'memo': '',
+                'disabled': False
+            }
+        ]
+    }
+
