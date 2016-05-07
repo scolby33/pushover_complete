@@ -3,6 +3,7 @@
 TEST_TOKEN = 'azGDORePK8gMaC0QOYAMyEEuzJnyUi'
 TEST_BAD_GENERAL_ID = '1234'
 TEST_USER = 'uQiRzpo4DXghDmr9QzzfQu27cmVRsG'
+TEST_USER_EMAIL = 'user@example.com'
 TEST_GROUP = 'gznej3rKEVAvPUxu9vvNnqpmZpokzF'
 TEST_GROUP_NAME = 'Test Group'
 TEST_DEVICES = ['droid2', 'iPhone']

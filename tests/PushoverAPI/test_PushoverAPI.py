@@ -506,3 +506,39 @@ def test_PushoverAPI_changes_group_name(PushoverAPI):
         'status': 1,
         'request': TEST_REQUEST_ID
     }
+
+
+@responses.activate
+def test_PushoverAPI_assigns_license_to_user(PushoverAPI):
+    """Test assigning a license to a user."""
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'licenses/assign.json'),
+        callback=licenses_assign_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI.assign_license(TEST_USER)
+
+    assert resp == {
+        'status': 1,
+        'request': TEST_REQUEST_ID,
+        'credits': 0
+    }
+
+
+@responses.activate
+def test_PushoverAPI_assigns_license_to_email(PushoverAPI):
+    """Test assigning a license to an email."""
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'licenses/assign.json'),
+        callback=licenses_assign_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI.assign_license(TEST_USER_EMAIL)
+
+    assert resp == {
+        'status': 1,
+        'request': TEST_REQUEST_ID,
+        'credits': 0
+    }

@@ -401,3 +401,38 @@ def groups_rename_callback(request):
         resp_body['status'] = 1
 
     return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)
+
+
+def licenses_assign_callback(request):
+    """A callback to mock the `/licenses/assign.json` endpoint."""
+    resp_body = {
+        'request': TEST_REQUEST_ID
+    }
+    headers = {'X-Request-Id': TEST_REQUEST_ID}
+
+    req_body = getattr(request, 'body', None)
+    qs = parse_qs(req_body)
+    qs = {k: v[0] for k, v in qs.items()}
+
+    if qs.get('token', None) != TEST_TOKEN:
+        resp_body['token'] = 'invalid'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['application token is invalid']
+    elif qs.get('email', None) is not None and qs.get('email', None) != TEST_USER_EMAIL:
+        resp_body['email'] = 'is not a valid e-mail address'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['e-mail address is not a valid address']
+    elif qs.get('user', None) is not None and qs.get('user', None) != TEST_USER:
+        resp_body['user'] = 'is not a valid user'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['user key is not valid for any active user']
+    elif qs.get('user', None) is None and qs.get('email', None) is None:
+        resp_body['user'] = 'must be supplied'
+        resp_body['email'] = 'must be supplied'
+        resp_body['status'] = 0
+        resp_body['errors'] = ['user or email must be supplied']
+    else:
+        resp_body['status'] = 1
+        resp_body['credits'] = 0
+
+    return 200 if resp_body['status'] == 1 else 400, headers, json.dumps(resp_body)

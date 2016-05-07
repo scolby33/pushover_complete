@@ -363,3 +363,12 @@ class PushoverAPI(object):
         }
         return self._generic_post('groups/{}/rename.json', group_key, payload)
 
+    def assign_license(self, user_identifier, os=None):
+        payload = {
+            'os': os
+        }
+        if '@' in user_identifier:
+            payload['email'] = user_identifier
+        else:
+            payload['user'] = user_identifier
+        return self._generic_post('licenses/assign.json', payload=payload)
