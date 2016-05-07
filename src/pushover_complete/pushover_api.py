@@ -19,6 +19,7 @@ class PushoverAPI(object):
         self.token = token
 
     def _generic_get(self, endpoint, url_parameter=None, payload=None, session=None):
+        # TODO DOCSTRING
         if payload is None:
             payload = {}
         payload['token'] = self.token
@@ -31,9 +32,10 @@ class PushoverAPI(object):
         resp_body = resp.json()
         if resp_body.get('status', None) != 1:
             raise BadAPIRequestError('{}: {}'.format(resp.status_code, ': '.join(resp_body.get('errors'))))
-        return resp
+        return resp_body
 
     def _generic_post(self, endpoint, url_parameter=None, payload=None, session=None):
+        # TODO DOCSTRING
         if payload is None:
             payload = {}
         payload['token'] = self.token
@@ -48,7 +50,7 @@ class PushoverAPI(object):
         resp_body = resp.json()
         if resp_body.get('status', None) != 1:
             raise BadAPIRequestError('{}: {}'.format(resp.status_code, ': '.join(resp_body.get('errors'))))
-        return resp
+        return resp_body
 
     def _send_message(self, user, message, device=None, title=None, url=None, url_title=None,
                       priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False,
@@ -142,9 +144,8 @@ class PushoverAPI(object):
         :returns:
         :rtype:
         """
-        resp = self._send_message(user, message, device, title, url, url_title, priority, retry, expire, callback_url,
+        return self._send_message(user, message, device, title, url, url_title, priority, retry, expire, callback_url,
                                   timestamp, sound, html)
-        return resp
 
     def send_messages(self, messages):
         """Send multiple messages with one call. Utilizes a single HTTP session to decrease overhead.
@@ -155,10 +156,10 @@ class PushoverAPI(object):
         :rtype:
         """
         sess = requests.Session()
-        resps = []
+        resp_bodies = []
         for message in messages:
-            resps.append(self._send_message(session=sess, **message))
-        return resps
+            resp_bodies.append(self._send_message(session=sess, **message))
+        return resp_bodies
 
     def get_sounds(self):
         """Get the current list of supported sounds from the Pushover servers.
@@ -166,7 +167,7 @@ class PushoverAPI(object):
         :return: A :class:`dict` of sounds, with keys representing the identifier and values a human-readable name.
         :rtype: dict
         """
-        return self._generic_get('sounds.json').json().get('sounds')
+        return self._generic_get('sounds.json').get('sounds')
 
     def validate(self, user, device=None):
         """Validate a user or group token or a user device.
@@ -251,8 +252,7 @@ class PushoverAPI(object):
             :returns:
             :rtype:
             """
-        resp = self._migrate_to_subscription(user, subscription_code, device, sound)
-        return resp
+        return self._migrate_to_subscription(user, subscription_code, device, sound)
 
     def migrate_multiple_to_subscription(self, users, subscription_code):
         """Migrate multiple users to subscriptions with one call. Utilizes a single HTTP session to decrease overhead.
@@ -271,7 +271,7 @@ class PushoverAPI(object):
         return resps
 
     def group_info(self, group_key):
-        """Retreive information about a delivery group.
+        """Retrieve information about a delivery group.
 
         :param group_key: A Pushover group key
         :type group_key: str
@@ -279,3 +279,4 @@ class PushoverAPI(object):
         :rtype:
         """
         return self._generic_get('groups/{}.json', group_key)
+
