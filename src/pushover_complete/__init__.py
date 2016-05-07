@@ -12,7 +12,7 @@ __version__ = '0.0.1'
 
 __title__ = 'pushover_complete'
 __description__ = ''
-__url__ = ''
+__url__ = 'https://github.com/scolby33/pushover_complete'
 
 
 __author__ = 'Scott Colby'
