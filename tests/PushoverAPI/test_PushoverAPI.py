@@ -14,6 +14,39 @@ from tests.responses_callbacks import *
 
 
 @responses.activate
+def test_generic_get_with_payload(PushoverAPI):
+    """Test the functionality of _generic_get that is missed by current uses."""
+    responses.add_callback(
+        responses.GET,
+        urljoin(PUSHOVER_API_URL, 'foobar.json'),
+        callback=generic_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI._generic_get('foobar.json', payload={'payload-test': 'test'})
+
+    assert resp == {
+        'status': 1,
+        'payload-test': 'test'
+    }
+
+
+@responses.activate
+def test_generic_post_without_payload(PushoverAPI):
+    """Test the functionality of _generic_post that is missed by current uses."""
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'foobar.json'),
+        callback=generic_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI._generic_post('foobar.json')
+
+    assert resp == {
+        'status': 1,
+        'payload-test': False
+    }
+
+@responses.activate
 def test_PushoverAPI_sends_simple_message(PushoverAPI):
     """Test the sending of a simple message."""
     responses.add_callback(

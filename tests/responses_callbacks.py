@@ -6,6 +6,24 @@ from urllib.parse import parse_qs
 from tests.constants import *
 
 
+def generic_callback(request):
+    """A callback to test the _generic_get and _generic_post methods."""
+    resp_body = {
+        'status': 1
+    }
+
+    req_body = getattr(request, 'body', None)
+    qs = parse_qs(req_body)
+    qs = {k: v[0] for k, v in qs.items()}
+
+    if qs.get('payload-test', None) is not None:
+        resp_body['payload-test'] = qs.get('payload-test')
+    else:
+        resp_body['payload-test'] = False
+
+    return 200, list(), json.dumps(resp_body)
+
+
 def messages_callback(request):
     """A callback to mock the `/messages.json` endpoint."""
     resp_body = {
