@@ -10,6 +10,16 @@ Welcome to :mod:`pushover_complete`
 
 To learn more about Pushover and the Pushover API, please visit the Pushover Website, `<https://pushover.net>`_.
 
+::
+
+   >>> from pushover_complete import PushoverAPI
+   >>> p = PushoverAPI('azGDORePK8gMaC0QOYAMyEEuzJnyUi')  # an instance of the PushoverAPI representing your application
+   >>> p.send_message('uQiRzpo4DXghDmr9QzzfQu27cmVRsG', 'Your toast is finished.')  # send a message to a user
+
+That's all you need to get started with sending Pushover notifications from your Python program.
+The majority of Pushover's API endpoints are accessible via :mod:`pushover_complete`.
+Check out the :ref:`api` to see how.
+
 On this page:
 
 .. contents::
@@ -28,10 +38,10 @@ Installation should be as easy as executing this command in your chosen terminal
 
    $ pip install pushover_complete
 
-.. note:: This package is not currently published on PyPi, so this advice is not yet accurate.
+.. note:: This package is not currently published on PyPI, so this advice is not yet accurate.
    Read on for current options for package installation.
 
-.. todo:: Upload to PyPi and remove the above notice when appropriate.
+.. todo:: Upload to PyPI and remove the above notice when appropriate.
 
 The source code for this project is `hosted on Github <https://github.com/scolby33/pushover_complete>`_.
 Downloading and installing from source goes like this::
@@ -42,20 +52,7 @@ Downloading and installing from source goes like this::
 
 If you intend to install in a virtual environment, activate it before running :code:`pip install`.
 
-See :ref:`installation` for further information about installing :mod:`pushover_complete` in a manner amenable
-to editing to make your own contributions to or hack on the project.
-
-Basic Usage
------------
-::
-
-   >>> from pushover_complete import PushoverAPI
-   >>> p = PushoverAPI('azGDORePK8gMaC0QOYAMyEEuzJnyUi')  # an instance of the PushoverAPI representing your application
-   >>> p.send_message('uQiRzpo4DXghDmr9QzzfQu27cmVRsG', 'Your toast is finished.')  # send a message to a user
-
-That's all you need to get started with sending Pushover notifications from your Python program.
-The majority of Pushover's API endpoints are accessible via :mod:`pushover_complete`.
-Check out the :ref:`api` to see how.
+See :ref:`installation` for further information about installing :mod:`pushover_complete` in all manner of ways.
 
 Roadmap
 -------
