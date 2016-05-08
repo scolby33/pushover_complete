@@ -49,8 +49,8 @@ Finally, :code:`pip` can install from the local filesystem::
 
 Installing like this lets you make changes to a copy of the project and use that custom version yourself!
 
-Installing as Editable
-----------------------
+Installing in Editable Mode
+---------------------------
 
 :code:`pip` has a :code:`--editable` (a.k.a. :code:`-e`) option that can be used to install from GitHub or a local copy in "editable" mode::
 
