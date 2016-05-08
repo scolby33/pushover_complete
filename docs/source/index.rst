@@ -126,6 +126,13 @@ The current version of :mod:`pushover_complete` is 0.0.1.
 
 Full changelogs can be found on the :ref:`changelog` page.
 
+.. todo:: Check on intersphinx and get it working
+
+.. toctree::
+:hidden:
+
+      todo
+
 Indices and tables
 ------------------
 
@@ -133,7 +140,3 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-.. toctree::
-   :hidden:
-
-   todo
