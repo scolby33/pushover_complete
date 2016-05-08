@@ -38,13 +38,11 @@ Here's how to get set up to contribute to :code:`pushover_complete`.
     # or
     $ pip install tox
 
-   With :code:`tox` installed, all tests, including checking the :code:`MANIFEST.in` file and code coverage can be performed
-   just by executing::
+   With :code:`tox` installed, all tests, including checking the :code:`MANIFEST.in` file and code coverage can be performed just by executing::
 
     $ tox
 
-   :code:`tox` handles the installation of all dependencies in virtual environments (under the :code:`.tox` folder) and
-   the running of the tests.
+   :code:`tox` handles the installation of all dependencies in virtual environments (under the :code:`.tox` folder) and the running of the tests.
 
    To develop like this, simply write your tests and your code and run :code:`tox` once in a while to check how you're doing.
 
@@ -53,8 +51,7 @@ Here's how to get set up to contribute to :code:`pushover_complete`.
     $ cd /your/dev/folder/pushover_complete
     $ cd pip install -e .
 
-   Tests should still be run via :code:`tox`, but installing the package in this way gives you the flexibility to
-   test things out in the REPL more easily.
+   Tests should still be run via :code:`tox`, but installing the package in this way gives you the flexibility to test things out in the REPL more easily.
 
 Branches
 --------
@@ -91,16 +88,16 @@ In keep your fork up to date with upstream by pulling the changes--if your fork 
 
 To pull in upstream changes::
 
-   $ git remote add upstream https://github.com/scolby33/pushover_complete
-   $ git fetch upstream develop
+    $ git remote add upstream https://github.com/scolby33/pushover_complete
+    $ git fetch upstream develop
 
 Check the log to make sure the upstream changes don't affect your work too much::
 
-   $ git log upstream/develop
+    $ git log upstream/develop
 
 Then merge in the new changes::
 
-   $ git merge upstream/develop
+    $ git merge upstream/develop
 
 More information about this whole fork-pull-merge process can be found `here on Github's website <https://help.github.com/articles/fork-a-repo/>`_.
 
@@ -114,7 +111,7 @@ Run the Tests
 
 Make sure your modifications still pass all tests before submitting a pull requests::
 
-   $ tox
+    $ tox
 
 Changes that break the package are mostly useless.
 
@@ -158,6 +155,7 @@ The steps for making a release of :code:`pushover_complete` are:
 
 #. Create a release branch :code:`git flow release start {new_version}`
 #. Bump the version specifier in :code:`src/pushover_complete/__init__.py` and :code:`docs/source/conf.py`
+#. Check that any new intersphinx links have corresponding inventories in :code:`docs/source/conf.py` (try :code:`egrep -rn --exclude-dir=__pycache__ ':\S+:' .`)
 #. Run all tests one last time! :code:`tox`
 #. Publish the release branch :code:`git flow release publish {new_version}`
 #. Finish the release branch :code:`git flow release finish {new_version}`
@@ -165,21 +163,21 @@ The steps for making a release of :code:`pushover_complete` are:
 #. Build the project :code:`python setup.py sdist bdist_wheel`
 #. Check that the sdist and wheel install properly::
 
-     $ rm -rf tmp-virtualenv
-     $ pyvenv tmp-virtualenv
-     $ tmp-virtualenv/bin/pip install dist/pushover_complete-{new-version}.tar.gz
-     $ tmp-virtualenv/bin/python
-     >>> import pushover_complete
-     >>> pushover_complete.__version__
-     '{new_version}'
-     $ rm -rf tmp-virtualenv
-     $ pyvenv tmp-virtualenv
-     $ tmp-virtualenv/bin/pip install dist/pushover_complete-{new-version}....whl
-     $ tmp-virtualenv/bin/python
-     >>> import pushover_complete
-     >>> pushover_complete.__version__
-     '{new_version}'
-     $ rm -rf tmp-virtualenv
+    $ rm -rf tmp-virtualenv
+    $ pyvenv tmp-virtualenv
+    $ tmp-virtualenv/bin/pip install dist/pushover_complete-{new-version}.tar.gz
+    $ tmp-virtualenv/bin/python
+    >>> import pushover_complete
+    >>> pushover_complete.__version__
+    '{new_version}'
+    $ rm -rf tmp-virtualenv
+    $ pyvenv tmp-virtualenv
+    $ tmp-virtualenv/bin/pip install dist/pushover_complete-{new-version}....whl
+    $ tmp-virtualenv/bin/python
+    >>> import pushover_complete
+    >>> pushover_complete.__version__
+    '{new_version}'
+    $ rm -rf tmp-virtualenv
 #. Try a release on the PyPI test server :code:`python setup.py register -r test; twine upload -r test dist/pushover_complete-{new_version}*`
 #. Test install from the test PyPI :code:`# make a virtualenv again; pip install -i https://testpypi.python.org/pypi pushover_complete`
 #. Check the metadata and such on the test PyPI web interface

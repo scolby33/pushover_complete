@@ -18,7 +18,7 @@ Main Interface
 The methods represent most of the useful functions of :class:`PushoverAPI`.
 
 .. autoclass:: PushoverAPI
-   :members:
+    :members:
 
 
 "Private" Methods
@@ -29,10 +29,10 @@ circumstances, particularly when many requests are to be made at one time.
 
 .. class:: PushoverAPI
 
-   .. automethod:: _send_message
-   .. automethod:: _migrate_to_subscription
-   .. automethod:: _generic_get
-   .. automethod:: _generic_post
+    .. automethod:: _send_message
+    .. automethod:: _migrate_to_subscription
+    .. automethod:: _generic_get
+    .. automethod:: _generic_post
 
 
 Exceptions and Errors

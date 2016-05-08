@@ -23,32 +23,32 @@ Check out the :ref:`api` to see how.
 On this page:
 
 .. contents::
-   :local:
+    :local:
 
 Installation
 ------------
 
 .. toctree::
-   :maxdepth: 2
-   :hidden:
+    :maxdepth: 2
+    :hidden:
 
-   installation
+    installation
 
 Installation should be as easy as executing this command in your chosen terminal::
 
-   $ pip install pushover_complete
+    $ pip install pushover_complete
 
 .. note:: This package is not currently published on PyPI, so this advice is not yet accurate.
-   Read on for current options for package installation.
+          Read on for current options for package installation.
 
 .. todo:: Upload to PyPI and remove the above notice when appropriate.
 
 The source code for this project is `hosted on Github <https://github.com/scolby33/pushover_complete>`_.
 Downloading and installing from source goes like this::
 
-   $ git clone https://github.com/scolby33/pushover_complete
-   $ cd pushover_complete
-   $ pip install .
+    $ git clone https://github.com/scolby33/pushover_complete
+    $ cd pushover_complete
+    $ pip install .
 
 If you intend to install in a virtual environment, activate it before running :code:`pip install`.
 
@@ -58,10 +58,10 @@ Roadmap
 -------
 
 .. toctree::
-   :maxdepth: 2
-   :hidden:
+    :maxdepth: 2
+    :hidden:
 
-   roadmap
+    roadmap
 
 :mod:`pushover_complete` emerged from my frustrating experience with a number of only partially-complete Pushover packages.
 It is my goal to fully support all of Pushover's API endpoints in this package, beginning with the most essential ones and working from there.
@@ -73,19 +73,19 @@ API Reference
 Information about each function, class, and method is included here.
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
 
-   api
+    api
 
 
 Contributing
 ------------
 
 .. toctree::
-   :maxdepth: 2
-   :hidden:
+    :maxdepth: 2
+    :hidden:
 
-   contributing
+    contributing
 
 :mod:`pushover_complete` is an open-source project and, so far, is mostly a one-person effort.
 Any contributions are welcome, be they bug reports, pull requests, or otherwise.
@@ -97,27 +97,27 @@ License Information
 -------------------
 
 .. toctree::
-   :maxdepth: 2
-   :hidden:
+    :maxdepth: 2
+    :hidden:
 
-   license
+    license
 
 :mod:`pushover_complete` is licensed under the MIT License, a permissive open-source license.
 
 The full text of the license is available :ref:`here <license>` and in the root of the source code repository.
 
 .. note:: This package is not written by or associated with Superblock, the creators of Pushover.
-   The use of the name "Pushover" in the package name is authorized per Superblock's attribution rules.
-   See the `logos section <https://pushover.net/press/logos>`_ of the Pushover website for more information.
+          The use of the name "Pushover" in the package name is authorized per Superblock's attribution rules.
+          See the `logos section <https://pushover.net/press/logos>`_ of the Pushover website for more information.
 
 Changelog
 ---------
 
 .. toctree::
-   :maxdepth: 2
-   :hidden:
+    :maxdepth: 2
+    :hidden:
 
-   changelog
+    changelog
 
 :mod:`pushover_complete` adheres to the Semantic Versioning ("Semver") 2.0.0 versioning standard.
 Details about this versioning scheme can be found on the `Semver website <http://semver.org/spec/v2.0.0.html>`_.
@@ -129,9 +129,9 @@ Full changelogs can be found on the :ref:`changelog` page.
 .. todo:: Check on intersphinx and get it working
 
 .. toctree::
-   :hidden:
+    :hidden:
 
-   todo
+    todo
 
 Indices and tables
 ------------------
