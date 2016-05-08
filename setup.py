@@ -9,11 +9,12 @@ import re
 
 PACKAGES = setuptools.find_packages(where='src')
 META_PATH = os.path.join('src', 'pushover_complete', '__init__.py')
-KEYWORDS = ['']
+KEYWORDS = ['pushover', 'message', 'push']
 CLASSIFIERS = [
-    'Development Status :: 1 - Planning',
+    'Development Status :: 5 - Production/Stable',
     'Intended Audience :: Developers',
     'License :: OSI Approved :: MIT License',
+    'Operating System :: OS Independent'
     'Programming Language :: Python :: 3.5',
     'Topic :: Communications'
 ]
