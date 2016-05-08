@@ -156,6 +156,36 @@ Making a Release
 
 The steps for making a release of :code:`pushover_complete` are:
 
-#. First
-#. Second
-#. Third
+#. Create a release branch :code:`git flow release start {new_version}`
+#. Bump the version specifier in :code:`src/pushover_complete/__init__.py` and :code:`docs/source/conf.py`
+#. Run all tests one last time! :code:`tox`
+#. Publish the release branch :code:`git flow release publish {new_version}`
+#. Finish the release branch :code:`git flow release finish {new_version}`
+#. Push the new tag :code:`git push --tags`
+#. Build the project :code:`python setup.py sdist bdist_wheel`
+#. Check that the sdist and wheel install properly::
+
+     $ rm -rf tmp-virtualenv
+     $ pyvenv tmp-virtualenv
+     $ tmp-virtualenv/bin/pip install dist/pushover_complete-{new-version}.tar.gz
+     $ tmp-virtualenv/bin/python
+     >>> import pushover_complete
+     >>> pushover_complete.__version__
+     '{new_version}'
+     $ rm -rf tmp-virtualenv
+     $ pyvenv tmp-virtualenv
+     $ tmp-virtualenv/bin/pip install dist/pushover_complete-{new-version}....whl
+     $ tmp-virtualenv/bin/python
+     >>> import pushover_complete
+     >>> pushover_complete.__version__
+     '{new_version}'
+     $ rm -rf tmp-virtualenv
+#. Try a release on the PyPI test server :code:`python setup.py register -r test; twine upload -r test dist/pushover_complete-{new_version}*`
+#. Test install from the test PyPI :code:`# make a virtualenv again; pip install -i https://testpypi.python.org/pypi pushover_complete`
+#. Check the metadata and such on the test PyPI web interface
+#. Deep breath
+#. Register on PyPI if necessary :code:`python setup.py register`
+#. Upload to PyPI! :code:`twine upload dist/pushover_complete-{new_version}*`
+#. Test install from PyPI :code:`# another virtualenv; pip install pushover_complete`
+#. Check the metadata and such on the PyPI website
+#. Upload a tarball of the source to the tag on GitHub
