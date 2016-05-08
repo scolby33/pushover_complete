@@ -11,7 +11,7 @@ __all__ = [
 __version__ = '0.0.1'
 
 __title__ = 'pushover_complete'
-__description__ = ''
+__description__ = 'A Python 3 package for interacting with *all* aspects of the Pushover API'
 __url__ = 'https://github.com/scolby33/pushover_complete'
 
 
