@@ -8,7 +8,7 @@ __all__ = [
     'PushoverAPI'
 ]
 
-__version__ = '1.0.0'
+__version__ = '1.0.1-dev'
 
 __title__ = 'pushover_complete'
 __description__ = 'A Python 3 package for interacting with *all* aspects of the Pushover API'

@@ -66,7 +66,7 @@ author = 'Scott Colby'
 # built documents.
 #
 # The full version, including alpha/beta/rc tags.
-release = '1.0.0'
+release = '1.0.1-dev'
 # The short X.Y version.
 version = re.sub('(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)(?:-(?P<release>[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+(?P<build>[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?',
                  '\g<major>.\g<minor>.\g<patch>', release)  # get the version number without any alpha/beta/rc/etc. tags
