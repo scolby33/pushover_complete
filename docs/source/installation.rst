@@ -19,10 +19,6 @@ Installation from here is easy and generally the preferred method::
 
     $ pip install pushover_complete
 
-.. note:: This package is not currently published on PyPI, so this advice is not yet accurate.
-          Read on for current options for package installation.
-
-.. todo:: Upload to PyPI and remove the above notice when appropriate.
 
 From GitHub
 ^^^^^^^^^^^
