@@ -155,14 +155,32 @@ Making a Release
 
 The steps for making a release of :code:`pushover_complete` are:
 
-#. Create a release branch :code:`git flow release start {new_version}`
-#. Bump the version specifier in :code:`src/pushover_complete/__init__.py` and :code:`docs/source/conf.py`
-#. Check that any new intersphinx links have corresponding inventories in :code:`docs/source/conf.py` (try :code:`egrep -rn --exclude-dir=__pycache__ ':\S+:' .`)
-#. Run all tests one last time! :code:`tox`
-#. Publish the release branch :code:`git flow release publish {new_version}`
-#. Finish the release branch :code:`git flow release finish {new_version}`
-#. Push the new tag :code:`git push --tags`
-#. Build the project :code:`python setup.py sdist bdist_wheel`
+#. Create a release branch::
+
+     $ git flow release start {new_version}
+#. Bump the version specifier in :code:`src/pushover_complete/__init__.py` and :code:`docs/source/conf.py` from '{new_version}-dev' to plain '{new_version}'::
+
+    $ bumpversion release
+#. Add a release entry in :code:`docs/source/changelog.rst` (something like :code:`- :release:`{new_version} <date>``)
+#. Update :code:`README.rst` with new version and changelog information
+#. Check that any new intersphinx links have corresponding inventories in :code:`docs/source/conf.py`::
+
+    $ egrep -rn --exclude-dir=__pycache__ ':\S+:' .
+#. Run all tests one last time! ::
+
+    $ tox
+#. Publish the release branch::
+
+    $ git flow release publish {new_version}
+#. Finish the release branch::
+
+    $ git flow release finish {new_version}
+#. Push the new tag::
+
+    $ git push --tags
+#. Build the project::
+
+    $ python setup.py sdist bdist_wheel
 #. Check that the sdist and wheel install properly::
 
     $ rm -rf tmp-virtualenv
@@ -180,12 +198,42 @@ The steps for making a release of :code:`pushover_complete` are:
     >>> pushover_complete.__version__
     '{new_version}'
     $ rm -rf tmp-virtualenv
-#. Try a release on the PyPI test server :code:`python setup.py register -r test; twine upload -r test dist/pushover_complete-{new_version}*`
-#. Test install from the test PyPI :code:`# make a virtualenv again; pip install -i https://testpypi.python.org/pypi pushover_complete`
+#. Try a release on the PyPI test server::
+
+    $ python setup.py register -r test
+    $ twine upload -r test dist/pushover_complete-{new_version}*
+#. Test install from the test PyPI::
+
+    $ rm -rf tmp-virtualenv
+    $ pyvenv tmp-virtualenv
+    $ tmp-virtualenv/bin/pip install -i https://testpypi.python.org/pypi pushover_complete
+    $ tmp-virtualenv/bin/python
+    >>> import pushover_complete
+    >>> pushover_complete.__version__
+    '{new_version}'
+    $ rm -rf tmp-virtualenv
 #. Check the metadata and such on the test PyPI web interface
 #. Deep breath
-#. Register on PyPI if necessary :code:`python setup.py register`
-#. Upload to PyPI! :code:`twine upload dist/pushover_complete-{new_version}*`
-#. Test install from PyPI :code:`# another virtualenv; pip install pushover_complete`
+#. Register on PyPI if necessary::
+
+    $ python setup.py register
+#. Upload to PyPI! ::
+
+    $ twine upload dist/pushover_complete-{new_version}*
+#. Test install from PyPI::
+
+    $ rm -rf tmp-virtualenv
+    $ pyvenv tmp-virtualenv
+    $ tmp-virtualenv/bin/pip install pushover_complete
+    $ tmp-virtualenv/bin/python
+    >>> import pushover_complete
+    >>> pushover_complete.__version__
+    '{new_version}'
+    $ rm -rf tmp-virtualenv
+    $ # another virtualenv; pip install pushover_complete`
 #. Check the metadata and such on the PyPI website
-#. Upload a tarball of the source to the tag on GitHub
+#. Upload the sdist and wheel to the release on GitHub
+#. Add a pretty changelog to the release on GitHub
+#. Bump the version to the next dev version::
+
+    $ bumpversion patch
