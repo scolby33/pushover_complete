@@ -174,7 +174,7 @@ The steps for making a release of :code:`pushover_complete` are:
     $ git flow release publish {new_version}
 #. Finish the release branch::
 
-    $ git flow release finish {new_version}
+    $ git flow release finish -F {new_version}
 #. Push the new tag::
 
     $ git push --tags
