@@ -169,15 +169,6 @@ The steps for making a release of :code:`pushover_complete` are:
 #. Run all tests one last time! ::
 
     $ tox
-#. Publish the release branch::
-
-    $ git flow release publish {new_version}
-#. Finish the release branch::
-
-    $ git flow release finish -F {new_version}
-#. Push the new tag::
-
-    $ git push --tags
 #. Build the project::
 
     $ python setup.py sdist bdist_wheel
@@ -230,8 +221,16 @@ The steps for making a release of :code:`pushover_complete` are:
     >>> pushover_complete.__version__
     '{new_version}'
     $ rm -rf tmp-virtualenv
-    $ # another virtualenv; pip install pushover_complete`
 #. Check the metadata and such on the PyPI website
+#. Publish the release branch::
+
+    $ git flow release publish {new_version}
+#. Finish the release branch::
+
+    $ git flow release finish -F {new_version}
+#. Push the new tag::
+
+    $ git push --tags
 #. Upload the sdist and wheel to the release on GitHub
 #. Add a pretty changelog to the release on GitHub
 #. Bump the version to the next dev version::
