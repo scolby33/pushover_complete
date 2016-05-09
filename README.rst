@@ -39,8 +39,7 @@ Contributing
 Contributions, large or small, from bug reports to pull requests and full-on forks, are highly encouraged.
 Read the the `contributing page <http://pushover-complete.readthedocs.io/en/latest/contributing.html>`_ in the docs or :code:`CONTRIBUTING.rst` for more information on getting involved.
 
-The full list of contributors is in :code:`AUTHORS.rst` or `on GitHub <https://github.com/scolby33/pushover_complete/contributor:w
-s`_.
+The full list of contributors is in :code:`AUTHORS.rst` or `on GitHub <https://github.com/scolby33/pushover_complete/contributors>`_.
 
 License
 -------
