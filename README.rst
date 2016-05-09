@@ -2,14 +2,14 @@ pushover_complete
 =================
 A Python 3 package for interacting with *all* aspects of the Pushover API.
 
-.. image:: https://travis-ci.org/scolby33/pushover_complete.svg?branch=master
+.. image:: https://travis-ci.org/scolby33/pushover_complete.svg?branch=develop
     :target: https://travis-ci.org/scolby33/pushover_complete
     :alt: Build Status
-.. image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=master
-    :target: https://codecov.io/github/scolby33/pushover_complete?branch=master
+.. image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=develop
+    :target: https://codecov.io/github/scolby33/pushover_complete?branch=develop
     :alt: Test Coverage Status
-.. image:: http://readthedocs.org/projects/pushover-complete/badge/?version=latest
-    :target: http://pushover-complete.readthedocs.io/en/latest/?badge=latest
+.. image:: http://readthedocs.org/projects/pushover-complete/badge/?version=develop
+    :target: http://pushover-complete.readthedocs.io/en/latest/?badge=develop
     :alt: Documentation Status
 
 To learn more about Pushover and the Pushover API, please visit the Pushover Website, `<https://pushover.net>`_.
