@@ -9,6 +9,8 @@ If you have a bug or issue to report, please visit the `issues page on Github <h
 
 If you want to make a code contribution, read on for recommendations on how to set up your environment.
 
+.. note:: Remember to add yourself to :code:`AUTHORS.rst` if you make a code contribution!
+
 Setup
 -----
 
