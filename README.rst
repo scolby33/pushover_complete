@@ -14,7 +14,7 @@ A Python 3 package for interacting with *all* aspects of the Pushover API.
 
 To learn more about Pushover and the Pushover API, please visit the Pushover Website, `<https://pushover.net>`_.
 
-::
+.. code-block:: python
 
    >>> from pushover_complete import PushoverAPI
    >>> p = PushoverAPI('azGDORePK8gMaC0QOYAMyEEuzJnyUi')  # an instance of the PushoverAPI representing your application
@@ -27,7 +27,9 @@ Check out the `docs <http://pushover-complete.readthedocs.io/>`_ to learn more.
 Installation
 ------------
 
-Installation should be as easy as executing this command in your chosen terminal::
+Installation should be as easy as executing this command in your chosen terminal:
+
+.. code-block:: sh
 
     $ pip install pushover_complete
 
