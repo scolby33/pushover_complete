@@ -66,7 +66,7 @@ author = 'Scott Colby'
 # built documents.
 #
 # The full version, including alpha/beta/rc tags.
-release = '0.0.1'
+release = '1.0.0'
 # The short X.Y version.
 version = re.sub('(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)(?:-(?P<release>[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+(?P<build>[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?',
                  '\g<major>.\g<minor>.\g<patch>', release)  # get the version number without any alpha/beta/rc/etc. tags
@@ -150,7 +150,8 @@ html_theme = 'sphinx_rtd_theme'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+# html_static_path = ['_static']
+html_static_path = []
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied

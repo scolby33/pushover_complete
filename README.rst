@@ -41,6 +41,15 @@ Read the the `contributing page <http://pushover-complete.readthedocs.io/en/late
 
 The full list of contributors is in :code:`AUTHORS.rst` or `on GitHub <https://github.com/scolby33/pushover_complete/contributors>`_.
 
+Changelog
+---------
+
+1.0.0 <2016-05-09>
+^^^^^^^^^^^^^^^^^^
+
+- Implementation of methods for the Pushover messages, sounds, users, receipt, subscriptions, groups, and licenses APIs
+- Documentation and build process
+
 License
 -------
 
