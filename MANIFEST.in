@@ -8,6 +8,7 @@ recursive-include tests *.py
 
 include docs/Makefile
 include docs/make.bat
+include docs/requirements.txt
 include docs/source/conf.py
 recursive-include docs/source *.rst
 
