@@ -221,7 +221,6 @@ The steps for making a release of :code:`pushover_complete` are:
     >>> pushover_complete.__version__
     '{new_version}'
     $ rm -rf tmp-virtualenv
-    $ # another virtualenv; pip install pushover_complete`
 #. Check the metadata and such on the PyPI website
 #. Publish the release branch::
 
