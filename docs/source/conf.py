@@ -38,6 +38,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
+    'releases',
     # 'sphinx.ext.githubpages'
 ]
 
@@ -304,3 +305,7 @@ intersphinx_mapping = {
 }
 
 autodoc_member_order = 'bysource'
+
+
+# 'releases' (changelog) configuration
+releases_github_path = 'scolby33/pushover_complete'
