@@ -1,6 +1,7 @@
 include *.rst
 include tox.ini
 
+include .bumpversion.cfg
 include .coveragerc
 
 recursive-include tests *.py
