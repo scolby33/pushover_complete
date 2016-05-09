@@ -116,8 +116,9 @@ Changelog
 
 :mod:`pushover_complete` adheres to the Semantic Versioning ("Semver") 2.0.0 versioning standard.
 Details about this versioning scheme can be found on the `Semver website <http://semver.org/spec/v2.0.0.html>`_.
+Versions postfixed with '-dev' are currently under development and those without a postfix are stable releases.
 
-The current version of :mod:`pushover_complete` is 0.0.1.
+The current version of :mod:`pushover_complete` is |release|.
 
 Full changelogs can be found on the :ref:`changelog` page.
 
