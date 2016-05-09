@@ -9,7 +9,7 @@ A Python 3 package for interacting with *all* aspects of the Pushover API.
     :target: https://codecov.io/github/scolby33/pushover_complete?branch=develop
     :alt: Test Coverage Status
 .. image:: http://readthedocs.org/projects/pushover-complete/badge/?version=develop
-    :target: http://pushover-complete.readthedocs.io/en/latest/?badge=develop
+    :target: http://pushover-complete.readthedocs.io/en/develop/?badge=develop
     :alt: Documentation Status
 
 To learn more about Pushover and the Pushover API, please visit the Pushover Website, `<https://pushover.net>`_.
