@@ -44,7 +44,9 @@ The full list of contributors is in :code:`AUTHORS.rst` or `on GitHub <https://g
 Changelog
 ---------
 
-1.0.0 <2016-05-09>
+Changes as of 9 May 2016
+
+1.0.0 <9 May 2016>
 ^^^^^^^^^^^^^^^^^^
 
 - Implementation of methods for the Pushover messages, sounds, users, receipt, subscriptions, groups, and licenses APIs
