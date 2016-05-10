@@ -14,7 +14,7 @@
 Welcome to :mod:`pushover_complete`
 ===================================
 
-:mod:`pushover_complete` is a Python 3 package for interacting with *all* aspects of the `Pushover API <https://pushover.net/api>`_.
+:mod:`pushover_complete` is a Python package for interacting with *all* aspects of the `Pushover API <https://pushover.net/api>`_.
 
 To learn more about Pushover and the Pushover API, please visit the Pushover Website, `<https://pushover.net>`_.
 
@@ -54,6 +54,10 @@ Downloading and installing from source goes like this::
     $ pip install .
 
 If you intend to install in a virtual environment, activate it before running :code:`pip install`.
+
+:mod:`pushover_complete` officially supports Python 2.7 and 3.5.
+Currently, Python 3.3 and 3.4 pass all tests and function properly as well, but this could change: these versions are not officially targeted by development.
+Support for Python 2.x may be dropped in the future, but only in a major version update (e.g. 1.x.y → 2.x.y) and this change will be announced well in advance.
 
 See :ref:`installation` for further information about installing :mod:`pushover_complete` in all manner of ways.
 

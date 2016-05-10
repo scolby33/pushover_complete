@@ -1,4 +1,4 @@
-"""A Python 3 package for interacting with *all* aspects of the Pushover API"""
+"""A Python package for interacting with *all* aspects of the Pushover API"""
 
 from .error import PushoverCompleteError, BadAPIRequestError
 from .pushover_api import PushoverAPI
@@ -11,7 +11,7 @@ __all__ = [
 __version__ = '1.0.1-dev'
 
 __title__ = 'pushover_complete'
-__description__ = 'A Python 3 package for interacting with *all* aspects of the Pushover API'
+__description__ = 'A Python package for interacting with *all* aspects of the Pushover API'
 __url__ = 'https://github.com/scolby33/pushover_complete'
 
 
