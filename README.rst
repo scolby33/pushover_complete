@@ -33,6 +33,11 @@ Installation should be as easy as executing this command in your chosen terminal
 
     $ pip install pushover_complete
 
+:code:`pushover_complete` officially supports Python 2.7 and 3.5.
+Currently, Python 3.3 and 3.4 pass all tests and function properly as well, but this could change: these versions are not officially targeted by development.
+Support for Python 2.x may be dropped in the future, but only in a major version update (e.g. 1.x.y → 2.x.y) and this change will be announced well in advance.
+
+
 Contributing
 ------------
 
