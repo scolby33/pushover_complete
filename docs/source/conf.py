@@ -303,6 +303,10 @@ texinfo_documents = [
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
 
+# Suppress warnings about nonlocal image URIs
+suppress_warnings = [
+    'image.nonlocal_uri'
+]
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {

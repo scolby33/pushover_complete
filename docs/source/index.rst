@@ -16,35 +16,35 @@ Welcome to :mod:`pushover_complete`
 
 :mod:`pushover_complete` is a Python package for interacting with *all* aspects of the `Pushover API <https://pushover.net/api>`_.
 
-=========== =============== ================== ======================= ====================
-Stable      |stable_build|  |stable_coverage|  |stable_documentation|  |stable_pyversions|
-Development |develop_build| |develop_coverage| |develop_documentation| |develop_pyversions|
-=========== =============== ================== ======================= ====================
+.. =========== =============== ================== ======================= ====================
+    Stable      |stable_build|  |stable_coverage|  |stable_documentation|  |stable_pyversions|
+    Development |develop_build| |develop_coverage| |develop_documentation| |develop_pyversions|
+    =========== =============== ================== ======================= ====================
 
-.. |stable_build| image:: https://travis-ci.org/scolby33/pushover_complete.svg?branch=master
-    :target: https://travis-ci.org/scolby33/pushover_complete
-    :alt: Stable Build Status
-.. |stable_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=master
-    :target: https://codecov.io/github/scolby33/pushover_complete?branch=master
-    :alt: Stable Test Coverage Status
-.. |stable_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=stable
-    :target: http://pushover-complete.readthedocs.io/en/stable/?badge=stable
-    :alt: Stable Documentation Status
-.. |stable_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5-blue.svg
-    :alt: Stable Supported Python Versions
+    .. |stable_build| image:: https://travis-ci.org/scolby33/pushover_complete.svg?branch=master
+        :target: https://travis-ci.org/scolby33/pushover_complete
+        :alt: Stable Build Status
+    .. |stable_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=master
+        :target: https://codecov.io/github/scolby33/pushover_complete?branch=master
+        :alt: Stable Test Coverage Status
+    .. |stable_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=stable
+        :target: http://pushover-complete.readthedocs.io/en/stable/?badge=stable
+        :alt: Stable Documentation Status
+    .. |stable_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5-blue.svg
+        :alt: Stable Supported Python Versions
 
 
-.. |develop_build| image:: https://travis-ci.org/scolby33/pushover_complete.svg?branch=develop
-    :target: https://travis-ci.org/scolby33/pushover_complete
-    :alt: Development Build Status
-.. |develop_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=develop
-    :target: https://codecov.io/github/scolby33/pushover_complete?branch=develop
-    :alt: Development Test Coverage Status
-.. |develop_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=develop
-    :target: http://pushover-complete.readthedocs.io/en/develop/?badge=develop
-    :alt: Development Documentation Status
-.. |develop_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5-blue.svg
-    :alt: Development Supported Python Versions
+    .. |develop_build| image:: https://travis-ci.org/scolby33/pushover_complete.svg?branch=develop
+        :target: https://travis-ci.org/scolby33/pushover_complete
+        :alt: Development Build Status
+    .. |develop_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=develop
+        :target: https://codecov.io/github/scolby33/pushover_complete?branch=develop
+        :alt: Development Test Coverage Status
+    .. |develop_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=develop
+        :target: http://pushover-complete.readthedocs.io/en/develop/?badge=develop
+        :alt: Development Documentation Status
+    .. |develop_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5-blue.svg
+        :alt: Development Supported Python Versions
 
 To learn more about Pushover and the Pushover API, please visit the Pushover Website, `<https://pushover.net>`_.
 
