@@ -1,7 +1,10 @@
 """Tests for the :mod:`pushover_complete.pushover_api.PushoverAPI` class."""
 
 import re
-from urllib.parse import urljoin, parse_qs
+try:
+    from urllib.parse import urljoin, parse_qs
+except ImportError:
+    from urlparse import urljoin, parse_qs
 
 import pytest
 import responses

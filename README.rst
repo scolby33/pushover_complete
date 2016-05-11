@@ -1,16 +1,36 @@
 pushover_complete
 =================
-A Python 3 package for interacting with *all* aspects of the Pushover API.
+A Python package for interacting with *all* aspects of the Pushover API.
 
-.. image:: https://travis-ci.org/scolby33/pushover_complete.svg?branch=master
+=========== =============== ================== ======================= ====================
+Stable      |stable_build|  |stable_coverage|  |stable_documentation|  |stable_pyversions|
+Development |develop_build| |develop_coverage| |develop_documentation| |develop_pyversions|
+=========== =============== ================== ======================= ====================
+
+.. |stable_build| image:: https://travis-ci.org/scolby33/pushover_complete.svg?branch=master
     :target: https://travis-ci.org/scolby33/pushover_complete
-    :alt: Build Status
-.. image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=master
+    :alt: Stable Build Status
+.. |stable_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=master
     :target: https://codecov.io/github/scolby33/pushover_complete?branch=master
-    :alt: Test Coverage Status
-.. image:: http://readthedocs.org/projects/pushover-complete/badge/?version=latest
-    :target: http://pushover-complete.readthedocs.io/en/latest/?badge=latest
-    :alt: Documentation Status
+    :alt: Stable Test Coverage Status
+.. |stable_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=stable
+    :target: http://pushover-complete.readthedocs.io/en/stable/?badge=stable
+    :alt: Stable Documentation Status
+.. |stable_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5-blue.svg
+    :alt: Stable Supported Python Versions
+
+
+.. |develop_build| image:: https://travis-ci.org/scolby33/pushover_complete.svg?branch=develop
+    :target: https://travis-ci.org/scolby33/pushover_complete
+    :alt: Development Build Status
+.. |develop_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=develop
+    :target: https://codecov.io/github/scolby33/pushover_complete?branch=develop
+    :alt: Development Test Coverage Status
+.. |develop_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=develop
+    :target: http://pushover-complete.readthedocs.io/en/develop/?badge=develop
+    :alt: Development Documentation Status
+.. |develop_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5-blue.svg
+    :alt: Development Supported Python Versions
 
 To learn more about Pushover and the Pushover API, please visit the Pushover Website, `<https://pushover.net>`_.
 
@@ -33,6 +53,11 @@ Installation should be as easy as executing this command in your chosen terminal
 
     $ pip install pushover_complete
 
+:code:`pushover_complete` officially supports Python 2.7 and 3.5.
+Currently, Python 3.3 and 3.4 pass all tests and function properly as well, but this could change: these versions are not officially targeted by development.
+Support for Python 2.x may be dropped in the future, but only in a major version update (e.g. 1.x.y → 2.x.y) and this change will be announced well in advance.
+
+
 Contributing
 ------------
 
@@ -44,7 +69,15 @@ The full list of contributors is in :code:`AUTHORS.rst` or `on GitHub <https://g
 Changelog
 ---------
 
-1.0.0 <2016-05-09>
+Changes as of 10 May 2016
+
+1.0.1 <10 May 2016>
+^^^^^^^^^^^^^^^^^^^
+
+- Officially add Python 2.7 support and add testing for it to tox and Travis
+- Numerous updates to documentation and README, etc. to make them prettier and more useful
+
+1.0.0 <9 May 2016>
 ^^^^^^^^^^^^^^^^^^
 
 - Implementation of methods for the Pushover messages, sounds, users, receipt, subscriptions, groups, and licenses APIs

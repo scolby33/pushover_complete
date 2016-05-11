@@ -1,7 +1,10 @@
 """Callbacks used by the :mod:`responses` module for mocking out API requests."""
 
 import json
-from urllib.parse import parse_qs
+try:
+    from urllib.parse import parse_qs
+except ImportError:
+    from urlparse import parse_qs
 
 from tests.constants import *
 
