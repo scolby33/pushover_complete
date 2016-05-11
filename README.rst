@@ -69,7 +69,13 @@ The full list of contributors is in :code:`AUTHORS.rst` or `on GitHub <https://g
 Changelog
 ---------
 
-Changes as of 9 May 2016
+Changes as of 10 May 2016
+
+1.0.1 <10 May 2016>
+^^^^^^^^^^^^^^^^^^^
+
+- Officially add Python 2.7 support and add testing for it to tox and Travis
+- Numerous updates to documentation and README, etc. to make them prettier and more useful
 
 1.0.0 <9 May 2016>
 ^^^^^^^^^^^^^^^^^^

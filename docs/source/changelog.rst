@@ -19,6 +19,7 @@ Versions postfixed with '-dev' are currently under development and those without
    To see the most recent changes, `visit the GitHub repository <https://github.com/scolby33/pushover_complete/tree/develop>`_.
    I am working on a fix for this issue.
 
+- :release:`1.0.1 <10 May 2016>`
 - :support:`-` Numerous updates to documentation and README, etc. to make them prettier and more useful
 - :support:`-` Officially add Python 2.7 support and add testing for it to tox and Travis
 - :release:`1.0.0 <9 May 2016>`
