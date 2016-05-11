@@ -318,6 +318,8 @@ autodoc_member_order = 'bysource'
 
 
 # 'releases' (changelog) configuration
+releases_release_uri = 'https://github.com/scolby33/pushover_complete/releases/tag/v%s'
+# releases_future_release_uri = 'https://github.com/scolby33/pushover_complete/tree/develop'
 releases_github_path = 'scolby33/pushover_complete'
 
 if os.environ.get('READTHEDOCS', None):
