@@ -70,8 +70,8 @@ if __name__ == '__main__':
         install_requires=INSTALL_REQUIRES,
         extras_require=EXTRAS_REQUIRE,
         tests_require=TESTS_REQUIRE,
-        entry_points='''
-            [console_scripts]
-            pushover=pushover_complete.pushover_cli:cli
-        '''
+        entry_points={
+            'console_scripts':
+                ['pushover=pushover_complete.pushover_cli:cli']
+        }
     )
