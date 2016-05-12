@@ -23,7 +23,6 @@ def cli(ctx, config, config_preset, token):
             cf.update(cfp[config_preset])
 
         token = cf.pop('token')
-
         if token is None:
             ctx.fail("missing TOKEN")
 
@@ -46,14 +45,94 @@ def cli(ctx, config, config_preset, token):
 @click.option('--timestamp', type=int)
 @click.option('--sound')
 @click.option('--html', type=int)
-@click.pass_obj
-def send(obj, message, **kwargs):
-    pushover, cf = obj
+@click.pass_context
+def send(ctx, message, **kwargs):
+    pushover, cf = ctx.obj
     cf.update({k: v for k, v in kwargs.items() if v is not None})
 
     if 'user' not in cf:
-        click.fail('missing USER')
+        ctx.fail('missing USER')
     user = cf.pop('user')
 
     response = pushover.send_message(user, message, **cf)
     click.echo(response)
+
+
+@cli.command()
+@click.argument('user')
+@click.argument('device')
+@click.pass_obj
+def validate(obj, user, device):
+    pushover, cf = obj
+    response = pushover.validate(user, device)
+    click.echo(response)
+
+
+@cli.command()
+@click.argument('receipt')
+@click.pass_obj
+def check_receipt(obj, receipt):
+    pushover, cf = obj
+    response = pushover.check_receipt(receipt)
+    click.echo(response)
+
+
+@cli.command()
+@click.argument('receipt')
+@click.pass_obj
+def cancel_receipt(obj, receipt):
+    pushover, cf = obj
+    response = pushover.cancel_receipt(receipt)
+    click.echo(response)
+
+
+@cli.command()
+def migrate():
+    pass
+
+
+@cli.command()
+@click.argument('user')
+def assign(user):
+    pass
+
+
+@cli.group()
+@click.option('group-key')
+def group(group_key):
+    pass
+
+
+@group.command()
+@click.argument('group')
+@click.argument('user')
+def add(group, user):
+    pass
+
+
+@group.command()
+@click.argument('group')
+@click.argument('user')
+def delete(group, user):
+    pass
+
+
+@group.command()
+@click.argument('group')
+@click.argument('user')
+def enable(group, user):
+    pass
+
+
+@group.command()
+@click.argument('group')
+@click.argument('user')
+def disable(group, user):
+    pass
+
+
+@group.command()
+@click.argument('group')
+@click.argument('name')
+def rename(group, name):
+    pass
