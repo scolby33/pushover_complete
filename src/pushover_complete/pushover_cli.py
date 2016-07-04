@@ -26,7 +26,7 @@ def _get_sys_dir(app_name, force_posix=False):
     return os.path.join('/etc', click.utils._posixify(app_name))  # /etc/{app_name}
 
 
-def read_configs(file_config=None):
+def _read_configs(file_config=None):
     sys_config = os.path.join(_get_sys_dir(NAME), 'config.ini')
     usr_config = os.path.join(click.get_app_dir(NAME), 'config.ini')
     config = ConfigParser()
@@ -37,6 +37,17 @@ def read_configs(file_config=None):
     return config
 
 
+def _update_configs_from_args(ctx, args):
+    args = copy.copy(args)
+    try:
+        args.pop('ctx')
+    except KeyError:
+        pass
+    args = {k: v for k, v in args.items() if v}
+    ctx.obj['config'].update(args)
+    # pprint(ctx.obj['config'])
+
+
 @click.group(invoke_without_command=True)
 @click.option('--token')
 @click.option('--config', '-c', type=click.File())
@@ -44,9 +55,11 @@ def read_configs(file_config=None):
 @click.version_option()
 @click.pass_context
 def cli(ctx, token, config, preset):
-    ctx.obj = {'config': read_configs(config)}
-    ctx.obj['api'] = PushoverAPI(token if token else ctx.obj['config'].get(preset, 'token'))
-    click.echo(ctx.obj['api'])
+    config = _read_configs(config)
+    ctx.obj = {'config': defaultdict(lambda: None, config.items(preset))}
+    if token:
+        ctx.obj['config']['token'] = token
+    ctx.obj['api'] = PushoverAPI(ctx.obj['config']['token'])
 
 
 @cli.command()
@@ -65,25 +78,15 @@ def cli(ctx, token, config, preset):
 @click.option('--html', is_flag=True)
 @click.pass_context
 def send(ctx, message, user, device, title, url, url_title, priority, retry, expire, callback_url, timestamp, sound, html):
-    click.echo('MESSAGE: {}'.format(message))
-    click.echo('USER: {}'.format(user))
-    click.echo('DEVICE: {}'.format(device))
-    click.echo('TITLE: {}'.format(title))
-    click.echo('URL: {}'.format(url))
-    click.echo('URL_TITLE: {}'.format(url_title))
-    click.echo('PRIORITY: {}'.format(priority))
-    click.echo('RETRY: {}'.format(retry))
-    click.echo('EXPIRE: {}'.format(expire))
-    click.echo('CALLBACK_URL: {}'.format(callback_url))
-    click.echo('TIMESTAMP: {}'.format(timestamp))
-    click.echo('SOUND: {}'.format(sound))
-    click.echo('HTML: {}'.format(html))
+    _update_configs_from_args(ctx, locals())
 
 
 @cli.command()
 @click.pass_context
 def sounds(ctx):
-    pass
+    sounds_list = ctx.obj['api'].get_sounds()
+    for identifier, name in sounds_list.items():
+        print('{}: {}'.format(identifier, name))
 
 
 @cli.command()
@@ -91,15 +94,14 @@ def sounds(ctx):
 @click.option('--device')
 @click.pass_context
 def validate(ctx, user, device):
-    click.echo('USER: {}'.format(user))
-    click.echo('DEVICE: {}'.format(device))
+    _update_configs_from_args(ctx, locals())
 
 
 @cli.command()
 @click.argument('receipt', required=False)
 @click.pass_context
 def receipt(ctx, receipt):
-    click.echo('RECEIPT: {}'.format(receipt))
+    _update_configs_from_args(ctx, locals())
 
 
 @cli.command()
@@ -109,17 +111,14 @@ def receipt(ctx, receipt):
 @click.option('--sound')
 @click.pass_context
 def migrate(ctx, user, subscription, device, sound):
-    click.echo('USER: {}'.format(user))
-    click.echo('SUBSCRIPTION: {}'.format(subscription))
-    click.echo('DEVICE: {}'.format(device))
-    click.echo('SOUND: {}'.format(sound))
+    _update_configs_from_args(ctx, locals())
 
 
 @cli.group(invoke_without_command=True)
 @click.option('--group-key')
 @click.pass_context
 def group(ctx, group_key):
-    click.echo('GROUP_KEY: {}'.format(group_key))
+    _update_configs_from_args(ctx, locals())
 
 
 @group.command(name='add')
@@ -128,41 +127,39 @@ def group(ctx, group_key):
 @click.option('--memo')
 @click.pass_context
 def group_add(ctx, user, device, memo):
-    click.echo('USER: {}'.format(user))
-    click.echo('DEVICE: {}'.format(device))
-    click.echo('MEMO: {}'.format(memo))
+    _update_configs_from_args(ctx, locals())
 
 
 @group.command(name='delete')
 @click.argument('user', required=False)
 @click.pass_context
 def group_delete(ctx, user):
-    click.echo('USER: {}'.format(user))
+    _update_configs_from_args(ctx, locals())
 
 
 @group.command(name='disable')
 @click.argument('user', required=False)
 @click.pass_context
 def group_disable(ctx, user):
-    click.echo('USER: {}'.format(user))
+    _update_configs_from_args(ctx, locals())
 
 
 @group.command(name='enable')
 @click.argument('user', required=False)
 @click.pass_context
 def group_enable(ctx, user):
-    click.echo('USER: {}'.format(user))
+    _update_configs_from_args(ctx, locals())
 
 
 @group.command(name='rename')
 @click.argument('new_name', required=False)
 @click.pass_context
 def group_rename(ctx, new_name):
-    click.echo('NEW_NAME: {}'.format(new_name))
+    _update_configs_from_args(ctx, locals())
 
 
 @cli.command()
 @click.argument('user', required=False)
 @click.pass_context
 def assign(ctx, user):
-    click.echo('USER: {}'.format(user))
+    _update_configs_from_args(ctx, locals())
