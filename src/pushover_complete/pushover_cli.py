@@ -1,11 +1,16 @@
-from .pushover_api import PushoverAPI
-import click
+from collections import defaultdict
+import copy
 import os
+from pprint import pprint
 import sys
 try:
     from configparser import ConfigParser
 except ImportError:
     from ConfigParser import ConfigParser
+
+import click
+
+from .pushover_api import PushoverAPI
 
 NAME = 'Pushover Complete'
 
