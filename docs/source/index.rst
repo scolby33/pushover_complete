@@ -91,6 +91,18 @@ Support for Python 2.x may be dropped in the future, but only in a major version
 
 See :ref:`installation` for further information about installing :mod:`pushover_complete` in all manner of ways.
 
+CLI Tool
+--------
+
+.. toctree::
+    :maxdepth: 2
+    :hidden:
+
+    cli
+
+:mod:`pushover_complete` includes a command-line interface tool that exposes most of the functions of the API for use in the shell.
+It has rich configuration capabilities that make it useful for a wide variety of applications. Read more on the :ref:`CLI page <cli>`.
+
 Roadmap
 -------
 
