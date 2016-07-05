@@ -48,7 +48,7 @@ def _update_configs_from_args(ctx, args):
     # pprint(ctx.obj['config'])
 
 
-@click.group(invoke_without_command=True)
+@click.group()
 @click.option('--token')
 @click.option('--config', '-c', type=click.File())
 @click.option('--preset', '-p', default='DEFAULT')
