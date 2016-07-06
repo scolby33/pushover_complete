@@ -16,6 +16,11 @@ from tests.fixtures import *
 from tests.responses_callbacks import *
 
 
+def test_reasonable_repr(PushoverAPI):
+    """Test that the PushoverAPI class has a reasonable repr."""
+    assert PushoverAPI.__repr__() == 'PushoverAPI(token={})'.format(TEST_TOKEN)
+
+
 @responses.activate
 def test_generic_get_with_payload(PushoverAPI):
     """Test the functionality of _generic_get that is missed by current uses."""
