@@ -22,7 +22,7 @@ class PushoverAPI(object):
         self.token = token
 
     def __repr__(self):
-        return "PushoverAPI(token={})".format(self.token)
+        return 'PushoverAPI(token={})'.format(self.token)
 
     def _generic_get(self, endpoint, url_parameter=None, payload=None, session=None):
         """A method for abstracting GET requests to the Pushover API.
