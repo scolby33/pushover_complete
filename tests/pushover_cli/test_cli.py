@@ -97,7 +97,7 @@ def test_cli_gets_receipt(cli_runner):
 def test_cli_cancel_receipt(cli_runner):
     url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
     responses.add_callback(
-        responses.GET,
+        responses.POST,
         url_re,
         callback=receipt_cancel_callback,
         content_type='application/json'
