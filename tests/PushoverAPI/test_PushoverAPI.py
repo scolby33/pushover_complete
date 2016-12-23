@@ -326,7 +326,7 @@ def test_PushoverAPI_cancels_receipt(PushoverAPI):
     """Test cancelling a receipt."""
     url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
     responses.add_callback(
-        responses.GET,
+        responses.POST,
         url_re,
         callback=receipt_cancel_callback,
         content_type='application/json'
@@ -347,7 +347,7 @@ def test_PushoverAPI_raises_error_on_bad_receipt_cancel(PushoverAPI):
     """Test the cancelling of a bad receipt value."""
     url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
     responses.add_callback(
-        responses.GET,
+        responses.POST,
         url_re,
         callback=receipt_cancel_callback,
         content_type='application/json'
