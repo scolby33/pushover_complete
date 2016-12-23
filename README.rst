@@ -11,7 +11,7 @@ Development |develop_build| |develop_coverage| |develop_documentation| |develop_
     :target: https://travis-ci.org/scolby33/pushover_complete
     :alt: Stable Build Status
 .. |stable_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=master
-    :target: https://codecov.io/github/scolby33/pushover_complete?branch=master
+    :target: https://codecov.io/gh/scolby33/pushover_complete/branch/master
     :alt: Stable Test Coverage Status
 .. |stable_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=stable
     :target: http://pushover-complete.readthedocs.io/en/stable/?badge=stable
@@ -24,7 +24,7 @@ Development |develop_build| |develop_coverage| |develop_documentation| |develop_
     :target: https://travis-ci.org/scolby33/pushover_complete
     :alt: Development Build Status
 .. |develop_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=develop
-    :target: https://codecov.io/github/scolby33/pushover_complete?branch=develop
+    :target: https://codecov.io/gh/scolby33/pushover_complete/branch/develop
     :alt: Development Test Coverage Status
 .. |develop_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=develop
     :target: http://pushover-complete.readthedocs.io/en/develop/?badge=develop
