@@ -15,7 +15,17 @@ Changelog
 Details about this versioning scheme can be found on the `Semver website <http://semver.org/spec/v2.0.0.html>`_.
 Versions postfixed with '-dev' are currently under development and those without a postfix are stable releases.
 
-Changes as of 10 May 2016
+Changes as of 23 December 2016
+
+1.0.2 <23 December 2016>
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+- "Add" Python 3.6 support. It's not in Travis as an allowed failure and didn't require any code changes to pass!
+- Fix a major bug with the receipt cancel API. I was using a `GET` request instead of a `POST`
+- Stop using the `releases` Sphinx plugin for the changelog. Its philosophy didn't match well with mine
+- Update release procedure based on no longer using `releases`
+- Some minor documentation fixes
+
 
 1.0.1 <10 May 2016>
 ^^^^^^^^^^^^^^^^^^^

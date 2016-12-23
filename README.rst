@@ -69,7 +69,16 @@ The full list of contributors is in :code:`AUTHORS.rst` or `on GitHub <https://g
 Changelog
 ---------
 
-Changes as of 10 May 2016
+Changes as of 23 December 2016
+
+1.0.2 <23 December 2016>
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+- "Add" Python 3.6 support. It's not in Travis as an allowed failure and didn't require any code changes to pass!
+- Fix a major bug with the receipt cancel API. I was using a `GET` request instead of a `POST`
+- Stop using the `releases` Sphinx plugin for the changelog. Its philosophy didn't match well with mine
+- Update release procedure based on no longer using `releases`
+- Some minor documentation fixes
 
 1.0.1 <10 May 2016>
 ^^^^^^^^^^^^^^^^^^^
