@@ -238,7 +238,7 @@ class PushoverAPI(object):
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
-        return self._generic_get('receipts/{}/cancel.json', receipt)
+        return self._generic_post('receipts/{}/cancel.json', receipt)
 
     def _migrate_to_subscription(self, user, subscription_code, device=None, sound=None, session=None):
         """The internal function to migrate a user key to a subscription key.
