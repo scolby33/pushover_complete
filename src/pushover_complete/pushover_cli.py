@@ -123,7 +123,6 @@ def validate(ctx, user, device):
         ctx.exit(e.args[0].split(':')[-1].strip())
 
 
-
 @cli.group(invoke_without_command=True)
 @click.option('--receipt', metavar='TOKEN', help='The receipt id')
 @click.pass_context
