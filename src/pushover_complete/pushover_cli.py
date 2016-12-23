@@ -41,15 +41,12 @@ def _read_configs(file_config=None):
 
 def _update_configs_from_args(ctx, args, keys_to_remove=None):
     args = copy.copy(args)
-    try:
-        args.pop('ctx')
-    except KeyError:
-        pass
+    args.pop('ctx', None)
     args = {k: v for k, v in args.items() if v}
     ctx.obj['config'].update(args)
     if keys_to_remove:
         for key in keys_to_remove:
-            ctx.obj['config'].pop(key)
+            ctx.obj['config'].pop(key, None)
     # pprint(ctx.obj['config'])
 
 
@@ -65,7 +62,8 @@ def cli(ctx, token, config, preset):
     Brought to you by the `pushover_complete` Python package.
     """
     config = _read_configs(config)
-    ctx.obj = {'config': defaultdict(lambda: None, config.items(preset))}
+    # ctx.obj = {'config': defaultdict(lambda: None, config.items(preset))}
+    ctx.obj = {'config': dict(config.items(preset))}
     if token:
         ctx.obj['config']['token'] = token
     ctx.obj['api'] = PushoverAPI(ctx.obj['config']['token'])
