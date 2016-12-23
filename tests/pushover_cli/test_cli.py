@@ -32,3 +32,17 @@ def test_cli_sends_simple_message(cli_runner):
     result = cli_runner.invoke(cli, ['--token', TEST_TOKEN, 'send', '--user', TEST_USER, TEST_MESSAGE])
     assert result.exit_code == 0
     assert not result.output
+
+
+@responses.activate
+def test_cli_retrieves_sounds(cli_runner):
+    responses.add_callback(
+        responses.GET,
+        urljoin(PUSHOVER_API_URL, 'sounds.json'),
+        callback=sounds_callback,
+        content_type='application/json'
+    )
+
+    result = cli_runner.invoke(cli, ['--token', TEST_TOKEN, 'sounds'])
+    assert result.exit_code == 0
+    assert sorted(result.output.splitlines()) == sorted('{}: {}'.format(identifier, name) for identifier, name in SOUNDS.items())
