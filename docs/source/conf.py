@@ -38,7 +38,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
-    'releases',
+    # 'releases',
     # 'sphinx.ext.githubpages'
 ]
 
