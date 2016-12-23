@@ -91,3 +91,18 @@ def test_cli_gets_receipt(cli_runner):
     result = cli_runner.invoke(cli, ['--token', TEST_TOKEN, 'receipt', '--receipt', TEST_RECEIPT_ID])
     assert result.exit_code == 0
     assert result.output
+
+
+@responses.activate
+def test_cli_cancel_receipt(cli_runner):
+    url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
+    responses.add_callback(
+        responses.GET,
+        url_re,
+        callback=receipt_cancel_callback,
+        content_type='application/json'
+    )
+
+    result = cli_runner.invoke(cli, ['--token', TEST_TOKEN, 'receipt', '--receipt', TEST_RECEIPT_ID, 'cancel'])
+    assert result.exit_code == 0
+    assert not result.output
