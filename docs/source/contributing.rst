@@ -169,8 +169,8 @@ The steps for making a release of :code:`pushover_complete` are:
 
     $ bumpversion release
 
-#. Add a release entry in :code:`docs/source/changelog.rst` (something like :code:`- :release:`{new_version} <date>``)
-#. Update :code:`README.rst` with new version and changelog information, including the last updated date in the changelog
+#. Update the changelog in :code:`docs/source/changelog.rst`, including the last updated date
+#. Update the changelog in :code:`README.rst` to match the changelog in the docs
 #. Check that any new intersphinx links have corresponding inventory locations in :code:`docs/source/conf.py`. Run
 
     ::
