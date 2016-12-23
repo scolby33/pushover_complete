@@ -1,5 +1,6 @@
 from collections import defaultdict
 import copy
+import json
 import os
 from pprint import pprint
 import sys
@@ -127,15 +128,17 @@ def validate(ctx, user, device):
 @click.option('--receipt', metavar='TOKEN', help='The receipt id')
 @click.pass_context
 def receipt(ctx, receipt):
-    """Check a receipt issued after sending an emergency-priority message."""
+    """Check a receipt issued after sending an emergency-priority message. Prints the JSON-formatted result of the API call."""
     _update_configs_from_args(ctx, locals(), ('token',))
     if not ctx.invoked_subcommand:
         try:
-            ctx.obj['api'].check_receipt(**ctx.obj['config'])
+            receipt_details = ctx.obj['api'].check_receipt(**ctx.obj['config'])
         except TypeError as e:
             ctx.fail(MISSING_ARG.format(e.args[0].split(':')[1].strip()))
         except BadAPIRequestError as e:
             ctx.exit(e.args[0].split(':')[-1].strip())
+
+        print(json.dumps(receipt_details, indent=2, sort_keys=True))
 
 
 @receipt.command(name='cancel')
