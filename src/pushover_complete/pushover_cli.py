@@ -66,7 +66,7 @@ def cli(ctx, token, config, preset):
     ctx.obj = {'config': dict(config.items(preset))}
     if token:
         ctx.obj['config']['token'] = token
-    ctx.obj['api'] = PushoverAPI(ctx.obj['config']['token'])
+    ctx.obj['api'] = PushoverAPI(ctx.obj['config'].get('token', None))
 
 
 @cli.command()
