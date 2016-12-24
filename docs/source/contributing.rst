@@ -71,8 +71,6 @@ Development takes place on the :code:`develop` branch with individual features b
 Further reading on this style can be found in `this blog post <http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/>`_ by Jeff Kreeftmeijer.
 A git plugin to aid in managing branches in this way, called :code:`git-flow`, can be found `here <https://github.com/nvie/gitflow>`_.
 
-.. note:: This is not quite true yet...once the 1.0 release takes place, development will move to the develop branch. Until then, it's on master because that's just how the project started.
-
 This might seem a bit complicated, but in general you won't have to worry about it as a contributor.
 The long and short of this system for you is:
 
@@ -85,7 +83,7 @@ The maintainers will take care of any other issues relating to this.
 Pull Requests
 -------------
 
-Once you've got your feature or bugfix finished (or if its in a partially complete state but you want to publish it
+Once you've got your feature or bugfix finished (or if it's in a partially complete state but you want to publish it
 for comment), push it to your fork of the repository and open a pull request against the develop branch on GitHub.
 
 Make a descriptive comment about your pull request, perhaps referencing the issue it is meant to fix (something along the lines of "fixes issue #10" will cause GitHub to automatically link to that issue).
@@ -171,8 +169,8 @@ The steps for making a release of :code:`pushover_complete` are:
 
     $ bumpversion release
 
-#. Add a release entry in :code:`docs/source/changelog.rst` (something like :code:`- :release:`{new_version} <date>``)
-#. Update :code:`README.rst` with new version and changelog information, including the last updated date in the changelog
+#. Update the changelog in :code:`docs/source/changelog.rst`, including the last updated date
+#. Update the changelog in :code:`README.rst` to match the changelog in the docs
 #. Check that any new intersphinx links have corresponding inventory locations in :code:`docs/source/conf.py`. Run
 
     ::

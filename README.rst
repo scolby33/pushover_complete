@@ -11,7 +11,7 @@ Development |develop_build| |develop_coverage| |develop_documentation| |develop_
     :target: https://travis-ci.org/scolby33/pushover_complete
     :alt: Stable Build Status
 .. |stable_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=master
-    :target: https://codecov.io/github/scolby33/pushover_complete?branch=master
+    :target: https://codecov.io/gh/scolby33/pushover_complete/branch/master
     :alt: Stable Test Coverage Status
 .. |stable_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=stable
     :target: http://pushover-complete.readthedocs.io/en/stable/?badge=stable
@@ -24,7 +24,7 @@ Development |develop_build| |develop_coverage| |develop_documentation| |develop_
     :target: https://travis-ci.org/scolby33/pushover_complete
     :alt: Development Build Status
 .. |develop_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=develop
-    :target: https://codecov.io/github/scolby33/pushover_complete?branch=develop
+    :target: https://codecov.io/gh/scolby33/pushover_complete/branch/develop
     :alt: Development Test Coverage Status
 .. |develop_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=develop
     :target: http://pushover-complete.readthedocs.io/en/develop/?badge=develop
@@ -69,7 +69,16 @@ The full list of contributors is in :code:`AUTHORS.rst` or `on GitHub <https://g
 Changelog
 ---------
 
-Changes as of 10 May 2016
+Changes as of 23 December 2016
+
+1.0.2 <23 December 2016>
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+- "Add" Python 3.6 support. It's not in Travis as an allowed failure and didn't require any code changes to pass!
+- Fix a major bug with the receipt cancel API. I was using a `GET` request instead of a `POST`
+- Stop using the `releases` Sphinx plugin for the changelog. Its philosophy didn't match well with mine
+- Update release procedure based on no longer using `releases`
+- Some minor documentation fixes
 
 1.0.1 <10 May 2016>
 ^^^^^^^^^^^^^^^^^^^
