@@ -178,11 +178,13 @@ def group(ctx, group_key):
     _update_configs_from_args(ctx, locals(), ('token',))
     if not ctx.invoked_subcommand:
         try:
-            pprint(ctx.obj['api'].group_info(**ctx.obj['config']))
+            group_info = ctx.obj['api'].group_info(**ctx.obj['config'])
         except TypeError as e:
             ctx.fail(MISSING_ARG.format(e.args[0].split(':')[1].strip()))
         except BadAPIRequestError as e:
             ctx.exit(e.args[0].split(':')[-1].strip())
+
+        print(json.dumps(group_info, indent=2, sort_keys=True))
 
 
 @group.command(name='add')
