@@ -162,7 +162,8 @@ def migrate(ctx, user, subscription_code, device, sound):
     """Migrate [USER] to a subscription key."""
     _update_configs_from_args(ctx, locals(), ('token',))
     try:
-        ctx.obj['api'].migrate_to_subscription(**ctx.obj['config'])
+        response = ctx.obj['api'].migrate_to_subscription(**ctx.obj['config'])
+        print(response['subscribed_user_key'])
     except TypeError as e:
         ctx.fail(MISSING_ARG.format(e.args[0].split(':')[1].strip()))
     except BadAPIRequestError as e:
