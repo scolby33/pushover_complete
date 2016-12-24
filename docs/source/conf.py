@@ -38,7 +38,7 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
-    'releases',
+    # 'releases',
     # 'sphinx.ext.githubpages'
 ]
 
@@ -66,7 +66,7 @@ author = 'Scott Colby'
 # built documents.
 #
 # The full version, including alpha/beta/rc tags.
-release = '1.0.1'
+release = '1.0.2'
 # The short X.Y version.
 parsed_version = re.match('(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)(?:-(?P<release>[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+(?P<build>[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?',
                           release)
@@ -318,9 +318,9 @@ autodoc_member_order = 'bysource'
 
 
 # 'releases' (changelog) configuration
-releases_release_uri = 'https://github.com/scolby33/pushover_complete/releases/tag/v%s'
+# releases_release_uri = 'https://github.com/scolby33/pushover_complete/releases/tag/v%s'
 # releases_future_release_uri = 'https://github.com/scolby33/pushover_complete/tree/develop'
-releases_github_path = 'scolby33/pushover_complete'
+# releases_github_path = 'scolby33/pushover_complete'
 
 if os.environ.get('READTHEDOCS', None):
     tags.add('readthedocs')
