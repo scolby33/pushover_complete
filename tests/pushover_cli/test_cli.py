@@ -106,3 +106,50 @@ def test_cli_cancel_receipt(cli_runner):
     result = cli_runner.invoke(cli, ['--token', TEST_TOKEN, 'receipt', '--receipt', TEST_RECEIPT_ID, 'cancel'])
     assert result.exit_code == 0
     assert not result.output
+
+
+@responses.activate
+def test_cli_migrate(cli_runner):
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'subscriptions/migrate.json'),
+        callback=subscription_migrate_callback,
+        content_type='application/json'
+    )
+
+    result = cli_runner.invoke(cli, ['--token', TEST_TOKEN, 'migrate', '--subscription-code', TEST_SUBSCRIPTION_CODE, TEST_USER])
+    assert result.exit_code == 0
+    assert result.output.strip() == TEST_SUBSCRIBED_USER_KEY
+
+
+@responses.activate
+def test_cli_group(cli_runner):
+    url_re = re.compile('https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*\.json')
+    responses.add_callback(
+        responses.GET,
+        url_re,
+        callback=groups_callback,
+        content_type='application/json'
+    )
+
+    result = cli_runner.invoke(cli, ['--token', TEST_TOKEN, 'group', '--group-key', TEST_GROUP])
+    parsed_result = json.loads(result.output)
+    assert result.exit_code == 0
+    assert parsed_result['name'] == 'Test Group'
+    assert len(parsed_result['users']) == 2
+
+
+@responses.activate
+def test_cli_add_to_group(cli_runner):
+    url_re = re.compile('https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/add_user\.json')
+    responses.add_callback(
+        responses.POST,
+        url_re,
+        callback=groups_add_user_callback,
+        content_type='application/json'
+    )
+
+    result = cli_runner.invoke(cli, ['--token', TEST_TOKEN, 'group', '--group-key', TEST_GROUP, 'add', TEST_USER])
+
+    assert result.exit_code == 0
+    assert not result.output
