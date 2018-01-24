@@ -182,13 +182,14 @@ class PushoverAPI(object):
         :param messages: An iterable of messages to be sent. Each item in the iterable must be expandable using the ``**kwargs`` syntax with the keys matching the parameters of :meth:`PushoverAPI.send_message`.
 
         :returns: Response body interpreted as JSON
-        :rtype: dict
+        :rtype: list[dict]
         """
         sess = requests.Session()
-        resp_bodies = []
-        for message in messages:
-            resp_bodies.append(self._send_message(session=sess, **message))
-        return resp_bodies
+        
+        return [
+            self._send_message(session=sess, **message)
+            for message in messages
+        ]
 
     def get_sounds(self):
         """Get the current list of supported sounds from the Pushover servers.
