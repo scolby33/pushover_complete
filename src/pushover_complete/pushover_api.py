@@ -141,11 +141,11 @@ class PushoverAPI(object):
             'html': html
         }
         
-        file = {}
         if image_path is not None and os.path.isfile(image_path):
-            file = {'attachment': (image_path, open(image_path, 'rb'))}
-
-        return self._generic_post('messages.json', payload=payload, session=session, files=file)
+            with open(image_path, 'rb') as f:
+                file = {'attachment': (image_path, f)}
+                return self._generic_post('messages.json', payload=payload, session=session, files=file)
+        return self._generic_post('messages.json', payload=payload, session=session)
 
     def send_message(self, user, message, device=None, title=None, url=None, url_title=None, image_path=None,
                      priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False):
