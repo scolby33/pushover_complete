@@ -112,7 +112,7 @@ class PushoverAPI(object):
         :type title: str
         :type url: str
         :type url_title: str
-        :type image_path: str
+        :type image_path: str or pathlib.Path
         :type priority: int
         :type retry: int
         :type expire: int
@@ -171,7 +171,7 @@ class PushoverAPI(object):
         :type title: str
         :type url: str
         :type url_title: str
-        :type image_path: str
+        :type image_path: str or pathlib.Path
         :type priority: int
         :type retry: int
         :type expire: int
