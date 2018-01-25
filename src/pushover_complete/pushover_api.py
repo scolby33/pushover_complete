@@ -57,12 +57,12 @@ class PushoverAPI(object):
         :param endpoint: The endpoint of the API to hit. Will be joined with "https://api.pushover.net/1/". Example value: "groups/{}.json"
         :param url_parameter: A parameter to replace in the endpoint string provided. Example value: "g123456". Combined with the above example value, would result in a final URL of "https://api.pushover.net/1/groups/g123456.json"
         :param payload: A dict of parameters to be appended to the URL, e.g. :code:`{'test-param': False}` would result in the URL having :code:`?test-param=false` appended. Do not include the application token in this dict, as it is added by the function.
-        :param files: A dict of file attachment parameters to be attached to the message
+        :param files: (optional) A dict of ``'attachment': value`` for attachment to the message. ``value`` may be a file-like object, or a tuple of at least ``('filename', file-like[, 'content_type'[, custom_headers_dict]])``. The optional 'content_type' string describes the file type and custom_headers_dict is a dict-like-object with additional headers describing the file
         :param session: A :class:`requests.Session` object to be used to send HTTP requests.
         :type endpoint: str
         :type url_parameter: str
         :type payload: dict
-        :type files: dict
+        :type files: dict{str,file-like} or dict{str,tuple(str,file-like[, str[, dict]])}
         :type session: requests.Session
 
         :returns: Response body interpreted as JSON
