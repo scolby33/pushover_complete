@@ -1,3 +1,4 @@
+import io
 import os
 try:
     from urllib.parse import urljoin
@@ -83,7 +84,7 @@ class PushoverAPI(object):
             raise BadAPIRequestError('{}: {}'.format(resp.status_code, ': '.join(resp_body.get('errors'))))
         return resp_body
 
-    def _send_message(self, user, message, device=None, title=None, url=None, url_title=None, image_path=None,
+    def _send_message(self, user, message, device=None, title=None, url=None, url_title=None, image=None,
                       priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False,
                       session=None):
         """The internal function used to send messages via the Pushover API.
@@ -97,7 +98,7 @@ class PushoverAPI(object):
         :param title: The title of the message
         :param url: A URL to be included with the message
         :param url_title: The link text to be displayed for the URL. If omitted, the URL itself is displayed.
-        :param image_path: The file path pointing to the image to be attached to the message.
+        :param image: The file path pointing to the image to be attached to the message or a file-like-object representing the image data.
         :param priority: An integer representing the priority of the message, from -2 (least important) to 2 (emergency). Default is 0.
         :param retry: How often the Pushover server will re-send an emergency-priority message in seconds. Required with priority 2 messages.
         :param expire: How long an emergency-priority message will be re-sent for in seconds
@@ -112,7 +113,7 @@ class PushoverAPI(object):
         :type title: str
         :type url: str
         :type url_title: str
-        :type image_path: str or pathlib.Path
+        :type image: str, pathlib.Path, or file-like
         :type priority: int
         :type retry: int
         :type expire: int
@@ -141,13 +142,17 @@ class PushoverAPI(object):
             'html': html
         }
         
-        if image_path is not None and os.path.isfile(image_path):
-            with open(image_path, 'rb') as f:
-                file = {'attachment': f}
-                return self._generic_post('messages.json', payload=payload, session=session, files=file)
+        if image is not None:
+            if isinstance(image, file) or isinstance(image, io.BytesIO):
+                    attachment = {'attachment': image}
+                    return self._generic_post('messages.json', payload=payload, session=session, files=attachment)
+            if isinstance(image, str) and os.path.isfile(image):
+                with open(image, 'rb') as f:
+                    attachment = {'attachment': f}
+                    return self._generic_post('messages.json', payload=payload, session=session, files=attachment)
         return self._generic_post('messages.json', payload=payload, session=session)
 
-    def send_message(self, user, message, device=None, title=None, url=None, url_title=None, image_path=None,
+    def send_message(self, user, message, device=None, title=None, url=None, url_title=None, image=None,
                      priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False):
         """Send a message via the Pushover API.
 
@@ -157,7 +162,7 @@ class PushoverAPI(object):
         :param title: The title of the message
         :param url: A URL to be included with the message
         :param url_title: The link text to be displayed for the URL. If omitted, the URL itself is displayed.
-        :param image_path: The file path pointing to the image to be attached to the message.
+        :param image: The file path pointing to the image to be attached to the message or a file-like-object representing the image data.
         :param priority: An integer representing the priority of the message, from -2 (least important) to 2 (emergency). Default is 0.
         :param retry: How often the Pushover server will re-send an emergency-priority message in seconds. Required with priority 2 messages.
         :param expire: How long an emergency-priority message will be re-sent for in seconds
@@ -171,7 +176,7 @@ class PushoverAPI(object):
         :type title: str
         :type url: str
         :type url_title: str
-        :type image_path: str or pathlib.Path
+        :type image: str, pathlib.Path, or file-like
         :type priority: int
         :type retry: int
         :type expire: int
