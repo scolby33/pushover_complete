@@ -143,7 +143,7 @@ class PushoverAPI(object):
         
         if image_path is not None and os.path.isfile(image_path):
             with open(image_path, 'rb') as f:
-                file = {'attachment': (image_path, f)}
+                file = {'attachment': f}
                 return self._generic_post('messages.json', payload=payload, session=session, files=file)
         return self._generic_post('messages.json', payload=payload, session=session)
 
