@@ -1,10 +1,10 @@
+import os
 try:
     from urllib.parse import urljoin
 except ImportError:
     from urlparse import urljoin
 
 import requests
-import os
 
 from .error import BadAPIRequestError
 
