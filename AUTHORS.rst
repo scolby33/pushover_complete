@@ -6,4 +6,5 @@ Authors
 Contributors
 ------------
 
+- Arno Hautala <arno@alum.wpiedu>: image attachment support
 - Your Name <email or twitter handle>: short description of your contribution, if you want
