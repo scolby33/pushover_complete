@@ -146,7 +146,7 @@ class PushoverAPI(object):
             if isinstance(image, file) or isinstance(image, io.BytesIO):
                     attachment = {'attachment': image}
                     return self._generic_post('messages.json', payload=payload, session=session, files=attachment)
-            if isinstance(image, str) and os.path.isfile(image):
+            if isinstance(image, six.string_types) and os.path.isfile(image):
                 with open(image, 'rb') as f:
                     attachment = {'attachment': f}
                     return self._generic_post('messages.json', payload=payload, session=session, files=attachment)
