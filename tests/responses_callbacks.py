@@ -6,6 +6,8 @@ try:
 except ImportError:
     from urlparse import parse_qs
 
+from requests_toolbelt.multipart import decoder
+
 from tests.constants import *
 
 
@@ -34,9 +36,20 @@ def messages_callback(request):
     }
     headers = {'X-Request-Id': TEST_REQUEST_ID}
 
-    req_body = getattr(request, 'body', None)
-    qs = parse_qs(req_body)
-    qs = {k: v[0] for k, v in qs.items()}
+    if getattr(request, 'headers', None).get('content-type', None) == 'application/x-www-form-urlencoded':
+        req_body = getattr(request, 'body', None)
+        qs = parse_qs(req_body)
+        qs = {k: v[0] for k, v in qs.items()}
+    else:
+        request.content = getattr(request, 'body', None)  # make this like MultipartDecoder.from_response expects
+        multipart_data = decoder.MultipartDecoder.from_response(request)
+        qs = {}
+        for part in multipart_data.parts:
+            header_name = part.headers[b'Content-Disposition'].decode('utf-8').split(';')[1].split('=')[1].strip('"')
+            if header_name != 'attachment':
+                qs[header_name] = part.text
+            else:
+                qs[header_name] = part.content
 
     if qs.get('message', None) is None:
         resp_body['message'] = 'cannot be blank'
@@ -46,6 +59,10 @@ def messages_callback(request):
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
+    elif qs.get('attachment', None) and qs.get('attachment', None) != TEST_IMAGE_BYTES:
+        resp_body['attachment'] = 'wrong image'  # todo better error message like real Pushover does
+        resp_body['status'] = 0
+        resp_body['errors'] = ['wrong image']
     elif qs.get('user', None) != TEST_USER and qs.get('user', None) != TEST_GROUP:  # allow TEST_USER or TEST_GROUP
         resp_body['user'] = 'invalid'
         resp_body['status'] = 0
