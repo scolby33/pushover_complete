@@ -22,7 +22,7 @@ CLASSIFIERS = [
     'Topic :: Communications'
 ]
 INSTALL_REQUIRES = ['requests', 'six']
-if sys.version_info >= (3,):
+if sys.version_info < (3,):
     INSTALL_REQUIRES.append('pathlib2')
 EXTRAS_REQUIRE = {}
 TESTS_REQUIRE = ['tox']
