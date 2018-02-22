@@ -188,7 +188,7 @@ class PushoverAPI(object):
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
-        return self._send_message(user, message, device, title, url, url_title, image_path, priority, retry, expire, callback_url,
+        return self._send_message(user, message, device, title, url, url_title, image, priority, retry, expire, callback_url,
                                   timestamp, sound, html)
 
     def send_messages(self, messages):
