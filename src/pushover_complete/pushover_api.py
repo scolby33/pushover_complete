@@ -1,11 +1,15 @@
 import io
 import os
+
 try:
-    from urllib.parse import urljoin
+    from pathlib import Path
 except ImportError:
-    from urlparse import urljoin
+    from pathlib2 import Path
 
 import requests
+
+import six
+from six.moves.urllib.parse import urljoin
 
 from .error import BadAPIRequestError
 
@@ -63,7 +67,7 @@ class PushoverAPI(object):
         :type endpoint: str
         :type url_parameter: str
         :type payload: dict
-        :type files: dict{str,file-like} or dict{str,tuple(str,file-like[, str[, dict]])}
+        :type files: dict{str, file-like} or dict{str, tuple(str, file-like[, str[, dict]])}
         :type session: requests.Session
 
         :returns: Response body interpreted as JSON
@@ -72,7 +76,7 @@ class PushoverAPI(object):
         if payload is None:
             payload = {}
         payload['token'] = self.token
-        
+
         post = session.post if session else requests.post
         resp = post(
             urljoin(PUSHOVER_API_URL, endpoint.format(url_parameter)),
@@ -113,7 +117,7 @@ class PushoverAPI(object):
         :type title: str
         :type url: str
         :type url_title: str
-        :type image: str, pathlib.Path, or file-like
+        :type image: str, pathlib.Path, pathlib2.Path (only in Python 2), or file-like
         :type priority: int
         :type retry: int
         :type expire: int
@@ -141,15 +145,18 @@ class PushoverAPI(object):
             'sound': sound,
             'html': html
         }
-        
+
         if image is not None:
-            if isinstance(image, file) or isinstance(image, io.BytesIO):
-                    attachment = {'attachment': image}
-                    return self._generic_post('messages.json', payload=payload, session=session, files=attachment)
-            if isinstance(image, six.string_types) and os.path.isfile(image):
+            # if it's a str or a pathlib.Path, open it
+            if isinstance(image, six.string_types) or isinstance(image, Path):
                 with open(image, 'rb') as f:
                     attachment = {'attachment': f}
                     return self._generic_post('messages.json', payload=payload, session=session, files=attachment)
+            # otherwise, assume it's a file-like (no good way to test that in both Python 2 and 3...)
+            else:
+                attachment = {'attachment': image}
+                return self._generic_post('messages.json', payload=payload, session=session, files=attachment)
+
         return self._generic_post('messages.json', payload=payload, session=session)
 
     def send_message(self, user, message, device=None, title=None, url=None, url_title=None, image=None,
@@ -162,7 +169,7 @@ class PushoverAPI(object):
         :param title: The title of the message
         :param url: A URL to be included with the message
         :param url_title: The link text to be displayed for the URL. If omitted, the URL itself is displayed.
-        :param image: The file path pointing to the image to be attached to the message or a file-like-object representing the image data.
+        :param image: The file path pointing to the image to be attached to the message or a file-like object representing the image data.
         :param priority: An integer representing the priority of the message, from -2 (least important) to 2 (emergency). Default is 0.
         :param retry: How often the Pushover server will re-send an emergency-priority message in seconds. Required with priority 2 messages.
         :param expire: How long an emergency-priority message will be re-sent for in seconds
@@ -176,7 +183,7 @@ class PushoverAPI(object):
         :type title: str
         :type url: str
         :type url_title: str
-        :type image: str, pathlib.Path, or file-like
+        :type image: str, pathlib.Path, pathlib2.Path (only in Python 2), or file-like
         :type priority: int
         :type retry: int
         :type expire: int
@@ -188,8 +195,8 @@ class PushoverAPI(object):
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
-        return self._send_message(user, message, device, title, url, url_title, image, priority, retry, expire, callback_url,
-                                  timestamp, sound, html)
+        return self._send_message(user, message, device, title, url, url_title, image, priority, retry, expire,
+                                  callback_url, timestamp, sound, html)
 
     def send_messages(self, messages):
         """Send multiple messages with one call. Utilizes a single HTTP session to decrease overhead.
