@@ -36,7 +36,7 @@ def messages_callback(request):
     }
     headers = {'X-Request-Id': TEST_REQUEST_ID}
 
-    if getattr(request, 'headers', None).get('content-type', None) == 'application/x-www-form-urlencoded':
+    if getattr(request, 'headers', {}).get('content-type') == 'application/x-www-form-urlencoded':
         req_body = getattr(request, 'body', None)
         qs = parse_qs(req_body)
         qs = {k: v[0] for k, v in qs.items()}
