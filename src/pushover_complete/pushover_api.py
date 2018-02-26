@@ -1,17 +1,17 @@
 import io
 import os
 
-try:
-    from pathlib import Path
-except ImportError:
-    from pathlib2 import Path
-
 import requests
 
 import six
 from six.moves.urllib.parse import urljoin
 
 from .error import BadAPIRequestError
+
+try:
+    from pathlib import Path
+except ImportError:
+    from pathlib2 import Path
 
 PUSHOVER_API_URL = 'https://api.pushover.net/1/'
 
