@@ -11,6 +11,15 @@ from requests_toolbelt.multipart import decoder
 from tests.constants import *
 
 
+def get_content_disposition_name(headers):
+    """Get the name from the Content-Disposition header (like `Content-Disposition: form-data; name="gotten name"`)"""
+    content_disposition = headers[b'Content-Disposition'].decode('utf-8')
+    name_and_label = content_disposition.split(';')[1]
+    name = name_and_label.split('=')[1]
+    unquoted_name = name.strip('"')
+    return unquoted_name
+
+
 def generic_callback(request):
     """A callback to test the _generic_get and _generic_post methods."""
     resp_body = {
@@ -45,7 +54,7 @@ def messages_callback(request):
         multipart_data = decoder.MultipartDecoder.from_response(request)
         qs = {}
         for part in multipart_data.parts:
-            header_name = part.headers[b'Content-Disposition'].decode('utf-8').split(';')[1].split('=')[1].strip('"')
+            header_name = get_content_disposition_name(part.headers)
             if header_name != 'attachment':
                 qs[header_name] = part.text
             else:
