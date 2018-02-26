@@ -21,7 +21,7 @@ def generic_callback(request):
     qs = parse_qs(req_body)
     qs = {k: v[0] for k, v in qs.items()}
 
-    if qs.get('payload-test', None) is not None:
+    if qs.get('payload-test') is not None:
         resp_body['payload-test'] = qs.get('payload-test')
     else:
         resp_body['payload-test'] = False
@@ -51,28 +51,28 @@ def messages_callback(request):
             else:
                 qs[header_name] = part.content
 
-    if qs.get('message', None) is None:
+    if qs.get('message') is None:
         resp_body['message'] = 'cannot be blank'
         resp_body['status'] = 0
         resp_body['errors'] = ['message cannot be blank']
-    elif qs.get('token', None) != TEST_TOKEN:
+    elif qs.get('token') != TEST_TOKEN:
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
-    elif qs.get('attachment', None) and qs.get('attachment', None) != TEST_IMAGE_BYTES:
+    elif qs.get('attachment') and qs.get('attachment') != TEST_IMAGE_BYTES:
         resp_body['attachment'] = 'wrong image'  # todo better error message like real Pushover does
         resp_body['status'] = 0
         resp_body['errors'] = ['wrong image']
-    elif qs.get('user', None) != TEST_USER and qs.get('user', None) != TEST_GROUP:  # allow TEST_USER or TEST_GROUP
+    elif qs.get('user') != TEST_USER and qs.get('user') != TEST_GROUP:  # allow TEST_USER or TEST_GROUP
         resp_body['user'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['user identifier is not a valid user, group, or subscribed user key']
-    elif qs.get('priority', None) == 2:
-        if qs.get('expire', None) is None:
+    elif qs.get('priority') == 2:
+        if qs.get('expire') is None:
             resp_body['expire'] = 'must be supplied with priority=2'
             resp_body['status'] = 0
             resp_body['errors'] = ['expire must be supplied with priority=2']
-        elif qs.get('retry', None) is None:
+        elif qs.get('retry') is None:
             resp_body['retry'] = 'must be supplied with priority=2'
             resp_body['status'] = 0
             resp_body['errors'] = ['retry must be supplied with priority=2']
@@ -95,7 +95,7 @@ def sounds_callback(request):
     qs = parse_qs(req_body)
     qs = {k: v[0] for k, v in qs.items()}
 
-    if qs.get('token', None) != TEST_TOKEN:
+    if qs.get('token') != TEST_TOKEN:
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
@@ -117,14 +117,14 @@ def validate_callback(request):
     qs = parse_qs(req_body)
     qs = {k: v[0] for k, v in qs.items()}
 
-    if qs.get('token', None) != TEST_TOKEN:
+    if qs.get('token') != TEST_TOKEN:
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
 
-    user = qs.get('user', None)
+    user = qs.get('user')
     if user == TEST_USER:
-        device = qs.get('device', None)
+        device = qs.get('device')
         if device and device.lower() not in TEST_DEVICES:
             resp_body['device'] = 'invalid for this user'
             resp_body['status'] = 0
@@ -169,7 +169,7 @@ def receipt_callback(request):
     qs = parse_qs(req_body)
     qs = {k: v[0] for k, v in qs.items()}
 
-    if qs.get('token', None) != TEST_TOKEN:
+    if qs.get('token') != TEST_TOKEN:
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
@@ -216,7 +216,7 @@ def receipt_cancel_callback(request):
     qs = parse_qs(req_body)
     qs = {k: v[0] for k, v in qs.items()}
 
-    if qs.get('token', None) != TEST_TOKEN:
+    if qs.get('token') != TEST_TOKEN:
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
@@ -241,15 +241,15 @@ def subscription_migrate_callback(request):
     qs = parse_qs(req_body)
     qs = {k: v[0] for k, v in qs.items()}
 
-    if qs.get('token', None) != TEST_TOKEN:
+    if qs.get('token') != TEST_TOKEN:
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
-    elif qs.get('subscription', None) != TEST_SUBSCRIPTION_CODE:
+    elif qs.get('subscription') != TEST_SUBSCRIPTION_CODE:
         resp_body['subscription'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['subscription token is invalid']
-    elif qs.get('user', None) != TEST_USER:
+    elif qs.get('user') != TEST_USER:
         resp_body['user'] = 'is not a valid user'
         resp_body['status'] = 0
         resp_body['errors'] = ['user key is not valid for any active user']
@@ -271,7 +271,7 @@ def groups_callback(request):
     qs = parse_qs(req_body)
     qs = {k: v[0] for k, v in qs.items()}
 
-    if qs.get('token', None) != TEST_TOKEN:
+    if qs.get('token') != TEST_TOKEN:
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
@@ -311,7 +311,7 @@ def groups_add_user_callback(request):
     qs = parse_qs(req_body)
     qs = {k: v[0] for k, v in qs.items()}
 
-    if qs.get('token', None) != TEST_TOKEN:
+    if qs.get('token') != TEST_TOKEN:
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
@@ -319,7 +319,7 @@ def groups_add_user_callback(request):
         resp_body['group'] = 'not found'
         resp_body['status'] = 0
         resp_body['errors'] = ['group not found or you are not authorized to edit it']
-    elif qs.get('user', None) != TEST_USER:
+    elif qs.get('user') != TEST_USER:
         resp_body['user'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['user key is invalid']
@@ -340,7 +340,7 @@ def groups_delete_user_callback(request):
     qs = parse_qs(req_body)
     qs = {k: v[0] for k, v in qs.items()}
 
-    if qs.get('token', None) != TEST_TOKEN:
+    if qs.get('token') != TEST_TOKEN:
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
@@ -348,7 +348,7 @@ def groups_delete_user_callback(request):
         resp_body['group'] = 'not found'
         resp_body['status'] = 0
         resp_body['errors'] = ['group not found or you are not authorized to edit it']
-    elif qs.get('user', None) != TEST_USER:
+    elif qs.get('user') != TEST_USER:
         resp_body['user'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['user is not a member of this group']
@@ -369,7 +369,7 @@ def groups_disable_user_callback(request):
     qs = parse_qs(req_body)
     qs = {k: v[0] for k, v in qs.items()}
 
-    if qs.get('token', None) != TEST_TOKEN:
+    if qs.get('token') != TEST_TOKEN:
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
@@ -377,7 +377,7 @@ def groups_disable_user_callback(request):
         resp_body['group'] = 'not found'
         resp_body['status'] = 0
         resp_body['errors'] = ['group not found or you are not authorized to edit it']
-    elif qs.get('user', None) != TEST_USER:
+    elif qs.get('user') != TEST_USER:
         resp_body['user'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['user is not a member of this group']
@@ -398,7 +398,7 @@ def groups_enable_user_callback(request):
     qs = parse_qs(req_body)
     qs = {k: v[0] for k, v in qs.items()}
 
-    if qs.get('token', None) != TEST_TOKEN:
+    if qs.get('token') != TEST_TOKEN:
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
@@ -406,7 +406,7 @@ def groups_enable_user_callback(request):
         resp_body['group'] = 'not found'
         resp_body['status'] = 0
         resp_body['errors'] = ['group not found or you are not authorized to edit it']
-    elif qs.get('user', None) != TEST_USER:
+    elif qs.get('user') != TEST_USER:
         resp_body['user'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['user is not a member of this group']
@@ -427,7 +427,7 @@ def groups_rename_callback(request):
     qs = parse_qs(req_body)
     qs = {k: v[0] for k, v in qs.items()}
 
-    if qs.get('token', None) != TEST_TOKEN:
+    if qs.get('token') != TEST_TOKEN:
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
@@ -452,19 +452,19 @@ def licenses_assign_callback(request):
     qs = parse_qs(req_body)
     qs = {k: v[0] for k, v in qs.items()}
 
-    if qs.get('token', None) != TEST_TOKEN:
+    if qs.get('token') != TEST_TOKEN:
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
-    elif qs.get('email', None) is not None and qs.get('email', None) != TEST_USER_EMAIL:
+    elif qs.get('email') is not None and qs.get('email') != TEST_USER_EMAIL:
         resp_body['email'] = 'is not a valid e-mail address'
         resp_body['status'] = 0
         resp_body['errors'] = ['e-mail address is not a valid address']
-    elif qs.get('user', None) is not None and qs.get('user', None) != TEST_USER:
+    elif qs.get('user') is not None and qs.get('user') != TEST_USER:
         resp_body['user'] = 'is not a valid user'
         resp_body['status'] = 0
         resp_body['errors'] = ['user key is not valid for any active user']
-    elif qs.get('user', None) is None and qs.get('email', None) is None:
+    elif qs.get('user') is None and qs.get('email') is None:
         resp_body['user'] = 'must be supplied'
         resp_body['email'] = 'must be supplied'
         resp_body['status'] = 0
