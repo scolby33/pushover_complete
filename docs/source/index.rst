@@ -91,6 +91,10 @@ If you intend to install in a virtual environment, activate it before running :c
 Currently, Python 3.3 and 3.4 pass all tests and function properly as well, but this could change: these versions are not officially targeted by development.
 Additionally, due to changes in Sphinx, the documentation cannot be built with Python 3.3.
 
+.. warning::
+    .. deprecated:: 1.1.0 Support for Python 3.5 is deprecated. It will be removed in the next major version release.
+        This doesn't mean that Python 3.5 will stop working immediately, but I will no longer consider failing tests for that version to be critical.
+
 Support for Python 2.x may be dropped in the future, but only in a major version update (e.g. 1.x.y → 2.x.y) and this change will be announced well in advance.
 
 See :ref:`installation` for further information about installing :mod:`pushover_complete` in all manner of ways.
