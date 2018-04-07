@@ -16,7 +16,7 @@ Development |develop_build| |develop_coverage| |develop_documentation| |develop_
 .. |stable_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=stable
     :target: http://pushover-complete.readthedocs.io/en/stable/?badge=stable
     :alt: Stable Documentation Status
-.. |stable_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5-blue.svg
+.. |stable_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6-blue.svg
     :alt: Stable Supported Python Versions
 
 
