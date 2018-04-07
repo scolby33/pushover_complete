@@ -16,10 +16,10 @@ Welcome to :mod:`pushover_complete`
 
 :mod:`pushover_complete` is a Python package for interacting with *all* aspects of the `Pushover API <https://pushover.net/api>`_.
 
-.. =========== =============== ================== ======================= ====================
-    Stable      |stable_build|  |stable_coverage|  |stable_documentation|  |stable_pyversions|
-    Development |develop_build| |develop_coverage| |develop_documentation| |develop_pyversions|
-    =========== =============== ================== ======================= ====================
+  =========== =============== ================== ======================= ====================
+  Stable      |stable_build|  |stable_coverage|  |stable_documentation|  |stable_pyversions|
+  Development |develop_build| |develop_coverage| |develop_documentation| |develop_pyversions|
+  =========== =============== ================== ======================= ====================
 
     .. |stable_build| image:: https://travis-ci.org/scolby33/pushover_complete.svg?branch=master
         :target: https://travis-ci.org/scolby33/pushover_complete
