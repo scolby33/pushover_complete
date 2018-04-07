@@ -17,6 +17,13 @@ Versions postfixed with '-dev' are currently under development and those without
 
 Changes as of 6 April 2018
 
+1.1.1 <6 April 2018>
+^^^^^^^^^^^^^^^^^^^^
+
+- HOTFIX for 1.1.0
+- Fix Python versions badge in the documents index
+- Add the Python 3.6 classifier in :code:`setup.py` so the right versions are shown on PyPI
+
 1.1.0 <6 April 2018>
 ^^^^^^^^^^^^^^^^^^^^
 

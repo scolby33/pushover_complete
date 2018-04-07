@@ -66,7 +66,7 @@ author = 'Scott Colby'
 # built documents.
 #
 # The full version, including alpha/beta/rc tags.
-release = '1.1.0'
+release = '1.1.1'
 # The short X.Y version.
 parsed_version = re.match('(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)(?:-(?P<release>[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?(?:\+(?P<build>[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*))?',
                           release)
