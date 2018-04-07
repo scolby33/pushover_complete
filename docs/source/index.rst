@@ -16,7 +16,9 @@ Welcome to :mod:`pushover_complete`
 
 :mod:`pushover_complete` is a Python package for interacting with *all* aspects of the `Pushover API <https://pushover.net/api>`_.
 
-.. =========== =============== ================== ======================= ====================
+.. only:: not latex
+
+    =========== =============== ================== ======================= ====================
     Stable      |stable_build|  |stable_coverage|  |stable_documentation|  |stable_pyversions|
     Development |develop_build| |develop_coverage| |develop_documentation| |develop_pyversions|
     =========== =============== ================== ======================= ====================
@@ -43,7 +45,7 @@ Welcome to :mod:`pushover_complete`
     .. |develop_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=develop
         :target: http://pushover-complete.readthedocs.io/en/develop/?badge=develop
         :alt: Development Documentation Status
-    .. |develop_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5-blue.svg
+    .. |develop_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6-blue.svg
         :alt: Development Supported Python Versions
 
 To learn more about Pushover and the Pushover API, please visit the Pushover Website, `<https://pushover.net>`_.
@@ -85,8 +87,14 @@ Downloading and installing from source goes like this::
 
 If you intend to install in a virtual environment, activate it before running :code:`pip install`.
 
-:mod:`pushover_complete` officially supports Python 2.7 and 3.5.
+:mod:`pushover_complete` officially supports Python 2.7, 3.5, and 3.6.
 Currently, Python 3.3 and 3.4 pass all tests and function properly as well, but this could change: these versions are not officially targeted by development.
+Additionally, due to changes in Sphinx, the documentation cannot be built with Python 3.3.
+
+.. warning::
+    .. deprecated:: 1.1.0 Support for Python 3.5 is deprecated. It will be removed in the next major version release.
+        This doesn't mean that Python 3.5 will stop working immediately, but I will no longer consider failing tests for that version to be critical.
+
 Support for Python 2.x may be dropped in the future, but only in a major version update (e.g. 1.x.y → 2.x.y) and this change will be announced well in advance.
 
 See :ref:`installation` for further information about installing :mod:`pushover_complete` in all manner of ways.
@@ -160,7 +168,7 @@ Changelog
 Details about this versioning scheme can be found on the `Semver website <http://semver.org/spec/v2.0.0.html>`_.
 Versions postfixed with '-dev' are currently under development and those without a postfix are stable releases.
 
-The current version of :mod:`pushover_complete` is |release|.
+You are reading the documents for version |release| of :mod:`pushover_complete`.
 
 Full changelogs can be found on the :ref:`changelog` page.
 

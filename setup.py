@@ -4,6 +4,7 @@ import setuptools
 import codecs  # To use a consistent encoding
 import os
 import re
+import sys
 
 #################################################################
 
@@ -20,7 +21,9 @@ CLASSIFIERS = [
     'Programming Language :: Python :: 3.5',
     'Topic :: Communications'
 ]
-INSTALL_REQUIRES = ['requests']
+INSTALL_REQUIRES = ['requests', 'six']
+if sys.version_info < (3, 4):  # pathlib added to stdlib in 3.4
+    INSTALL_REQUIRES.append('pathlib2')
 EXTRAS_REQUIRE = {}
 TESTS_REQUIRE = ['tox']
 

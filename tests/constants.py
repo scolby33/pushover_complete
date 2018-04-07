@@ -15,6 +15,8 @@ TEST_URL = 'twitter://direct_message?screen_name=someuser'
 TEST_URL_TITLE = 'Reply to @someuser'
 TEST_SUBSCRIPTION_CODE = 'Forum-f504h08fhlasdfj'
 TEST_SUBSCRIBED_USER_KEY = 'sPfjsD2fGzEd9TR52DU31Hv4A61Vvk'
+# a single black pixel
+TEST_IMAGE_BYTES = b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x01\x00\x00\x00\x007n\xf9$\x00\x00\x00\nIDATx\x9cc`\x00\x00\x00\x02\x00\x01H\xaf\xa4q\x00\x00\x00\x00IEND\xaeB`\x82'
 
 SOUNDS = {
     'pushover': 'Pushover (default)',
