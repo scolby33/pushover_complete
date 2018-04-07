@@ -15,7 +15,18 @@ Changelog
 Details about this versioning scheme can be found on the `Semver website <http://semver.org/spec/v2.0.0.html>`_.
 Versions postfixed with '-dev' are currently under development and those without a postfix are stable releases.
 
-Changes as of 23 December 2016
+Changes as of 6 April 2018
+
+1.1.0 <6 April 2018>
+^^^^^^^^^^^^^^^^^^^^
+
+- Add `image attachment support <https://pushover.net/api#attachments>`_ (Pulls `#5 <https://github.com/scolby33/pushover_complete/pull/5>`_ and `#9 <https://github.com/scolby33/pushover_complete/pull/9>`_)
+- Officially add support for Python 3.6
+- Officially deprecate support for Python 3.5. It will be removed in the next major version release.
+- Change default tox environment for Python 3 to py36
+- Refactored :code:`.travis.yml` to be more concise and use the new :code:`py` `environment specification <https://tox.readthedocs.io/en/3.0.0/example/basic.html#a-simple-tox-ini-default-environments>`_ (Pull `#8 <https://github.com/scolby33/pushover_complete/pull/8>`_)
+- Some refactoring in the main API (more list comprehensions yay!) (Pull `#6 <https://github.com/scolby33/pushover_complete/pull/6>`_)
+- Several small documentation changes/refinements
 
 1.0.2 <23 December 2016>
 ^^^^^^^^^^^^^^^^^^^^^^^^

@@ -42,7 +42,7 @@ Here's how to get set up to contribute to :code:`pushover_complete`.
 
     $ pipsi install tox
     # or
-    $ pyvenv my-virtual-env
+    $ python -m venv my-virtual-env
     $ source my-virtual-env/bin/activate
     $ pip install tox
     # or
@@ -181,24 +181,31 @@ The steps for making a release of :code:`pushover_complete` are:
 
 #. Run all tests one last time! ::
 
-    $ tox
+    $ tox -r
 
+   .. note:: I'm using the :code:`-r` option here, forcing tox to recreate all its virtual environments to be sure this is a "clean" build.
+        It takes longer but I think it's worth it for the peace of mind.
 #. Build the project::
 
     $ python setup.py sdist bdist_wheel
 
-#. Check that the sdist and wheel install properly::
+#. Check that the sdist and wheel install properly
+
+   .. warning:: Make sure you do not have any activated virtual environments when running these and the similar test steps.
+        I've gotten inconsistent results in that situation.
+
+   ::
 
     $ rm -r tmp-virtualenv
-    $ pyvenv tmp-virtualenv
-    $ tmp-virtualenv/bin/pip install dist/pushover_complete-{new-version}.tar.gz
+    $ python -m venv tmp-virtualenv
+    $ tmp-virtualenv/bin/python -m pip install dist/pushover_complete-{new-version}.tar.gz
     $ tmp-virtualenv/bin/python
     >>> import pushover_complete
     >>> pushover_complete.__version__
     '{new_version}'
     $ rm -rf tmp-virtualenv
-    $ pyvenv tmp-virtualenv
-    $ tmp-virtualenv/bin/pip install dist/pushover_complete-{new-version}-py2.py3-none-any.whl
+    $ python -m venv tmp-virtualenv
+    $ tmp-virtualenv/bin/python -m pip install dist/pushover_complete-{new-version}-py2.py3-none-any.whl
     $ tmp-virtualenv/bin/python
     >>> import pushover_complete
     >>> pushover_complete.__version__
@@ -207,7 +214,6 @@ The steps for making a release of :code:`pushover_complete` are:
 
 #. Try a release on the PyPI test server::
 
-    $ python setup.py register -r test
     $ twine upload -r test dist/pushover_complete-{new_version}*
 
    .. note:: This requires a :code:`.pypirc` file in your home folder::
@@ -223,7 +229,6 @@ The steps for making a release of :code:`pushover_complete` are:
          password = password
 
          [pypi]
-         repository = https://pypi.python.org/pypi
          username = username
          password = password
 
@@ -232,8 +237,8 @@ The steps for making a release of :code:`pushover_complete` are:
 #. Test install from the test PyPI::
 
     $ rm -rf tmp-virtualenv
-    $ pyvenv tmp-virtualenv
-    $ tmp-virtualenv/bin/pip install -i https://testpypi.python.org/pypi pushover_complete
+    $ python -m venv tmp-virtualenv
+    $ tmp-virtualenv/bin/python -m pip install -i https://testpypi.python.org/pypi pushover_complete
     $ tmp-virtualenv/bin/python
     >>> import pushover_complete
     >>> pushover_complete.__version__
@@ -242,10 +247,6 @@ The steps for making a release of :code:`pushover_complete` are:
 
 #. Check the metadata and such on the test PyPI website
 #. Deep breath
-#. Register on PyPI::
-
-    $ python setup.py register
-
 #. Upload to PyPI! ::
 
     $ twine upload dist/pushover_complete-{new_version}*
@@ -253,8 +254,8 @@ The steps for making a release of :code:`pushover_complete` are:
 #. Test install from PyPI::
 
     $ rm -rf tmp-virtualenv
-    $ pyvenv tmp-virtualenv
-    $ tmp-virtualenv/bin/pip install pushover_complete
+    $ python -m venv tmp-virtualenv
+    $ tmp-virtualenv/bin/python -m pip install pushover_complete
     $ tmp-virtualenv/bin/python
     >>> import pushover_complete
     >>> pushover_complete.__version__

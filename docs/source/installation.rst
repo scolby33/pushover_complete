@@ -13,7 +13,7 @@ Installation
 
 There are many ways to install a Python package like :mod:`pushover_complete`. Here many of those will be explained and the advantages of each will be identified.
 
-If you are not yet familiar with virtual environments, stop reading this documentation and take a few moments to learn. Try some searches for "virtualenv," "virtualenvwrapper," and "pyvenv".
+If you are not yet familiar with virtual environments, stop reading this documentation and take a few moments to learn. Try some searches for "virtualenv," "virtualenvwrapper," and the "venv" standard library module.
 I promise that they will change your (Python) life.
 
 Where to Get the Code
