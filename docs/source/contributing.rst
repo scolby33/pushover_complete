@@ -247,10 +247,6 @@ The steps for making a release of :code:`pushover_complete` are:
 
 #. Check the metadata and such on the test PyPI website
 #. Deep breath
-#. Register on PyPI::
-
-    $ python setup.py register
-
 #. Upload to PyPI! ::
 
     $ twine upload dist/pushover_complete-{new_version}*
