@@ -29,7 +29,7 @@ Development |develop_build| |develop_coverage| |develop_documentation| |develop_
 .. |develop_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=develop
     :target: http://pushover-complete.readthedocs.io/en/develop/?badge=develop
     :alt: Development Documentation Status
-.. |develop_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5-blue.svg
+.. |develop_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6-blue.svg
     :alt: Development Supported Python Versions
 
 To learn more about Pushover and the Pushover API, please visit the Pushover Website, `<https://pushover.net>`_.
