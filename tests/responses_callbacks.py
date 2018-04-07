@@ -68,10 +68,6 @@ def messages_callback(request):
         resp_body['token'] = 'invalid'
         resp_body['status'] = 0
         resp_body['errors'] = ['application token is invalid']
-    elif qs.get('attachment') and qs.get('attachment') != TEST_IMAGE_BYTES:
-        resp_body['attachment'] = 'wrong image'  # todo better error message like real Pushover does
-        resp_body['status'] = 0
-        resp_body['errors'] = ['wrong image']
     elif qs.get('user') != TEST_USER and qs.get('user') != TEST_GROUP:  # allow TEST_USER or TEST_GROUP
         resp_body['user'] = 'invalid'
         resp_body['status'] = 0

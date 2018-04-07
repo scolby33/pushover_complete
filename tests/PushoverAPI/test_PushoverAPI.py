@@ -129,24 +129,25 @@ def test_PushoverAPI_sends_message_with_image(PushoverAPI):
         'request': TEST_REQUEST_ID
     }
 
-@responses.activate
-def test_PushoverAPI_raises_error_on_bad_image(PushoverAPI):
-    """Test the sending of a corrupt image"""
-    responses.add_callback(
-        responses.POST,
-        urljoin(PUSHOVER_API_URL, 'messages.json'),
-        callback=messages_callback,
-        content_type='application/json'
-    )
-
-    image_io = BytesIO(TEST_IMAGE_BYTES[10:])  # "corrupt" the image by removing some of the beginning
-
-    with pytest.raises(BadAPIRequestError):
-        PushoverAPI.send_message(
-            TEST_USER,
-            TEST_MESSAGE,
-            image=image_io
-        )
+# Pushover doesn't seem to validate the received images in any way
+#@responses.activate
+# def test_PushoverAPI_raises_error_on_bad_image(PushoverAPI):
+#     """Test the sending of a corrupt image"""
+#     responses.add_callback(
+#         responses.POST,
+#         urljoin(PUSHOVER_API_URL, 'messages.json'),
+#         callback=messages_callback,
+#         content_type='application/json'
+#     )
+#
+#     image_io = BytesIO(TEST_IMAGE_BYTES[10:])  # "corrupt" the image by removing some of the beginning
+#
+#     with pytest.raises(BadAPIRequestError):
+#         PushoverAPI.send_message(
+#             TEST_USER,
+#             TEST_MESSAGE,
+#             image=image_io
+#         )
 
 @responses.activate
 def test_PushoverAPI_sends_message_with_image_from_path(PushoverAPI, tmpdir):
