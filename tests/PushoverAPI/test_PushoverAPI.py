@@ -1,5 +1,6 @@
 """Tests for the :mod:`pushover_complete.pushover_api.PushoverAPI` class."""
 
+from io import BytesIO
 import re
 try:
     from urllib.parse import urljoin, parse_qs
@@ -107,6 +108,68 @@ def test_PushoverAPI_sends_complex_message(PushoverAPI):
         'request': TEST_REQUEST_ID
     }
 
+@responses.activate
+def test_PushoverAPI_sends_message_with_image(PushoverAPI):
+    """Test the sending of an image attachment"""
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'messages.json'),
+        callback=messages_callback,
+        content_type='application/json'
+    )
+    image_io = BytesIO(TEST_IMAGE_BYTES)
+    resp = PushoverAPI.send_message(
+        TEST_USER,
+        TEST_MESSAGE,
+        image=image_io
+    )
+
+    assert resp == {
+        'status': 1,
+        'request': TEST_REQUEST_ID
+    }
+
+# Pushover doesn't seem to validate the received images in any way
+#@responses.activate
+# def test_PushoverAPI_raises_error_on_bad_image(PushoverAPI):
+#     """Test the sending of a corrupt image"""
+#     responses.add_callback(
+#         responses.POST,
+#         urljoin(PUSHOVER_API_URL, 'messages.json'),
+#         callback=messages_callback,
+#         content_type='application/json'
+#     )
+#
+#     image_io = BytesIO(TEST_IMAGE_BYTES[10:])  # "corrupt" the image by removing some of the beginning
+#
+#     with pytest.raises(BadAPIRequestError):
+#         PushoverAPI.send_message(
+#             TEST_USER,
+#             TEST_MESSAGE,
+#             image=image_io
+#         )
+
+@responses.activate
+def test_PushoverAPI_sends_message_with_image_from_path(PushoverAPI, tmpdir):
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'messages.json'),
+        callback=messages_callback,
+        content_type='application/json'
+    )
+
+    img_path = tmpdir.join('pushover.png')
+    img_path.write_binary(TEST_IMAGE_BYTES)
+    resp = PushoverAPI.send_message(
+        TEST_USER,
+        TEST_MESSAGE,
+        image=img_path.strpath
+    )
+
+    assert resp == {
+        'status': 1,
+        'request': TEST_REQUEST_ID
+    }
 
 @responses.activate
 def test_PushoverAPI_raises_error_on_bad_message(PushoverAPI):
