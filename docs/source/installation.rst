@@ -11,9 +11,9 @@
 Installation
 ============
 
-There are many ways to install a Python package like :code:`pushover_complete`. Here many of those will be explained and the advantages of each will be identified.
+There are many ways to install a Python package like :mod:`pushover_complete`. Here many of those will be explained and the advantages of each will be identified.
 
-If you are not yet familiar with virtual environments, stop reading this documentation and take a few moments to learn. Try some searches for "virtualenv," "virtualenvwrapper," and "pyvenv."
+If you are not yet familiar with virtual environments, stop reading this documentation and take a few moments to learn. Try some searches for "virtualenv," "virtualenvwrapper," and "pyvenv".
 I promise that they will change your (Python) life.
 
 Where to Get the Code
@@ -22,7 +22,7 @@ Where to Get the Code
 From PyPI
 ^^^^^^^^^
 
-Stable releases of :code:`pushover_complete` are located on PyPI, the `PYthon Package Index <https://pypi.python.org/pypi>`_.
+Stable releases of :mod:`pushover_complete` are located on PyPI, the `PYthon Package Index <https://pypi.python.org/pypi>`_.
 Installation from here is easy and generally the preferred method::
 
     $ pip install pushover_complete
@@ -37,7 +37,7 @@ From GitHub
 
 This works because only release-ready code is pushed to the master branch.
 
-To get the latest and greatest version of :code:`pushover_complete` from the develop branch, install like this instead::
+To get the latest and greatest version of :mod:`pushover_complete` from the develop branch, install like this instead::
 
     $ pip install git+https://github.com/scolby33/pushover_complete@develop#egg=pushover_complete-latestdev
 

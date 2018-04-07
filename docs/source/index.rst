@@ -162,7 +162,7 @@ Changelog
 Details about this versioning scheme can be found on the `Semver website <http://semver.org/spec/v2.0.0.html>`_.
 Versions postfixed with '-dev' are currently under development and those without a postfix are stable releases.
 
-The current version of :mod:`pushover_complete` is |release|.
+You are reading the documents for version |release| of :mod:`pushover_complete`.
 
 Full changelogs can be found on the :ref:`changelog` page.
 
