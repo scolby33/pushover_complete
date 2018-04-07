@@ -19,6 +19,7 @@ CLASSIFIERS = [
     'Programming Language :: Python',
     'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3.5',
+    'Programming Language :: Python :: 3.6',
     'Topic :: Communications'
 ]
 INSTALL_REQUIRES = ['requests', 'six']
