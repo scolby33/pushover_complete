@@ -4,27 +4,20 @@ cache: pip
 language: python
 
 python:
-    - "2.7"
-    - "3.3"
-    - "3.4"
-    - "3.5"
-    - "3.6"
+    - 3.6
+    - 3.5
+    - 3.4
+    - 3.3
+    - 2.7
+
 env:
-    - TOXENV=manifest
-    - TOXENV=docs
+  matrix:
+    - TOXENV=py
 
 matrix:
     include:
-        - python: "2.7"
-          env: TOXENV=py27
-        - python: "3.3"
-          env: TOXENV=py33
-        - python: "3.4"
-          env: TOXENV=py34
-        - python: "3.5"
-          env: TOXENV=py35
-        - python: "3.6"
-          env: TOXENV=py36
+        - env: TOXENV=docs
+        - env: TOXENV=manifest
     allow_failures:
         - python: "3.3"
         - python: "3.4"
