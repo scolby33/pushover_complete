@@ -29,7 +29,7 @@ Development |develop_build| |develop_coverage| |develop_documentation| |develop_
 .. |develop_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=develop
     :target: http://pushover-complete.readthedocs.io/en/develop/?badge=develop
     :alt: Development Documentation Status
-.. |develop_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6-blue.svg
+.. |develop_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6%2C%203.7-blue.svg
     :alt: Development Supported Python Versions
 
 To learn more about Pushover and the Pushover API, please visit the Pushover Website, `<https://pushover.net>`_.
@@ -53,7 +53,7 @@ Installation should be as easy as executing this command in your chosen terminal
 
     $ pip install pushover_complete
 
-:code:`pushover_complete` officially supports Python 2.7, 3.5, and 3.6.
+:code:`pushover_complete` officially supports Python 2.7, 3.5, 3.6, and 3.7.
 Currently, Python 3.3 and 3.4 pass all tests and function properly as well, but this could change: these versions are not officially targeted by development.
 Additionally, due to changes in Sphinx, the documentation cannot be built with Python 3.3.
 

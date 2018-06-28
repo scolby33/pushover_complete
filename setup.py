@@ -20,7 +20,8 @@ CLASSIFIERS = [
     'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
-    'Topic :: Communications'
+    'Programming Language :: Python :: 3.7',
+    'Topic :: Communications',
 ]
 INSTALL_REQUIRES = ['requests', 'six']
 if sys.version_info < (3, 4):  # pathlib added to stdlib in 3.4
