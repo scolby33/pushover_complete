@@ -88,7 +88,8 @@ Downloading and installing from source goes like this::
 If you intend to install in a virtual environment, activate it before running :code:`pip install`.
 
 :mod:`pushover_complete` officially supports Python 2.7, 3.5, 3.6, and 3.7.
-Currently, Python 3.3 and 3.4 pass all tests and function properly as well, but this could change: these versions are not officially targeted by development.
+Currently, Python 3.4 passes all test and functions properly as well, but this could change: this version is not officially targeted by development.
+Tox has dropped support for Python 3.3 and, as such, tests are no longer run on this version. Like for Python 3.4, functionality could break for Python 3.3 at any time.
 Additionally, due to changes in Sphinx, the documentation cannot be built with Python 3.3.
 
 .. warning::
