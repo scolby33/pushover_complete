@@ -33,7 +33,7 @@ Welcome to :mod:`pushover_complete`
         :target: http://pushover-complete.readthedocs.io/en/stable/?badge=stable
         :alt: Stable Documentation Status
     .. |stable_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6-blue.svg
-        :alt: Stable Supported Python Versions
+        :alt: Stable Supported Python Versions: 2.7, 3.5, and 3.6
 
 
     .. |develop_build| image:: https://travis-ci.org/scolby33/pushover_complete.svg?branch=develop
@@ -46,7 +46,7 @@ Welcome to :mod:`pushover_complete`
         :target: http://pushover-complete.readthedocs.io/en/develop/?badge=develop
         :alt: Development Documentation Status
     .. |develop_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6%2C%203.7-blue.svg
-        :alt: Development Supported Python Versions
+        :alt: Development Supported Python Versions: 2.7, 3.5, 3.6, and 3.7
 
 To learn more about Pushover and the Pushover API, please visit the Pushover Website, `<https://pushover.net>`_.
 
