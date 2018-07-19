@@ -42,7 +42,7 @@ To learn more about Pushover and the Pushover API, please visit the Pushover Web
 
 That's all you need to get started with sending Pushover notifications from your Python program.
 The majority of Pushover's API endpoints are accessible via :code:`pushover_complete`.
-Check out the `docs <http://pushover-complete.readthedocs.io/>`_ to learn more.
+Check out the `docs <https://pushover-complete.readthedocs.io/>`_ to learn more.
 
 Installation
 ------------
