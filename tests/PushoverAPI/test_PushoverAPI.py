@@ -171,6 +171,29 @@ def test_PushoverAPI_sends_message_with_image_from_path(PushoverAPI, tmpdir):
         'request': TEST_REQUEST_ID
     }
 
+
+@responses.activate
+def test_PushoverAPI_sends_message_with_ttl(PushoverAPI):
+    """Test the sending of a message with ttl value."""
+    responses.add_callback(
+        responses.POST,
+        urljoin(PUSHOVER_API_URL, 'messages.json'),
+        callback=messages_callback,
+        content_type='application/json'
+    )
+    resp = PushoverAPI.send_message(TEST_USER, TEST_MESSAGE, ttl=30)
+    # request_body = parse_qs(resp.request.body)
+    # assert request_body['token'][0] == TEST_TOKEN
+    # assert request_body['user'][0] == TEST_USER
+    # assert request_body['message'][0] == TEST_MESSAGE
+    # assert request_body['ttl'][0] == 30
+
+    assert resp == {
+        'status': 1,
+        'request': TEST_REQUEST_ID
+    }
+
+
 @responses.activate
 def test_PushoverAPI_raises_error_on_bad_message(PushoverAPI):
     """Test proper error behavior when a malformed message is sent."""
@@ -267,7 +290,7 @@ def test_PushoverAPI_gets_sounds(PushoverAPI):
 
 
 @responses.activate
-def test_PushoverAPI_rasies_error_on_getting_sounds_with_bad_token(BadTokenPushoverAPI):
+def test_PushoverAPI_raises_error_on_getting_sounds_with_bad_token(BadTokenPushoverAPI):
     """Test proper error behavior when a malformed request to get sounds is sent."""
     responses.add_callback(
         responses.GET,

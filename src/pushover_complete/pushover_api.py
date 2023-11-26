@@ -90,7 +90,7 @@ class PushoverAPI(object):
 
     def _send_message(self, user, message, device=None, title=None, url=None, url_title=None, image=None,
                       priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False,
-                      session=None):
+                      ttl=None, session=None):
         """The internal function used to send messages via the Pushover API.
         Takes a ``session`` parameter to use for sending HTTP requests, allowing the re-use of sessions to decrease overhead.
         Used to abstract the differences between :meth:`PushoverAPI.send_message` and :meth:`PushoverAPI.send_messages`.
@@ -110,6 +110,7 @@ class PushoverAPI(object):
         :param timestamp: A Unix timestamp of the message's date and time to be displayed instead of the time the message is received by the Pushover servers
         :param sound: A string representing a sound to be played with the message instead of the user's default
         :param html: An integer representing if HTML formatting will be enabled for the message text. Set to 1 to enable.
+        :param ttl: An integer representing Time to Live in seconds, after which the message will be automatically deleted.
         :param session: A :class:`requests.Session` object to be used to send HTTP requests. Useful to send multiple messages without opening multiple HTTP sessions.
         :type user: str
         :type message: str
@@ -125,6 +126,7 @@ class PushoverAPI(object):
         :type timestamp: int
         :type sound: str
         :type html: int
+        :type ttl: int
         :type session: requests.Session
 
         :returns: Response body interpreted as JSON
@@ -143,7 +145,8 @@ class PushoverAPI(object):
             'callback': callback_url,
             'timestamp': timestamp,
             'sound': sound,
-            'html': html
+            'html': html,
+            'ttl': ttl
         }
 
         if image is not None:
@@ -160,7 +163,7 @@ class PushoverAPI(object):
         return self._generic_post('messages.json', payload=payload, session=session)
 
     def send_message(self, user, message, device=None, title=None, url=None, url_title=None, image=None,
-                     priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False):
+                     priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False, ttl=None):
         """Send a message via the Pushover API.
 
         :param user: A Pushover user token representing the user or group to whom the message will be sent
@@ -177,6 +180,7 @@ class PushoverAPI(object):
         :param timestamp: A Unix timestamp of the message's date and time to be displayed instead of the time the message is received by the Pushover servers
         :param sound: A string representing the sound to be played with the message instead of the user's default. Available sounds can be retreived using :meth:`PushoverAPI.get_sounds`.
         :param html: An integer representing if HTML formatting will be enabled for the message text. Set to 1 to enable.
+        :param ttl: An integer representing Time to Live in seconds, after which the message will be automatically deleted.
         :type user: str
         :type message: str
         :type device: str or list
@@ -191,12 +195,13 @@ class PushoverAPI(object):
         :type timestamp: int
         :type sound: str
         :type html: int
+        :type ttl: int
 
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
         return self._send_message(user, message, device, title, url, url_title, image, priority, retry, expire,
-                                  callback_url, timestamp, sound, html)
+                                  callback_url, timestamp, sound, html, ttl)
 
     def send_messages(self, messages):
         """Send multiple messages with one call. Utilizes a single HTTP session to decrease overhead.
@@ -207,7 +212,7 @@ class PushoverAPI(object):
         :rtype: list[dict]
         """
         sess = requests.Session()
-        
+
         return [
             self._send_message(session=sess, **message)
             for message in messages
