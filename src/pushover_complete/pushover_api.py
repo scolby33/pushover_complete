@@ -44,6 +44,7 @@ class PushoverAPI(object):
 
         :returns: Response body interpreted as JSON
         :rtype: dict
+        :raises BadAPIRequestError: Raised when the Pushover response body contains a status code other than 1.
         """
         if payload is None:
             payload = {}
@@ -75,6 +76,7 @@ class PushoverAPI(object):
 
         :returns: Response body interpreted as JSON
         :rtype: dict
+        :raises BadAPIRequestError: Raised when the Pushover response body contains a status code other than 1.
         """
         if payload is None:
             payload = {}
