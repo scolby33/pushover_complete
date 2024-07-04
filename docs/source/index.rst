@@ -14,7 +14,8 @@
 Welcome to :mod:`pushover_complete`
 ===================================
 
-:mod:`pushover_complete` is a Python package for interacting with *all* aspects of the `Pushover API <https://pushover.net/api>`_.
+:mod:`pushover_complete` is a Python package for interacting with *all* aspects of the
+`Pushover API <https://pushover.net/api>`_.
 
 .. only:: not latex
 
@@ -88,15 +89,19 @@ Downloading and installing from source goes like this::
 If you intend to install in a virtual environment, activate it before running :code:`pip install`.
 
 :mod:`pushover_complete` officially supports Python 2.7, 3.5, 3.6, and 3.7.
-Currently, Python 3.4 passes all test and functions properly as well, but this could change: this version is not officially targeted by development.
-Tox has dropped support for Python 3.3 and, as such, tests are no longer run on this version. Like for Python 3.4, functionality could break for Python 3.3 at any time.
+Currently, Python 3.4 passes all test and functions properly as well, but this could change: this version is not
+officially targeted by development.
+Tox has dropped support for Python 3.3 and, as such, tests are no longer run on this version. Like for Python 3.4,
+functionality could break for Python 3.3 at any time.
 Additionally, due to changes in Sphinx, the documentation cannot be built with Python 3.3.
 
 .. warning::
     .. deprecated:: 1.1.0 Support for Python 3.5 is deprecated. It will be removed in the next major version release.
-        This doesn't mean that Python 3.5 will stop working immediately, but I will no longer consider failing tests for that version to be critical.
+        This doesn't mean that Python 3.5 will stop working immediately, but I will no longer consider failing tests for
+        that version to be critical.
 
-Support for Python 2.x may be dropped in the future, but only in a major version update (e.g. 1.x.y → 2.x.y) and this change will be announced well in advance.
+Support for Python 2.x may be dropped in the future, but only in a major version update (e.g. 1.x.y → 2.x.y) and this
+change will be announced well in advance.
 
 See :ref:`installation` for further information about installing :mod:`pushover_complete` in all manner of ways.
 
@@ -109,8 +114,10 @@ Roadmap
 
     roadmap
 
-:mod:`pushover_complete` emerged from my frustrating experience with a number of only partially-complete Pushover packages.
-It is my goal to fully support all of Pushover's API endpoints in this package, beginning with the most essential ones and working from there.
+:mod:`pushover_complete` emerged from my frustrating experience with a number of only partially-complete Pushover
+packages.
+It is my goal to fully support all of Pushover's API endpoints in this package, beginning with the most essential ones
+and working from there.
 The current status of progress towards this goal is tracked in the :ref:`roadmap <roadmap>`.
 
 API Reference
