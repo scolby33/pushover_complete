@@ -58,7 +58,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'pushover_complete'
-copyright = '2016, Scott Colby'
+copyright = '2024, Scott Colby'
 author = 'Scott Colby'
 
 # The version info for the project you're documenting, acts as replacement for
