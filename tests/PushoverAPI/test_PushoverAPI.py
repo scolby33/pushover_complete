@@ -343,7 +343,7 @@ def test_PushoverAPI_raises_error_on_bad_user_validation(PushoverAPI):
 @responses.activate
 def test_PushoverAPI_gets_receipt(PushoverAPI):
     """Test the retrieval of receipt details."""
-    url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*\.json')
+    url_re = re.compile(r'https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*\.json')
     responses.add_callback(
         responses.GET,
         url_re,
@@ -373,7 +373,7 @@ def test_PushoverAPI_gets_receipt(PushoverAPI):
 @responses.activate
 def test_PushoverAPI_raises_error_on_bad_receipt(PushoverAPI):
     """Test the getting of a bad receipt value."""
-    url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*\.json')
+    url_re = re.compile(r'https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*\.json')
     responses.add_callback(
         responses.GET,
         url_re,
@@ -387,7 +387,7 @@ def test_PushoverAPI_raises_error_on_bad_receipt(PushoverAPI):
 @responses.activate
 def test_PushoverAPI_cancels_receipt(PushoverAPI):
     """Test cancelling a receipt."""
-    url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
+    url_re = re.compile(r'https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
     responses.add_callback(
         responses.POST,
         url_re,
@@ -408,7 +408,7 @@ def test_PushoverAPI_cancels_receipt(PushoverAPI):
 @responses.activate
 def test_PushoverAPI_raises_error_on_bad_receipt_cancel(PushoverAPI):
     """Test the cancelling of a bad receipt value."""
-    url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
+    url_re = re.compile(r'https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
     responses.add_callback(
         responses.POST,
         url_re,
@@ -483,7 +483,7 @@ def test_PushoverAPI_migrates_multiple_subscriptions(PushoverAPI):
 @responses.activate
 def test_PushoverAPI_gets_group_info(PushoverAPI):
     """Test getting group info"""
-    url_re = re.compile('https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*\.json')
+    url_re = re.compile(r'https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*\.json')
     responses.add_callback(
         responses.GET,
         url_re,
@@ -520,7 +520,7 @@ def test_PushoverAPI_gets_group_info(PushoverAPI):
 @responses.activate
 def test_PushoverAPI_adds_user_to_group(PushoverAPI):
     """Test adding a user to a group"""
-    url_re = re.compile('https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/add_user\.json')
+    url_re = re.compile(r'https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/add_user\.json')
     responses.add_callback(
         responses.POST,
         url_re,
@@ -538,7 +538,7 @@ def test_PushoverAPI_adds_user_to_group(PushoverAPI):
 @responses.activate
 def test_PushoverAPI_deletes_user_from_group(PushoverAPI):
     """Test removing a user from a group"""
-    url_re = re.compile('https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/delete_user\.json')
+    url_re = re.compile(r'https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/delete_user\.json')
     responses.add_callback(
         responses.POST,
         url_re,
@@ -556,7 +556,7 @@ def test_PushoverAPI_deletes_user_from_group(PushoverAPI):
 @responses.activate
 def test_PushoverAPI_disables_user_in_group(PushoverAPI):
     """Test disabling a user in a group."""
-    url_re = re.compile('https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/disable_user\.json')
+    url_re = re.compile(r'https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/disable_user\.json')
     responses.add_callback(
         responses.POST,
         url_re,
@@ -574,7 +574,7 @@ def test_PushoverAPI_disables_user_in_group(PushoverAPI):
 @responses.activate
 def test_PushoverAPI_enables_user_in_group(PushoverAPI):
     """Test enabling a user in a group."""
-    url_re = re.compile('https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/enable_user\.json')
+    url_re = re.compile(r'https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/enable_user\.json')
     responses.add_callback(
         responses.POST,
         url_re,
@@ -592,7 +592,7 @@ def test_PushoverAPI_enables_user_in_group(PushoverAPI):
 @responses.activate
 def test_PushoverAPI_changes_group_name(PushoverAPI):
     """Test changing group name."""
-    url_re = re.compile('https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/rename\.json')
+    url_re = re.compile(r'https://api\.pushover\.net/1/groups/g[a-zA-Z0-9]*/rename\.json')
     responses.add_callback(
         responses.POST,
         url_re,

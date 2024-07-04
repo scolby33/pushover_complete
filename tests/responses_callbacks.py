@@ -155,7 +155,7 @@ def receipt_callback(request):
 
     Best used like so::
 
-        url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*\.json')
+        url_re = re.compile(r'https://api\\.pushover\\.net/1/receipts/r[a-zA-Z0-9]*\\.json')
         responses.add_callback(
             responses.GET,
             url_re,
@@ -202,7 +202,7 @@ def receipt_cancel_callback(request):
 
     Best used like so::
 
-            url_re = re.compile('https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
+            url_re = re.compile(r'https://api\\.pushover\\.net/1/receipts/r[a-zA-Z0-9]*/cancel\\.json')
         responses.add_callback(
             responses.GET,
             url_re,
