@@ -67,3 +67,96 @@ Changelog = "https://pushover-complete.readthedocs.io/en/stable/changelog.html"
 [tool.setuptools.dynamic]
 # https://setuptools.pypa.io/en/stable/userguide/pyproject_config.html#dynamic-metadata
 version = { attr = "pushover_complete.__version__" }
+
+[tool.coverage.run]
+branch = true
+source = [
+    "pushover_complete",
+]
+omit = [
+    "tests/*",
+    "docs/*",
+]
+
+[tool.coverage.paths]
+source = [
+    "src/pushover_complete",
+    ".tox/*/lib/python*/site-packages/pushover_complete",
+]
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.doc8]
+max-line-length = 120
+
+[tool.ruff.lint]
+# See https://docs.astral.sh/ruff/rules
+extend-select = [
+    # "F",  # pyflakes, included by default
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "C90",  # mccabe
+    "I",  # isort
+    "N",  # pep8 naming
+    "D",  # pydocstyle
+    "UP",  # pyupgrade
+    "YTT",  # flake8-2020
+    # "ANN",  # flake8-annotations, can't use because supporting Python 2
+    "ASYNC",  # flake8-async
+    "S",  # flake8-bandit
+    "BLE",  # flake8-blind-except
+    "FBT",  # flake8-boolean-trap
+    "B",  # flake8-bugbear
+    "A",  # flake8-builtins
+    "COM",  # flake8-commas
+    # "CPY",  # flake8-copyright, not using this
+    "C4",  # flake8-comprehensions
+    "DTZ",  # flake8-datetimez"
+    "T100",  # flake8-debugger
+    # "DJ",  # flake8-django, not using Django in this project
+    "EM",  # flake8-errmsg
+    "EXE",  # flake8-executable
+    "FA",  # flake8-future-annotations
+    "ISC",  # flake8-implicit-str-concat
+    "ICN",  # flake8-import-conventions
+    "LOG",  # flake8-logging
+    "G",  # flake8-logging-format
+    "INP",  # flake8-no-pep420
+    "PIE",  # flake8-pie
+    "T20",  # flake8-print
+    "PYI",  # flake8-pyi
+    "PT",  # flake8-pytest-style
+    "Q",  # flake8-quotes
+    "RSE",  # flake8-raise
+    "RET",  # flake8-return
+    "SLF",  # flake8-self
+    "SLOT",  # flake8-slots
+    "SIM",  # flake8-simplify
+    "TID",  # flake8-tidy-imports
+    "TCH",  # flake8-type-checking
+    "INT",  # flake8-gettext
+    "ARG",  # flake8-unused-arguments
+    "PTH",  # flake8-use-pathlib
+    "TD",  # flake8-todos
+    "FIX",  # flake8-fixme
+    "ERA",  # eradicate commented out code
+    "PD",  # pandas-vet
+    "PGH",  # pygrep-hooks
+    "PLC",  # pylint convention
+    "PLE",  # pylint error
+    "PLR",  # pylint refactor
+    "PLW",  # pylint warning
+    "TRY",  # tryceratops
+    "FLY",  # flynt
+    "NPY",  # numpy checks
+    "AIR",  # airflow
+    "PERF",  # perflint
+    "FURB",  # refurb
+    "RUF",  # ruff rules
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Ignore commented-out code in Sphinx configuration file
+"docs/source/conf.py" = ["ERA001"]
+
