@@ -4,11 +4,12 @@ from .error import PushoverCompleteError, BadAPIRequestError
 from .pushover_api import PushoverAPI
 
 __all__ = [
-    'PushoverCompleteError', 'BadAPIRequestError',
-    'PushoverAPI'
+    "PushoverCompleteError",
+    "BadAPIRequestError",
+    "PushoverAPI",
 ]
 
-__version__ = '1.1.2-dev'
+__version__ = "1.1.2-dev"
 
-__license__ = 'MIT License'
-__copyright__ = 'Copyright (c) 2024 Scott Colby'
+__license__ = "MIT License"
+__copyright__ = "Copyright (c) 2024 Scott Colby"

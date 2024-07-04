@@ -15,7 +15,7 @@ try:
 except ImportError:
     from pathlib2 import Path  # type: ignore[no-redef]
 
-PUSHOVER_API_URL = 'https://api.pushover.net/1/'
+PUSHOVER_API_URL = "https://api.pushover.net/1/"
 
 
 class PushoverAPI(object):
@@ -48,19 +48,22 @@ class PushoverAPI(object):
         """
         if payload is None:
             payload = {}
-        payload['token'] = self.token
+        payload["token"] = self.token
 
         get = session.get if session else requests.get
         resp = get(
-            urljoin(PUSHOVER_API_URL, endpoint.format(url_parameter)),
-            data=payload
+            urljoin(PUSHOVER_API_URL, endpoint.format(url_parameter)), data=payload
         )
         resp_body = resp.json()
-        if resp_body.get('status', None) != 1:
-            raise BadAPIRequestError('{}: {}'.format(resp.status_code, ': '.join(resp_body.get('errors'))))
+        if resp_body.get("status", None) != 1:
+            raise BadAPIRequestError(
+                "{}: {}".format(resp.status_code, ": ".join(resp_body.get("errors")))
+            )
         return resp_body
 
-    def _generic_post(self, endpoint, url_parameter=None, payload=None, session=None, files=None):
+    def _generic_post(
+        self, endpoint, url_parameter=None, payload=None, session=None, files=None
+    ):
         """A method for abstracting POST requests to the Pushover API.
 
         :param endpoint: The endpoint of the API to hit. Will be joined with "https://api.pushover.net/1/". Example value: "groups/{}.json"
@@ -80,22 +83,39 @@ class PushoverAPI(object):
         """
         if payload is None:
             payload = {}
-        payload['token'] = self.token
+        payload["token"] = self.token
 
         post = session.post if session else requests.post
         resp = post(
             urljoin(PUSHOVER_API_URL, endpoint.format(url_parameter)),
             data=payload,
-            files=files
+            files=files,
         )
         resp_body = resp.json()
-        if resp_body.get('status', None) != 1:
-            raise BadAPIRequestError('{}: {}'.format(resp.status_code, ': '.join(resp_body.get('errors'))))
+        if resp_body.get("status", None) != 1:
+            raise BadAPIRequestError(
+                "{}: {}".format(resp.status_code, ": ".join(resp_body.get("errors")))
+            )
         return resp_body
 
-    def _send_message(self, user, message, device=None, title=None, url=None, url_title=None, image=None,
-                      priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False,
-                      session=None):
+    def _send_message(
+        self,
+        user,
+        message,
+        device=None,
+        title=None,
+        url=None,
+        url_title=None,
+        image=None,
+        priority=None,
+        retry=None,
+        expire=None,
+        callback_url=None,
+        timestamp=None,
+        sound=None,
+        html=False,
+        session=None,
+    ):
         """The internal function used to send messages via the Pushover API.
         Takes a ``session`` parameter to use for sending HTTP requests, allowing the re-use of sessions to decrease overhead.
         Used to abstract the differences between :meth:`PushoverAPI.send_message` and :meth:`PushoverAPI.send_messages`.
@@ -136,36 +156,58 @@ class PushoverAPI(object):
         :rtype: dict
         """
         payload = {
-            'user': user,
-            'message': message,
-            'device': device,
-            'title': title,
-            'url': url,
-            'url_title': url_title,
-            'priority': priority,
-            'retry': retry,
-            'expire': expire,
-            'callback': callback_url,
-            'timestamp': timestamp,
-            'sound': sound,
-            'html': html
+            "user": user,
+            "message": message,
+            "device": device,
+            "title": title,
+            "url": url,
+            "url_title": url_title,
+            "priority": priority,
+            "retry": retry,
+            "expire": expire,
+            "callback": callback_url,
+            "timestamp": timestamp,
+            "sound": sound,
+            "html": html,
         }
 
         if image is not None:
             # if it's a str or a pathlib.Path, open it
             if isinstance(image, six.string_types) or isinstance(image, Path):
-                with open(image, 'rb') as f:
-                    attachment = {'attachment': f}
-                    return self._generic_post('messages.json', payload=payload, session=session, files=attachment)
+                with open(image, "rb") as f:
+                    attachment = {"attachment": f}
+                    return self._generic_post(
+                        "messages.json",
+                        payload=payload,
+                        session=session,
+                        files=attachment,
+                    )
             # otherwise, assume it's a file-like (no good way to test that in both Python 2 and 3...)
             else:
-                attachment = {'attachment': image}
-                return self._generic_post('messages.json', payload=payload, session=session, files=attachment)
+                attachment = {"attachment": image}
+                return self._generic_post(
+                    "messages.json", payload=payload, session=session, files=attachment
+                )
 
-        return self._generic_post('messages.json', payload=payload, session=session)
+        return self._generic_post("messages.json", payload=payload, session=session)
 
-    def send_message(self, user, message, device=None, title=None, url=None, url_title=None, image=None,
-                     priority=None, retry=None, expire=None, callback_url=None, timestamp=None, sound=None, html=False):
+    def send_message(
+        self,
+        user,
+        message,
+        device=None,
+        title=None,
+        url=None,
+        url_title=None,
+        image=None,
+        priority=None,
+        retry=None,
+        expire=None,
+        callback_url=None,
+        timestamp=None,
+        sound=None,
+        html=False,
+    ):
         """Send a message via the Pushover API.
 
         :param user: A Pushover user token representing the user or group to whom the message will be sent
@@ -200,8 +242,22 @@ class PushoverAPI(object):
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
-        return self._send_message(user, message, device, title, url, url_title, image, priority, retry, expire,
-                                  callback_url, timestamp, sound, html)
+        return self._send_message(
+            user,
+            message,
+            device,
+            title,
+            url,
+            url_title,
+            image,
+            priority,
+            retry,
+            expire,
+            callback_url,
+            timestamp,
+            sound,
+            html,
+        )
 
     def send_messages(self, messages):
         """Send multiple messages with one call. Utilizes a single HTTP session to decrease overhead.
@@ -213,10 +269,7 @@ class PushoverAPI(object):
         """
         sess = requests.Session()
 
-        return [
-            self._send_message(session=sess, **message)
-            for message in messages
-        ]
+        return [self._send_message(session=sess, **message) for message in messages]
 
     def get_sounds(self):
         """Get the current list of supported sounds from the Pushover servers.
@@ -224,7 +277,7 @@ class PushoverAPI(object):
         :return: A :class:`dict` of sounds, with keys representing the identifier and values a human-readable name.
         :rtype: dict
         """
-        return self._generic_get('sounds.json').get('sounds')
+        return self._generic_get("sounds.json").get("sounds")
 
     def validate(self, user, device=None):
         """Validate a user or group token or a user device.
@@ -237,11 +290,8 @@ class PushoverAPI(object):
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
-        payload = {
-            'user': user,
-            'device': device
-        }
-        return self._generic_post('users/validate.json', payload=payload)
+        payload = {"user": user, "device": device}
+        return self._generic_post("users/validate.json", payload=payload)
 
     def check_receipt(self, receipt):
         """Check a receipt issued after sending an emergency-priority message.
@@ -252,7 +302,7 @@ class PushoverAPI(object):
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
-        return self._generic_get('receipts/{}.json', receipt)
+        return self._generic_get("receipts/{}.json", receipt)
 
     def cancel_receipt(self, receipt):
         """Cancel a receipt (and thus further re-sends of the message).
@@ -263,9 +313,11 @@ class PushoverAPI(object):
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
-        return self._generic_post('receipts/{}/cancel.json', receipt)
+        return self._generic_post("receipts/{}/cancel.json", receipt)
 
-    def _migrate_to_subscription(self, user, subscription_code, device=None, sound=None, session=None):
+    def _migrate_to_subscription(
+        self, user, subscription_code, device=None, sound=None, session=None
+    ):
         """The internal function to migrate a user key to a subscription key.
         Takes a ``session`` parameter to use for sending HTTP requests, allowing the re-use of sessions to decrease overhead.
         Used to abstract the differences between :meth:`PushoverAPI.migrate_to_subscription` and :meth:`PushoverAPI.migrate_multiple_to_subscription`.
@@ -286,13 +338,15 @@ class PushoverAPI(object):
         :rtype: dict
         """
         payload = {
-            'user': user,
-            'subscription': subscription_code,
-            'device_name': device,
-            'sound': sound
+            "user": user,
+            "subscription": subscription_code,
+            "device_name": device,
+            "sound": sound,
         }
 
-        return self._generic_post('subscriptions/migrate.json', payload=payload, session=session)
+        return self._generic_post(
+            "subscriptions/migrate.json", payload=payload, session=session
+        )
 
     def migrate_to_subscription(self, user, subscription_code, device=None, sound=None):
         """Migrate a user key to a subscription key.
@@ -324,7 +378,11 @@ class PushoverAPI(object):
         sess = requests.Session()
         resps = []
         for user in users:
-            resps.append(self._migrate_to_subscription(session=sess, subscription_code=subscription_code, **user))
+            resps.append(
+                self._migrate_to_subscription(
+                    session=sess, subscription_code=subscription_code, **user
+                )
+            )
         return resps
 
     def group_info(self, group_key):
@@ -336,7 +394,7 @@ class PushoverAPI(object):
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
-        return self._generic_get('groups/{}.json', group_key)
+        return self._generic_get("groups/{}.json", group_key)
 
     def group_add_user(self, group_key, user, device=None, memo=None):
         """Add a user to a group.
@@ -353,12 +411,8 @@ class PushoverAPI(object):
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
-        payload = {
-            'user': user,
-            'device': device,
-            'memo': memo
-        }
-        return self._generic_post('groups/{}/add_user.json', group_key, payload)
+        payload = {"user": user, "device": device, "memo": memo}
+        return self._generic_post("groups/{}/add_user.json", group_key, payload)
 
     def group_delete_user(self, group_key, user):
         """Remove user from a group.
@@ -371,10 +425,8 @@ class PushoverAPI(object):
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
-        payload = {
-            'user': user
-        }
-        return self._generic_post('groups/{}/delete_user.json', group_key, payload)
+        payload = {"user": user}
+        return self._generic_post("groups/{}/delete_user.json", group_key, payload)
 
     def group_disable_user(self, group_key, user):
         """Temporarily disable a user in a group.
@@ -387,10 +439,8 @@ class PushoverAPI(object):
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
-        payload = {
-            'user': user
-        }
-        return self._generic_post('groups/{}/disable_user.json', group_key, payload)
+        payload = {"user": user}
+        return self._generic_post("groups/{}/disable_user.json", group_key, payload)
 
     def group_enable_user(self, group_key, user):
         """Re-enable a user in a group.
@@ -403,10 +453,8 @@ class PushoverAPI(object):
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
-        payload = {
-            'user': user
-        }
-        return self._generic_post('groups/{}/enable_user.json', group_key, payload)
+        payload = {"user": user}
+        return self._generic_post("groups/{}/enable_user.json", group_key, payload)
 
     def group_rename(self, group_key, new_name):
         """Change the name of a group.
@@ -419,10 +467,8 @@ class PushoverAPI(object):
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
-        payload = {
-            'name': new_name
-        }
-        return self._generic_post('groups/{}/rename.json', group_key, payload)
+        payload = {"name": new_name}
+        return self._generic_post("groups/{}/rename.json", group_key, payload)
 
     def assign_license(self, user_identifier, os=None):
         """Assign a Pushover license to a user.
@@ -435,11 +481,9 @@ class PushoverAPI(object):
         :returns: Response body interpreted as JSON
         :rtype: dict
         """
-        payload = {
-            'os': os
-        }
-        if '@' in user_identifier:
-            payload['email'] = user_identifier
+        payload = {"os": os}
+        if "@" in user_identifier:
+            payload["email"] = user_identifier
         else:
-            payload['user'] = user_identifier
-        return self._generic_post('licenses/assign.json', payload=payload)
+            payload["user"] = user_identifier
+        return self._generic_post("licenses/assign.json", payload=payload)
