@@ -11,7 +11,7 @@ from .error import BadAPIRequestError
 try:
     from pathlib import Path
 except ImportError:
-    from pathlib2 import Path
+    from pathlib2 import Path  # type: ignore[no-redef]
 
 PUSHOVER_API_URL = 'https://api.pushover.net/1/'
 
