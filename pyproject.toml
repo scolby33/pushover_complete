@@ -1,0 +1,69 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#static-vs-dynamic-metadata
+# https://setuptools.pypa.io/en/stable/userguide/pyproject_config.html#dynamic-metadata
+# see below in [tool.setuptools.dynamic] table
+dynamic = ["version"]
+
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#basic-information
+name = "pushover_complete"
+
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#dependencies-and-requirements
+dependencies = [
+    "requests",
+    "six",
+    "pathlib2; python_version <\"3.4\""
+]
+requires-python = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*"
+
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#about-your-project
+authors = [
+    { name = "Scott Colby", email = "scott@scolby.com" }
+]
+maintainers = [
+    { name = "Scott Colby", email = "scott@scolby.com" }
+]
+description = "A Python package for interacting with *all* aspects of the Pushover API"
+readme = "README.rst"
+keywords = ["pushover", "message", "push"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.5",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Communications",
+]
+
+[project.optional-dependencies]
+tests = [
+    "tox",
+]
+docs = [
+    "sphinx",
+    "sphinx_rtd_theme",
+]
+
+[project.urls]
+Homepage = "https://github.com/scolby33/pushover_complete"
+Documentation = "https://pushover-complete.readthedocs.io"
+Repository = "https://github.com/scolby33/pushover_complete"
+Issues = "https://github.com/scolby33/pushover_complete/issues"
+Changelog = "https://pushover-complete.readthedocs.io/en/stable/changelog.html"
+
+[tool.setuptools.dynamic]
+# https://setuptools.pypa.io/en/stable/userguide/pyproject_config.html#dynamic-metadata
+version = { attr = "pushover_complete.__version__" }
