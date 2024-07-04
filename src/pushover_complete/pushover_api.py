@@ -1,3 +1,5 @@
+"""The PushoverAPI class, containing the main functionality of the pushover_complete package."""
+
 import io
 import os
 
@@ -24,6 +26,7 @@ class PushoverAPI(object):
     :param token: A Pushover application token
     :type token: str
     """
+
     def __init__(self, token):
         self.token = token
 
@@ -207,7 +210,7 @@ class PushoverAPI(object):
         :rtype: list[dict]
         """
         sess = requests.Session()
-        
+
         return [
             self._send_message(session=sess, **message)
             for message in messages

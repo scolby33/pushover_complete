@@ -1,3 +1,5 @@
+"""Exceptions used by pushover_complete."""
+
 class PushoverCompleteError(Exception):
     """Root exception for pushover_complete exceptions.
     Only used to except any pushover_complete error. Will never be raised explicitly."""

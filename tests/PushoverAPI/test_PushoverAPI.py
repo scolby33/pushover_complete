@@ -151,6 +151,7 @@ def test_PushoverAPI_sends_message_with_image(PushoverAPI):
 
 @responses.activate
 def test_PushoverAPI_sends_message_with_image_from_path(PushoverAPI, tmpdir):
+    """Test the sending of an image attachment from a filesystem path."""
     responses.add_callback(
         responses.POST,
         urljoin(PUSHOVER_API_URL, 'messages.json'),
