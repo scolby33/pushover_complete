@@ -155,6 +155,12 @@ extend-select = [
     "FURB",  # refurb
     "RUF",  # ruff rules
 ]
+ignore = [
+    "D203",  # one-blank-line-before-class; conflicts with D211, which I want
+    "D212",  # multi-line-summary-first-line; conflicts with D213, which I want
+    "COM812",  # conflicts with ruff formatter
+    "ISC001",  # conflicts with ruff formatter
+]
 
 [tool.ruff.lint.per-file-ignores]
 # Ignore commented-out code in Sphinx configuration file
