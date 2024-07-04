@@ -1,10 +1,7 @@
 """The PushoverAPI class, containing the main functionality of the pushover_complete package."""
 
-import io
-import os
 
 import requests
-
 import six
 from six.moves.urllib.parse import urljoin
 
@@ -18,8 +15,10 @@ except ImportError:
 PUSHOVER_API_URL = "https://api.pushover.net/1/"
 
 
-class PushoverAPI(object):
-    """The object representing an application interacting with the Pushover API.
+class PushoverAPI:
+    """
+    The object representing an application interacting with the Pushover API.
+
     Instantiated with a Pushover application token.
     All API calls made via that instance will use the provided application token.
 
@@ -31,11 +30,17 @@ class PushoverAPI(object):
         self.token = token
 
     def _generic_get(self, endpoint, url_parameter=None, payload=None, session=None):
-        """A method for abstracting GET requests to the Pushover API.
+        """
+        Make a GET request to the Pushover API.
 
-        :param endpoint: The endpoint of the API to hit. Will be joined with "https://api.pushover.net/1/". Example value: "groups/{}.json"
-        :param url_parameter: A parameter to replace in the endpoint string provided. Example value: "g123456". Combined with the above example value, would result in a final URL of "https://api.pushover.net/1/groups/g123456.json"
-        :param payload: A dict of parameters to be appended to the URL, e.g. :code:`{'test-param': False}` would result in the URL having :code:`?test-param=false` appended. Do not include the application token in this dict, as it is added by the function.
+        :param endpoint: The endpoint of the API to hit. Will be joined with "https://api.pushover.net/1/". Example
+            value: "groups/{}.json"
+        :param url_parameter: A parameter to replace in the endpoint string provided. Example value: "g123456". Combined
+            with the above example value, would result in a final URL of
+            "https://api.pushover.net/1/groups/g123456.json"
+        :param payload: A dict of parameters to be appended to the URL, e.g. :code:`{'test-param': False}` would result
+            in the URL having :code:`?test-param=false` appended. Do not include the application token in this dict, as
+            it is added by the function.
         :param session: A :class:`requests.Session` object to be used to send HTTP requests.
         :type endpoint: str
         :type url_parameter: str
@@ -56,20 +61,29 @@ class PushoverAPI(object):
         )
         resp_body = resp.json()
         if resp_body.get("status", None) != 1:
-            raise BadAPIRequestError(
-                "{}: {}".format(resp.status_code, ": ".join(resp_body.get("errors")))
-            )
+            msg = "{}: {}".format(resp.status_code, ": ".join(resp_body.get("errors")))
+            raise BadAPIRequestError(msg)
         return resp_body
 
     def _generic_post(
         self, endpoint, url_parameter=None, payload=None, session=None, files=None
     ):
-        """A method for abstracting POST requests to the Pushover API.
+        """
+        Make a POST request to the Pushover API.
 
-        :param endpoint: The endpoint of the API to hit. Will be joined with "https://api.pushover.net/1/". Example value: "groups/{}.json"
-        :param url_parameter: A parameter to replace in the endpoint string provided. Example value: "g123456". Combined with the above example value, would result in a final URL of "https://api.pushover.net/1/groups/g123456.json"
-        :param payload: A dict of parameters to be appended to the URL, e.g. :code:`{'test-param': False}` would result in the URL having :code:`?test-param=false` appended. Do not include the application token in this dict, as it is added by the function.
-        :param files: (optional) A dict of ``'attachment': value`` for attachment to the message. ``value`` may be a file-like object, or a tuple of at least ``('filename', file-like[, 'content_type'[, custom_headers_dict]])``. The optional 'content_type' string describes the file type and custom_headers_dict is a dict-like-object with additional headers describing the file
+        :param endpoint: The endpoint of the API to hit. Will be joined with "https://api.pushover.net/1/".
+            Example value: "groups/{}.json".
+        :param url_parameter: A parameter to replace in the endpoint string provided. Example value: "g123456". Combined
+            with the above example value, would result in a final URL of
+            "https://api.pushover.net/1/groups/g123456.json".
+        :param payload: A dict of parameters to be appended to the URL, e.g. :code:`{'test-param': False}` would result
+            in the URL having :code:`?test-param=false` appended. Do not include the application token in this dict, as
+            it is added by the function.
+        :param files: (optional) A dict of ``'attachment': value`` for attachment to the message. ``value`` may be a
+            file-like object, or a tuple of at least
+            ``('filename', file-like[, 'content_type'[, custom_headers_dict]])``. The optional 'content_type' string
+            describes the file type and custom_headers_dict is a dict-like-object with additional headers describing
+            the file.
         :param session: A :class:`requests.Session` object to be used to send HTTP requests.
         :type endpoint: str
         :type url_parameter: str
@@ -93,12 +107,12 @@ class PushoverAPI(object):
         )
         resp_body = resp.json()
         if resp_body.get("status", None) != 1:
-            raise BadAPIRequestError(
-                "{}: {}".format(resp.status_code, ": ".join(resp_body.get("errors")))
-            )
+            msg = "{}: {}".format(resp.status_code, ": ".join(resp_body.get("errors")))
+            raise BadAPIRequestError(msg)
         return resp_body
 
-    def _send_message(
+    # yeah, it's a lot of arguments, but I'd rather do this than create a type for the request
+    def _send_message(  # noqa: PLR0913
         self,
         user,
         message,
@@ -113,11 +127,15 @@ class PushoverAPI(object):
         callback_url=None,
         timestamp=None,
         sound=None,
-        html=False,
+        # this doesn't change function behavior, it is just passed directly in the request
+        html=False,  # noqa: FBT002
         session=None,
     ):
-        """The internal function used to send messages via the Pushover API.
-        Takes a ``session`` parameter to use for sending HTTP requests, allowing the re-use of sessions to decrease overhead.
+        """
+        Send a message via the Pushover API with control over the HTTP session.
+
+        Takes a ``session`` parameter to use for sending HTTP requests, allowing the re-use of sessions to decrease
+        overhead.
         Used to abstract the differences between :meth:`PushoverAPI.send_message` and :meth:`PushoverAPI.send_messages`.
         Feel free to call directly if your use case isn't fulfilled by the more public methods.
 
@@ -127,15 +145,22 @@ class PushoverAPI(object):
         :param title: The title of the message
         :param url: A URL to be included with the message
         :param url_title: The link text to be displayed for the URL. If omitted, the URL itself is displayed.
-        :param image: The file path pointing to the image to be attached to the message or a file-like-object representing the image data.
-        :param priority: An integer representing the priority of the message, from -2 (least important) to 2 (emergency). Default is 0.
-        :param retry: How often the Pushover server will re-send an emergency-priority message in seconds. Required with priority 2 messages.
+        :param image: The file path pointing to the image to be attached to the message or a file-like-object
+            representing the image data.
+        :param priority: An integer representing the priority of the message, from -2 (least important) to 2
+            (emergency). Default is 0.
+        :param retry: How often the Pushover server will re-send an emergency-priority message in seconds. Required with
+            priority 2 messages.
         :param expire: How long an emergency-priority message will be re-sent for in seconds
-        :param callback_url: A url to be visited by the Pushover servers upon acknowledgement of an emergency-priority message
-        :param timestamp: A Unix timestamp of the message's date and time to be displayed instead of the time the message is received by the Pushover servers
+        :param callback_url: A url to be visited by the Pushover servers upon acknowledgement of an emergency-priority
+            message
+        :param timestamp: A Unix timestamp of the message's date and time to be displayed instead of the time the
+            message is received by the Pushover servers
         :param sound: A string representing a sound to be played with the message instead of the user's default
-        :param html: An integer representing if HTML formatting will be enabled for the message text. Set to 1 to enable.
-        :param session: A :class:`requests.Session` object to be used to send HTTP requests. Useful to send multiple messages without opening multiple HTTP sessions.
+        :param html: An integer representing if HTML formatting will be enabled for the message text. Set to 1 to
+            enable.
+        :param session: A :class:`requests.Session` object to be used to send HTTP requests. Useful to send multiple
+            messages without opening multiple HTTP sessions.
         :type user: str
         :type message: str
         :type device: str or list
@@ -172,9 +197,19 @@ class PushoverAPI(object):
         }
 
         if image is not None:
-            # if it's a str or a pathlib.Path, open it
-            if isinstance(image, six.string_types) or isinstance(image, Path):
-                with open(image, "rb") as f:
+            # if it's a str, convert to a Path and open it
+            if isinstance(image, six.string_types):
+                with Path(image).open("rb") as f:
+                    attachment = {"attachment": f}
+                    return self._generic_post(
+                        "messages.json",
+                        payload=payload,
+                        session=session,
+                        files=attachment,
+                    )
+            # if it's already a Path, open it directly
+            elif isinstance(image, Path):
+                with image.open("rb") as f:
                     attachment = {"attachment": f}
                     return self._generic_post(
                         "messages.json",
@@ -191,7 +226,8 @@ class PushoverAPI(object):
 
         return self._generic_post("messages.json", payload=payload, session=session)
 
-    def send_message(
+    # yeah, it's a lot of arguments, but I'd rather do this than create a type for the request
+    def send_message(  # noqa: PLR0913
         self,
         user,
         message,
@@ -206,9 +242,11 @@ class PushoverAPI(object):
         callback_url=None,
         timestamp=None,
         sound=None,
-        html=False,
+        # this doesn't change function behavior, it is just passed directly in the request
+        html=False,  # noqa: FBT002
     ):
-        """Send a message via the Pushover API.
+        """
+        Send a message via the Pushover API.
 
         :param user: A Pushover user token representing the user or group to whom the message will be sent
         :param message: The message to be sent
@@ -216,14 +254,21 @@ class PushoverAPI(object):
         :param title: The title of the message
         :param url: A URL to be included with the message
         :param url_title: The link text to be displayed for the URL. If omitted, the URL itself is displayed.
-        :param image: The file path pointing to the image to be attached to the message or a file-like object representing the image data.
-        :param priority: An integer representing the priority of the message, from -2 (least important) to 2 (emergency). Default is 0.
-        :param retry: How often the Pushover server will re-send an emergency-priority message in seconds. Required with priority 2 messages.
+        :param image: The file path pointing to the image to be attached to the message or a file-like object
+            representing the image data.
+        :param priority: An integer representing the priority of the message, from -2 (least important) to 2
+            (emergency). Default is 0.
+        :param retry: How often the Pushover server will re-send an emergency-priority message in seconds. Required with
+            priority 2 messages.
         :param expire: How long an emergency-priority message will be re-sent for in seconds
-        :param callback_url: A url to be visited by the Pushover servers upon acknowledgement of an emergency-priority message
-        :param timestamp: A Unix timestamp of the message's date and time to be displayed instead of the time the message is received by the Pushover servers
-        :param sound: A string representing the sound to be played with the message instead of the user's default. Available sounds can be retreived using :meth:`PushoverAPI.get_sounds`.
-        :param html: An integer representing if HTML formatting will be enabled for the message text. Set to 1 to enable.
+        :param callback_url: A url to be visited by the Pushover servers upon acknowledgement of an emergency-priority
+            message
+        :param timestamp: A Unix timestamp of the message's date and time to be displayed instead of the time the
+            message is received by the Pushover servers
+        :param sound: A string representing the sound to be played with the message instead of the user's default.
+            Available sounds can be retreived using :meth:`PushoverAPI.get_sounds`.
+        :param html: An integer representing if HTML formatting will be enabled for the message text. Set to 1 to
+            enable.
         :type user: str
         :type message: str
         :type device: str or list
@@ -260,9 +305,11 @@ class PushoverAPI(object):
         )
 
     def send_messages(self, messages):
-        """Send multiple messages with one call. Utilizes a single HTTP session to decrease overhead.
+        """
+        Send multiple messages with one call. Utilizes a single HTTP session to decrease overhead.
 
-        :param messages: An iterable of messages to be sent. Each item in the iterable must be expandable using the ``**kwargs`` syntax with the keys matching the parameters of :meth:`PushoverAPI.send_message`.
+        :param messages: An iterable of messages to be sent. Each item in the iterable must be expandable using the
+            ``**kwargs`` syntax with the keys matching the parameters of :meth:`PushoverAPI.send_message`.
 
         :returns: Response body interpreted as JSON
         :rtype: list[dict]
@@ -272,7 +319,8 @@ class PushoverAPI(object):
         return [self._send_message(session=sess, **message) for message in messages]
 
     def get_sounds(self):
-        """Get the current list of supported sounds from the Pushover servers.
+        """
+        Get the current list of supported sounds from the Pushover servers.
 
         :return: A :class:`dict` of sounds, with keys representing the identifier and values a human-readable name.
         :rtype: dict
@@ -280,7 +328,8 @@ class PushoverAPI(object):
         return self._generic_get("sounds.json").get("sounds")
 
     def validate(self, user, device=None):
-        """Validate a user or group token or a user device.
+        """
+        Validate a user or group token or a user device.
 
         :param user: A Pushover user or group token to validate
         :param device: A string representing a device name to validate
@@ -294,7 +343,8 @@ class PushoverAPI(object):
         return self._generic_post("users/validate.json", payload=payload)
 
     def check_receipt(self, receipt):
-        """Check a receipt issued after sending an emergency-priority message.
+        """
+        Check a receipt issued after sending an emergency-priority message.
 
         :param receipt: The receipt id
         :type receipt: str
@@ -305,7 +355,8 @@ class PushoverAPI(object):
         return self._generic_get("receipts/{}.json", receipt)
 
     def cancel_receipt(self, receipt):
-        """Cancel a receipt (and thus further re-sends of the message).
+        """
+        Cancel a receipt (and thus further re-sends of the message).
 
         :param receipt: The id of the receipt id to be cancelled
         :type receipt: str
@@ -318,16 +369,21 @@ class PushoverAPI(object):
     def _migrate_to_subscription(
         self, user, subscription_code, device=None, sound=None, session=None
     ):
-        """The internal function to migrate a user key to a subscription key.
-        Takes a ``session`` parameter to use for sending HTTP requests, allowing the re-use of sessions to decrease overhead.
-        Used to abstract the differences between :meth:`PushoverAPI.migrate_to_subscription` and :meth:`PushoverAPI.migrate_multiple_to_subscription`.
+        """
+        Migrates a user key to a subscription key.
+
+        Takes a ``session`` parameter to use for sending HTTP requests, allowing the re-use of sessions to decrease
+        overhead.
+        Used to abstract the differences between :meth:`PushoverAPI.migrate_to_subscription` and
+        :meth:`PushoverAPI.migrate_multiple_to_subscription`.
         Feel free to call directly if your use case isn't fulfilled by the more public methods.
 
         :param user: The user key to migrate
         :param subscription_code: The subscription code to migrate the user to
         :param device: The user's device that the subscription will be limited to
         :param sound: The user's preferred sound
-        :param session: A :class:`requests.Session` object to be used to send HTTP requests. Useful to send multiple messages without opening multiple HTTP sessions.
+        :param session: A :class:`requests.Session` object to be used to send HTTP requests. Useful to send multiple
+            messages without opening multiple HTTP sessions.
         :type user: str
         :type subscription_code: str
         :type device: str
@@ -349,7 +405,8 @@ class PushoverAPI(object):
         )
 
     def migrate_to_subscription(self, user, subscription_code, device=None, sound=None):
-        """Migrate a user key to a subscription key.
+        """
+        Migrate a user key to a subscription key.
 
         :param user: The user key to migrate
         :param subscription_code: The subscription code to migrate the user to
@@ -366,9 +423,12 @@ class PushoverAPI(object):
         return self._migrate_to_subscription(user, subscription_code, device, sound)
 
     def migrate_multiple_to_subscription(self, users, subscription_code):
-        """Migrate multiple users to subscriptions with one call. Utilizes a single HTTP session to decrease overhead.
+        """
+        Migrate multiple users to subscriptions with one call. Utilizes a single HTTP session to decrease overhead.
 
-        :param users: An iterable of messages to be sent. Each item in the iterable must be expandable using the ``**kwargs`` syntax with keys matching ``user`` and, optionally, ``device`` and ``sound``. Compare to :meth:`PushoverAPI.migrate_to_subscription`.
+        :param users: An iterable of messages to be sent. Each item in the iterable must be expandable using the
+            ``**kwargs`` syntax with keys matching ``user`` and, optionally, ``device`` and ``sound``. Compare to
+            :meth:`PushoverAPI.migrate_to_subscription`.
         :param subscription_code: The subscription code to migrate the user to
         :type subscription_code: str
 
@@ -376,17 +436,16 @@ class PushoverAPI(object):
         :rtype: dict
         """
         sess = requests.Session()
-        resps = []
-        for user in users:
-            resps.append(
-                self._migrate_to_subscription(
-                    session=sess, subscription_code=subscription_code, **user
-                )
+        return [
+            self._migrate_to_subscription(
+                session=sess, subscription_code=subscription_code, **user
             )
-        return resps
+            for user in users
+        ]
 
     def group_info(self, group_key):
-        """Retrieve information about a delivery group.
+        """
+        Retrieve information about a delivery group.
 
         :param group_key: A Pushover group key
         :type group_key: str
@@ -397,7 +456,8 @@ class PushoverAPI(object):
         return self._generic_get("groups/{}.json", group_key)
 
     def group_add_user(self, group_key, user, device=None, memo=None):
-        """Add a user to a group.
+        """
+        Add a user to a group.
 
         :param group_key: A Pushover group key
         :param user: The user key to be added to the group
@@ -415,7 +475,8 @@ class PushoverAPI(object):
         return self._generic_post("groups/{}/add_user.json", group_key, payload)
 
     def group_delete_user(self, group_key, user):
-        """Remove user from a group.
+        """
+        Remove user from a group.
 
         :param group_key: A Pushover group key
         :param user: The user key to remove from the group
@@ -429,7 +490,8 @@ class PushoverAPI(object):
         return self._generic_post("groups/{}/delete_user.json", group_key, payload)
 
     def group_disable_user(self, group_key, user):
-        """Temporarily disable a user in a group.
+        """
+        Temporarily disable a user in a group.
 
         :param group_key: A Pushover group key
         :param user: The user key to disable
@@ -443,7 +505,8 @@ class PushoverAPI(object):
         return self._generic_post("groups/{}/disable_user.json", group_key, payload)
 
     def group_enable_user(self, group_key, user):
-        """Re-enable a user in a group.
+        """
+        Re-enable a user in a group.
 
         :param group_key: A Pushover group key
         :param user: The user key to enable
@@ -457,7 +520,8 @@ class PushoverAPI(object):
         return self._generic_post("groups/{}/enable_user.json", group_key, payload)
 
     def group_rename(self, group_key, new_name):
-        """Change the name of a group.
+        """
+        Change the name of a group.
 
         :param group_key: A Pushover group key
         :param new_name: The new name for the group
@@ -471,7 +535,8 @@ class PushoverAPI(object):
         return self._generic_post("groups/{}/rename.json", group_key, payload)
 
     def assign_license(self, user_identifier, os=None):
-        """Assign a Pushover license to a user.
+        """
+        Assign a Pushover license to a user.
 
         :param user_identifier: A Pushover user key or email identifying the user to assign the license to
         :param os: An OS to limit the license. Available options are :code:`Android`, :code:`iOS`, or :code:`Desktop`

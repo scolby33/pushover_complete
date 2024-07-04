@@ -1,6 +1,6 @@
-"""A Python package for interacting with *all* aspects of the Pushover API"""
+"""A Python package for interacting with *all* aspects of the Pushover API."""
 
-from .error import PushoverCompleteError, BadAPIRequestError
+from .error import BadAPIRequestError, PushoverCompleteError
 from .pushover_api import PushoverAPI
 
 __all__ = [
