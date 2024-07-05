@@ -1,6 +1,5 @@
 """The PushoverAPI class, containing the main functionality of the pushover_complete package."""
 
-
 import requests
 import six
 from six.moves.urllib.parse import urljoin
@@ -56,18 +55,14 @@ class PushoverAPI:
         payload["token"] = self.token
 
         get = session.get if session else requests.get
-        resp = get(
-            urljoin(PUSHOVER_API_URL, endpoint.format(url_parameter)), data=payload
-        )
+        resp = get(urljoin(PUSHOVER_API_URL, endpoint.format(url_parameter)), data=payload)
         resp_body = resp.json()
         if resp_body.get("status", None) != 1:
             msg = "{}: {}".format(resp.status_code, ": ".join(resp_body.get("errors")))
             raise BadAPIRequestError(msg)
         return resp_body
 
-    def _generic_post(
-        self, endpoint, url_parameter=None, payload=None, session=None, files=None
-    ):
+    def _generic_post(self, endpoint, url_parameter=None, payload=None, session=None, files=None):
         """
         Make a POST request to the Pushover API.
 
@@ -220,9 +215,7 @@ class PushoverAPI:
             # otherwise, assume it's a file-like (no good way to test that in both Python 2 and 3...)
             else:
                 attachment = {"attachment": image}
-                return self._generic_post(
-                    "messages.json", payload=payload, session=session, files=attachment
-                )
+                return self._generic_post("messages.json", payload=payload, session=session, files=attachment)
 
         return self._generic_post("messages.json", payload=payload, session=session)
 
@@ -366,9 +359,7 @@ class PushoverAPI:
         """
         return self._generic_post("receipts/{}/cancel.json", receipt)
 
-    def _migrate_to_subscription(
-        self, user, subscription_code, device=None, sound=None, session=None
-    ):
+    def _migrate_to_subscription(self, user, subscription_code, device=None, sound=None, session=None):
         """
         Migrates a user key to a subscription key.
 
@@ -400,9 +391,7 @@ class PushoverAPI:
             "sound": sound,
         }
 
-        return self._generic_post(
-            "subscriptions/migrate.json", payload=payload, session=session
-        )
+        return self._generic_post("subscriptions/migrate.json", payload=payload, session=session)
 
     def migrate_to_subscription(self, user, subscription_code, device=None, sound=None):
         """
@@ -437,10 +426,7 @@ class PushoverAPI:
         """
         sess = requests.Session()
         return [
-            self._migrate_to_subscription(
-                session=sess, subscription_code=subscription_code, **user
-            )
-            for user in users
+            self._migrate_to_subscription(session=sess, subscription_code=subscription_code, **user) for user in users
         ]
 
     def group_info(self, group_key):

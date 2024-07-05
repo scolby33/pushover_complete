@@ -9,7 +9,5 @@ class PushoverCompleteError(Exception):
     """
 
 
-
 class BadAPIRequestError(PushoverCompleteError):
     """An exception raised when Pushover's API responds to a request with an error."""
-
