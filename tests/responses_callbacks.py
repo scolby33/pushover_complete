@@ -9,20 +9,31 @@ except ImportError:
 
 from requests_toolbelt.multipart import decoder
 
-from tests.constants import *
+from tests.constants import (
+    SOUNDS,
+    TEST_DEVICES,
+    TEST_GROUP,
+    TEST_GROUP_NAME,
+    TEST_RECEIPT_ID,
+    TEST_REQUEST_ID,
+    TEST_SUBSCRIBED_USER_KEY,
+    TEST_SUBSCRIPTION_CODE,
+    TEST_TOKEN,
+    TEST_USER,
+    TEST_USER_EMAIL,
+)
 
 
 def get_content_disposition_name(headers):
-    """Get the name from the Content-Disposition header (like `Content-Disposition: form-data; name="gotten name"`)"""
+    """Get the name from the Content-Disposition header (like `Content-Disposition: form-data; name="gotten name"`)."""
     content_disposition = headers[b"Content-Disposition"].decode("utf-8")
     name_and_label = content_disposition.split(";")[1]
     name = name_and_label.split("=")[1]
-    unquoted_name = name.strip('"')
-    return unquoted_name
+    return name.strip('"')
 
 
 def generic_callback(request):
-    """A callback to test the _generic_get and _generic_post methods."""
+    """Mock callback for the _generic_get and _generic_post methods."""
     resp_body = {"status": 1}
 
     req_body = getattr(request, "body", None)
@@ -34,25 +45,20 @@ def generic_callback(request):
     else:
         resp_body["payload-test"] = False
 
-    return 200, list(), json.dumps(resp_body)
+    return 200, [], json.dumps(resp_body)
 
 
-def messages_callback(request):
-    """A callback to mock the `/messages.json` endpoint."""
+def messages_callback(request):  # noqa: PLR0912; it's hard to reduce the number of branches in this mock
+    """Mock the `/messages.json` endpoint."""
     resp_body = {"request": TEST_REQUEST_ID}
     headers = {"X-Request-Id": TEST_REQUEST_ID}
 
-    if (
-        getattr(request, "headers", {}).get("content-type")
-        == "application/x-www-form-urlencoded"
-    ):
+    if getattr(request, "headers", {}).get("content-type") == "application/x-www-form-urlencoded":
         req_body = getattr(request, "body", None)
         qs = parse_qs(req_body)
         qs = {k: v[0] for k, v in qs.items()}
     else:
-        request.content = getattr(
-            request, "body", None
-        )  # make this like MultipartDecoder.from_response expects
+        request.content = getattr(request, "body", None)  # make this like MultipartDecoder.from_response expects
         multipart_data = decoder.MultipartDecoder.from_response(request)
         qs = {}
         for part in multipart_data.parts:
@@ -67,18 +73,14 @@ def messages_callback(request):
         resp_body["status"] = 0
         resp_body["errors"] = ["message cannot be blank"]
     elif qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"
+        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
-    elif (
-        qs.get("user") != TEST_USER and qs.get("user") != TEST_GROUP
-    ):  # allow TEST_USER or TEST_GROUP
+    elif qs.get("user") != TEST_USER and qs.get("user") != TEST_GROUP:  # allow TEST_USER or TEST_GROUP
         resp_body["user"] = "invalid"
         resp_body["status"] = 0
-        resp_body["errors"] = [
-            "user identifier is not a valid user, group, or subscribed user key"
-        ]
-    elif qs.get("priority") == 2:
+        resp_body["errors"] = ["user identifier is not a valid user, group, or subscribed user key"]
+    elif qs.get("priority") == 2:  # noqa: PLR2004; TODO: this should probably be an enum
         if qs.get("expire") is None:
             resp_body["expire"] = "must be supplied with priority=2"
             resp_body["status"] = 0
@@ -96,7 +98,7 @@ def messages_callback(request):
 
 
 def sounds_callback(request):
-    """A callback to mock the `/sounds.json` endpoint."""
+    """Mock the `/sounds.json` endpoint."""
     resp_body = {"request": TEST_REQUEST_ID}
     headers = {"X-Request-Id": TEST_REQUEST_ID}
 
@@ -105,7 +107,7 @@ def sounds_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"
+        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     else:
@@ -116,7 +118,7 @@ def sounds_callback(request):
 
 
 def validate_callback(request):
-    """A callback to mock the `/users/validate.json` endpoint."""
+    """Mock the `/users/validate.json` endpoint."""
     resp_body = {"request": TEST_REQUEST_ID}
     headers = {"X-Request-Id": TEST_REQUEST_ID}
 
@@ -125,7 +127,7 @@ def validate_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"
+        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
 
@@ -147,19 +149,18 @@ def validate_callback(request):
     else:
         resp_body["user"] = "invalid"
         resp_body["status"] = 0
-        resp_body["errors"] = [
-            "user identifier is not a valid user, group, or subscribed user key"
-        ]
+        resp_body["errors"] = ["user identifier is not a valid user, group, or subscribed user key"]
 
     return 200 if resp_body["status"] == 1 else 400, headers, json.dumps(resp_body)
 
 
 def receipt_callback(request):
-    """A callback to mock the /receipts/{receipt}.json endpoint.
+    r"""
+    Mock the /receipts/{receipt}.json endpoint.
 
     Best used like so::
 
-        url_re = re.compile(r'https://api\\.pushover\\.net/1/receipts/r[a-zA-Z0-9]*\\.json')
+        url_re = re.compile(r'https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*\.json')
         responses.add_callback(
             responses.GET,
             url_re,
@@ -177,7 +178,7 @@ def receipt_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"
+        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif (
@@ -202,11 +203,12 @@ def receipt_callback(request):
 
 
 def receipt_cancel_callback(request):
-    """A callback to mock the /receipts/{receipt}/cancel.json endpoint.
+    r"""
+    Mock the /receipts/{receipt}/cancel.json endpoint.
 
     Best used like so::
 
-            url_re = re.compile(r'https://api\\.pushover\\.net/1/receipts/r[a-zA-Z0-9]*/cancel\\.json')
+            url_re = re.compile(r'https://api\.pushover\.net/1/receipts/r[a-zA-Z0-9]*/cancel\.json')
         responses.add_callback(
             responses.GET,
             url_re,
@@ -224,7 +226,7 @@ def receipt_cancel_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"
+        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif (
@@ -240,7 +242,7 @@ def receipt_cancel_callback(request):
 
 
 def subscription_migrate_callback(request):
-    """A callback to mock the `/subscriptions/migrate.json` endpoint."""
+    """Mock the `/subscriptions/migrate.json` endpoint."""
     resp_body = {"request": TEST_REQUEST_ID}
     headers = {"X-Request-Id": TEST_REQUEST_ID}
 
@@ -249,7 +251,7 @@ def subscription_migrate_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"
+        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif qs.get("subscription") != TEST_SUBSCRIPTION_CODE:
@@ -268,7 +270,7 @@ def subscription_migrate_callback(request):
 
 
 def groups_callback(request):
-    """A callback to mock the `/groups/{group_key}.json` endpoint."""
+    """Mock the `/groups/{group_key}.json` endpoint."""
     resp_body = {"request": TEST_REQUEST_ID}
     headers = {"X-Request-Id": TEST_REQUEST_ID}
 
@@ -277,7 +279,7 @@ def groups_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"
+        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif request.path_url.split("/")[-1].split(".")[0] != TEST_GROUP:
@@ -306,7 +308,7 @@ def groups_callback(request):
 
 
 def groups_add_user_callback(request):
-    """A callback to mock the `/groups/{group_id}/add_user.json` endpoint."""
+    """Mock the `/groups/{group_id}/add_user.json` endpoint."""
     resp_body = {"request": TEST_REQUEST_ID}
     headers = {"X-Request-Id": TEST_REQUEST_ID}
 
@@ -315,7 +317,7 @@ def groups_add_user_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"
+        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif request.path_url.split("/")[-2] != TEST_GROUP:
@@ -333,7 +335,7 @@ def groups_add_user_callback(request):
 
 
 def groups_delete_user_callback(request):
-    """A callback to mock the `/groups/{group_id}/delete_user.json` endpoint."""
+    """Mock the `/groups/{group_id}/delete_user.json` endpoint."""
     resp_body = {"request": TEST_REQUEST_ID}
     headers = {"X-Request-Id": TEST_REQUEST_ID}
 
@@ -342,7 +344,7 @@ def groups_delete_user_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"
+        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif request.path_url.split("/")[-2] != TEST_GROUP:
@@ -360,7 +362,7 @@ def groups_delete_user_callback(request):
 
 
 def groups_disable_user_callback(request):
-    """A callback to mock the `/groups/{group_id}/disable_user.json` endpoint."""
+    """Mock the `/groups/{group_id}/disable_user.json` endpoint."""
     resp_body = {"request": TEST_REQUEST_ID}
     headers = {"X-Request-Id": TEST_REQUEST_ID}
 
@@ -369,7 +371,7 @@ def groups_disable_user_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"
+        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif request.path_url.split("/")[-2] != TEST_GROUP:
@@ -387,7 +389,7 @@ def groups_disable_user_callback(request):
 
 
 def groups_enable_user_callback(request):
-    """A callback to mock the `/groups/{group_id}/enable_user.json` endpoint."""
+    """Mock the `/groups/{group_id}/enable_user.json` endpoint."""
     resp_body = {"request": TEST_REQUEST_ID}
     headers = {"X-Request-Id": TEST_REQUEST_ID}
 
@@ -396,7 +398,7 @@ def groups_enable_user_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"
+        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif request.path_url.split("/")[-2] != TEST_GROUP:
@@ -414,7 +416,7 @@ def groups_enable_user_callback(request):
 
 
 def groups_rename_callback(request):
-    """A callback to mock the `/groups/{group_id}/rename.json` endpoint."""
+    """Mock the `/groups/{group_id}/rename.json` endpoint."""
     resp_body = {"request": TEST_REQUEST_ID}
     headers = {"X-Request-Id": TEST_REQUEST_ID}
 
@@ -423,7 +425,7 @@ def groups_rename_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"
+        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif request.path_url.split("/")[-2] != TEST_GROUP:
@@ -437,7 +439,7 @@ def groups_rename_callback(request):
 
 
 def licenses_assign_callback(request):
-    """A callback to mock the `/licenses/assign.json` endpoint."""
+    """Mock the `/licenses/assign.json` endpoint."""
     resp_body = {"request": TEST_REQUEST_ID}
     headers = {"X-Request-Id": TEST_REQUEST_ID}
 
@@ -446,7 +448,7 @@ def licenses_assign_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"
+        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif qs.get("email") is not None and qs.get("email") != TEST_USER_EMAIL:
