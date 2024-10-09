@@ -20,6 +20,7 @@ jobs:
         uses: "astral-sh/setup-uv@77c28f02b3322332d4a4446b3177f426da8bf086"  # v3.1.5
         with:
           enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
       - name: "Run package lints"
         run: >
           uv tool run
@@ -38,6 +39,7 @@ jobs:
         uses: "astral-sh/setup-uv@77c28f02b3322332d4a4446b3177f426da8bf086"  # v3.1.5
         with:
           enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
       - name: "Run code lints"
         run: >
           uv tool run
@@ -56,6 +58,7 @@ jobs:
         uses: "astral-sh/setup-uv@77c28f02b3322332d4a4446b3177f426da8bf086"  # v3.1.5
         with:
           enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
       - name: "Run documentation lints"
         run: >
           uv tool run
@@ -74,6 +77,7 @@ jobs:
         uses: "astral-sh/setup-uv@77c28f02b3322332d4a4446b3177f426da8bf086"  # v3.1.5
         with:
           enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
       - name: "Run documentation lints"
         run: >
           uv tool run
