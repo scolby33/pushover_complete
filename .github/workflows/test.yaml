@@ -1,0 +1,94 @@
+---
+name: "Run lints and tests with Tox"
+
+on:
+  push:
+    branches: [ "$default_branch" ]
+  pull_request:
+    branches: [ "$default_branch" ]
+
+jobs:
+  package-lint:
+    runs-on: "ubuntu-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "2.7", "3.9", "3.10", "3.11", "3.12", "3.13" ]
+        tox-env:
+          - "manifest"
+          - "pyroma"
+    steps:
+      - uses: "actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871"  # v4.2.1
+      - name: "Set up Python ${{ matrix.python-version }}"
+        uses: "actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3"  # v5.2.0
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - name: "Install test dependencies"
+        run: |
+          pip install tox tox-uv
+      - name: "Run package lints"
+        run: |
+          tox run -e "${{ matrix.tox-env }}"
+  code-lint:
+    runs-on: "ubuntu-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "2.7", "3.9", "3.10", "3.11", "3.12", "3.13" ]
+        tox-env:
+          - "ruff"
+          - "mypy"
+          - "pydoclint"
+          - "docstr-coverage"
+    steps:
+      - uses: "actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871"  # v4.2.1
+      - name: "Set up Python ${{ matrix.python-version }}"
+        uses: "actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3"  # v5.2.0
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - name: "Install test dependencies"
+        run: |
+          pip install tox tox-uv
+      - name: "Run code lints"
+        run: |
+          tox run -e "${{ matrix.tox-env }}"
+  doc-lint:
+    runs-on: "ubuntu-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "2.7", "3.9", "3.10", "3.11", "3.12", "3.13" ]
+        tox-env:
+          - "doc8"
+          - "docs"
+    steps:
+      - uses: "actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871"  # v4.2.1
+      - name: "Set up Python ${{ matrix.python-version }}"
+        uses: "actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3"  # v5.2.0
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - name: "Install test dependencies"
+        run: |
+          pip install tox tox-uv
+      - name: "Run documentation lints"
+        run: |
+          tox run -e "${{ matrix.tox-env }}"
+  test:
+    runs-on: "ubuntu-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "2.7", "3.9", "3.10", "3.11", "3.12", "3.13" ]
+    steps:
+      - uses: "actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871"  # v4.2.1
+      - name: "Set up Python ${{ matrix.python-version }}"
+        uses: "actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3"  # v5.2.0
+        with:
+          python-version: "${{ matrix.python-version }}"
+      - name: "Install test dependencies"
+        run: |
+          pip install tox tox-uv
+      - name: "Run tests"
+        run: |
+          tox run -e coverage-clean py coverage-report
+      - uses: "codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238"  # v4.6.0
