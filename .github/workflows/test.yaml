@@ -78,7 +78,7 @@ jobs:
         with:
           enable-cache: true
           cache-dependency-glob: "pyproject.toml"
-      - name: "Run documentation lints"
+      - name: "Run tests"
         run: >
           uv tool run
           --python '${{ matrix.python-version }}'
