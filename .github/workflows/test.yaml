@@ -24,7 +24,7 @@ jobs:
       - name: "Run package lints"
         run: >
           uv tool run
-          --python "${{ matrix.python-version }}"
+          --python '${{ matrix.python-version }}'
           --with tox-uv
           tox run -e manifest,pyroma
   code-lint:
@@ -43,7 +43,7 @@ jobs:
       - name: "Run code lints"
         run: >
           uv tool run
-          --python "${{ matrix.python-version }}"
+          --python '${{ matrix.python-version }}'
           --with tox-uv
           tox run -e ruff,mypy,pydoclint,docstr-coverage
   doc-lint:
@@ -62,7 +62,7 @@ jobs:
       - name: "Run documentation lints"
         run: >
           uv tool run
-          --python "${{ matrix.python-version }}"
+          --python '${{ matrix.python-version }}'
           --with tox-uv
           tox run -e doc8,docs
   test:
@@ -81,7 +81,7 @@ jobs:
       - name: "Run documentation lints"
         run: >
           uv tool run
-          --python "${{ matrix.python-version }}"
+          --python '${{ matrix.python-version }}'
           --with tox-uv
           tox run -e coverage-clean,py,coverage-report
       - uses: "codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238"  # v4.6.0
