@@ -54,22 +54,28 @@ Installation should be as easy as executing this command in your chosen terminal
     $ pip install pushover_complete
 
 :code:`pushover_complete` officially supports Python 2.7, 3.5, 3.6, and 3.7.
-Currently, Python 3.4 passes all test and functions properly as well, but this could change: this version is not officially targeted by development.
-Tox has dropped support for Python 3.3 and, as such, tests are no longer run on this version. Like for Python 3.4, functionality could break for Python 3.3 at any time.
+Currently, Python 3.4 passes all test and functions properly as well, but this could change: this version is not
+officially targeted by development.
+Tox has dropped support for Python 3.3 and, as such, tests are no longer run on this version. Like for Python 3.4,
+functionality could break for Python 3.3 at any time.
 Additionally, due to changes in Sphinx, the documentation cannot be built with Python 3.3.
 
 As of version 1.1.0, support for Python 3.5 is deprecated. It will be removed in the next major version release.
-This doesn't mean that Python 3.5 will stop working immediately, but I will no longer consider failing tests for that version to be critical.
+This doesn't mean that Python 3.5 will stop working immediately, but I will no longer consider failing tests for that
+version to be critical.
 
-Support for Python 2.x may be dropped in the future, but only in a major version update (e.g. 1.x.y → 2.x.y) and this change will be announced well in advance.
+Support for Python 2.x may be dropped in the future, but only in a major version update (e.g. 1.x.y → 2.x.y) and this
+change will be announced well in advance.
 
 Contributing
 ------------
 
 Contributions, large or small, from bug reports to pull requests and full-on forks, are highly encouraged.
-Read the the `contributing page <http://pushover-complete.readthedocs.io/en/latest/contributing.html>`_ in the docs or :code:`CONTRIBUTING.rst` for more information on getting involved.
+Read the the `contributing page <http://pushover-complete.readthedocs.io/en/latest/contributing.html>`_ in the docs or
+:code:`CONTRIBUTING.rst` for more information on getting involved.
 
-The full list of contributors is in :code:`AUTHORS.rst` or `on GitHub <https://github.com/scolby33/pushover_complete/contributors>`_.
+The full list of contributors is in :code:`AUTHORS.rst` or
+`on GitHub <https://github.com/scolby33/pushover_complete/contributors>`_.
 
 Changelog
 ---------

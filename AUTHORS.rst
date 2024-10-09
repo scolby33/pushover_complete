@@ -1,7 +1,7 @@
 Authors
 =======
 
-:code:`pushover_complete` is maintained by Scott Colby <scolby33@gmail.com>
+:code:`pushover_complete` is maintained by Scott Colby <scott@scolby.com>
 
 Contributors
 ------------
