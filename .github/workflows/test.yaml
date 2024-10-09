@@ -1,5 +1,5 @@
 ---
-name: "Run lints and tests with Tox"
+name: "linting & tests"
 
 on:
   push:
