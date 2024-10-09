@@ -3,9 +3,9 @@ name: "Run lints and tests with Tox"
 
 on:
   push:
-    branches: [ "$default_branch" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "$default_branch" ]
+    branches: [ "master", "develop" ]
 
 jobs:
   package-lint:
