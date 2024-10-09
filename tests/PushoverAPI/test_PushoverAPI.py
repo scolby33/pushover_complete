@@ -15,8 +15,8 @@ except ImportError:
 
 import pytest
 import responses
-from pushover_complete.error import BadAPIRequestError
 
+from pushover_complete.error import BadAPIRequestError
 from tests.constants import (
     PUSHOVER_API_URL,
     SOUNDS,
