@@ -84,6 +84,8 @@ jobs:
           --python '${{ matrix.python-version }}'
           --with tox-uv
           tox run -e coverage-clean,py,coverage-report
+
+          ls -la
       - uses: "codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238"  # v4.6.0
         with:
           token: "${{ secrets.CODECOV_TOKEN }}"
