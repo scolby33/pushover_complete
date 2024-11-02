@@ -49,10 +49,6 @@ classifiers = [
 tests = [
     "tox",
 ]
-docs = [
-    "sphinx",
-    "sphinx_rtd_theme",
-]
 
 [project.urls]
 Homepage = "https://github.com/scolby33/pushover_complete"
