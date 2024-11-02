@@ -45,7 +45,7 @@ classifiers = [
     "Topic :: Communications",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 tests = [
     "tox",
 ]
