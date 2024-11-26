@@ -4,9 +4,9 @@ from .error import BadAPIRequestError, PushoverCompleteError
 from .pushover_api import PushoverAPI
 
 __all__ = [
-    "PushoverCompleteError",
     "BadAPIRequestError",
     "PushoverAPI",
+    "PushoverCompleteError",
 ]
 
 __version__ = "1.1.2-dev"
