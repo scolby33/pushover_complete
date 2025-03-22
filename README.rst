@@ -7,7 +7,7 @@ Stable      |stable_build|  |stable_coverage|  |stable_documentation|  |stable_p
 Development |develop_build| |develop_coverage| |develop_documentation| |develop_pyversions|
 =========== =============== ================== ======================= ====================
 
-.. |stable_build| image:: https://github.com/scolby33/pushover_complete/actions/workflows/test.yaml/badge.svg?branch=master
+.. |stable_build| image:: https://github.com/scolby33/pushover_complete/actions/workflows/checks.yaml/badge.svg?branch=master
     :target: https://github.com/scolby33/pushover_complete/actions?query=branch%3Amaster
     :alt: Stable Build Status
 .. |stable_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=master
@@ -20,7 +20,7 @@ Development |develop_build| |develop_coverage| |develop_documentation| |develop_
     :alt: Stable Supported Python Versions: 2.7, 3.9, 3.10, 3.11, 3.12, 3.13
 
 
-.. |develop_build| image:: https://github.com/scolby33/pushover_complete/actions/workflows/test.yaml/badge.svg?branch=develop
+.. |develop_build| image:: https://github.com/scolby33/pushover_complete/actions/workflows/checks.yaml/badge.svg?branch=develop
     :target: https://github.com/scolby33/pushover_complete/actions?query=branch%3Adevelop
     :alt: Development Build Status
 .. |develop_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=develop
@@ -47,7 +47,7 @@ Check out the `docs <https://pushover-complete.readthedocs.io/>`_ to learn more.
 Installation
 ------------
 
-Installation should be as easy as executing this command in your chosen terminal:
+Installation should be as easy as executing this command in your chosen shell:
 
 .. code-block:: sh
 

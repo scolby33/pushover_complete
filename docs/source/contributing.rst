@@ -34,33 +34,22 @@ Here's how to get set up to contribute to :code:`pushover_complete`.
    If your change is larger or you want to be able to run tests on your contribution, clone your forked repository
    locally::
 
-    $ cd /your/dev/folder
+    $ cd ~/src
     $ git clone https://github.com/your_username/pushover_complete
 
-   This will download the contents of your forked repository to :code:`/your/dev/folder/pushover_complete`
+   This will download the contents of your forked repository to :code:`~/src/pushover_complete`
 
 #. If you're comfortable with a test-driven style of development, the only thing you need to install is
-   `tox <http://tox.readthedocs.io/en/latest/>`_, either via the sometimes-temperamental but still useful
-   `pipsi <https://github.com/mitsuhiko/pipsi>`_ (my choice), in a virtual environment, or just system-wide via pip::
+   `uv <https://docs.astral.sh/uv/>`_. You can then run the tests using `tox <http://tox.readthedocs.io/en/latest/>`_
+   without having to worry too much about other installation steps::
 
-    $ pipsi install tox
-    # or
-    $ python -m venv my-virtual-env
-    $ source my-virtual-env/bin/activate
-    $ pip install tox
-    # or
-    $ pip install tox
-
-   With :code:`tox` installed, all tests, including checking the :code:`MANIFEST.in` file and code coverage can be
-   performed just by executing::
-
-    $ tox
+    $ uv tool run --with tox-uv tox
 
    :code:`tox` handles the installation of all dependencies in virtual environments (under the :code:`.tox` folder) and
    the running of the tests.
 
-   To develop like this, simply write your tests and your code and run :code:`tox` once in a while to check how you're
-   doing.
+   To develop like this, simply write your tests and your code and run :code:`tox` as above once in a while to check how
+   you're doing.
 
    It is also possible to develop as usual by installing :code:`pushover_complete` in editable mode with pip
    (preferably in a virtual environment)::
@@ -74,19 +63,15 @@ Here's how to get set up to contribute to :code:`pushover_complete`.
 Branches
 --------
 
-Development of :code:`pushover_complete` follows the
-`"git flow" philosophy <http://nvie.com/posts/a-successful-git-branching-model/>`_ of branching.
-Development takes place on the :code:`develop` branch with individual features being developed on feature branches off
-of develop.
-Further reading on this style can be found in
-`this blog post <http://jeffkreeftmeijer.com/2010/why-arent-you-using-git-flow/>`_ by Jeff Kreeftmeijer.
-A git plugin to aid in managing branches in this way, called :code:`git-flow`, can be found
-`here <https://github.com/nvie/gitflow>`_.
+Development of :code:`pushover_complete` follows a common but ad-hoc style of branching. Development takes place on the
+:code:`develop` branch with individual features being developed on feature branches off of develop. Releases are made
+by merging the :code:`develop` branch to the :code:`master` branch, creating a tag, and creating a GitHub release from
+there. GitHub Actions handle building and publishing the distributions to PyPI.
 
 This might seem a bit complicated, but in general you won't have to worry about it as a contributor.
 The long and short of this system for you is:
 
-- make a new branch prefixed with "feature/" off of develop before starting work on your contribution
+- make a new branch off of develop before starting work on your contribution
   (:code:`git checkout -b feature/descriptive-feature-name develop`)
 - when pushing changes to your repository, push the right branch!
   (:code:`git push origin feature/descriptive-feature-name`)
@@ -139,7 +124,7 @@ Run the Tests
 
 Make sure your modifications still pass all tests before submitting a pull requests::
 
-    $ tox
+    $ uv tool run --with tox-uv tox
 
 Changes that break the package are mostly useless.
 
@@ -190,17 +175,19 @@ Making a Release
 
 The steps for making a release of :code:`pushover_complete` are:
 
-#. Create a release branch::
+#. Create a release branch off of :code:`develop`::
 
-     $ git flow release start {new_version}
+     $ git switch -c release/$(uv tool run bump-my-version show --increment release new_version) develop
 
-#. Bump the version specifier in :code:`src/pushover_complete/__init__.py` and :code:`docs/source/conf.py` from
-   '{new_version}-dev' to plain '{new_version}'::
+#. Bump the version specifiers::
 
-    $ bumpversion release
+     $ uv tool run bump-my-version release
 
-#. Update the changelog in :code:`docs/source/changelog.rst`, including the last updated date
-#. Update the changelog in :code:`README.rst` to match the changelog in the docs
+#. Update the changelogs and commit them
+
+   #. Update the changelog in :code:`docs/source/changelog.rst`, including the last updated date
+   #. Update the changelog in :code:`README.rst` to match the changelog in the docs
+
 #. Check that any new intersphinx links have corresponding inventory locations in :code:`docs/source/conf.py`. Run
 
     ::
@@ -211,106 +198,19 @@ The steps for making a release of :code:`pushover_complete` are:
    :code:`intersphinx_mapping` in :code:`conf.py`. (There will be a lot of lines, but with :code:`grep` coloring turned
    on, it's not that hard to skim through relatively quickly.)
 
-#. Run all tests one last time! ::
+#. Open a PR for the release branch into the develop branch and check that all tests pass before merging it
 
-    $ tox -r
+#. `Open a PR <https://github.com/scolby33/pushover_complete/compare/master...develop>`_ for the develop branch into
+   master and check that all tests pass before merging it
 
-   .. note:: I'm using the :code:`-r` option here, forcing tox to recreate all its virtual environments to be sure this
-        is a "clean" build.
-        It takes longer but I think it's worth it for the peace of mind.
-#. Build the project::
+#. Create a GitHub release and corresponding tag from the master branch. Make sure to mark it as a pre-release or not
+   as appropriate.
 
-    $ python setup.py sdist bdist_wheel
-
-#. Check that the sdist and wheel install properly
-
-   .. warning:: Make sure you do not have any activated virtual environments when running these and the similar test
-        steps.
-        I've gotten inconsistent results in that situation.
-
-   ::
-
-    $ rm -r tmp-virtualenv
-    $ python -m venv tmp-virtualenv
-    $ tmp-virtualenv/bin/python -m pip install dist/pushover_complete-{new-version}.tar.gz
-    $ tmp-virtualenv/bin/python
-    >>> import pushover_complete
-    >>> pushover_complete.__version__
-    '{new_version}'
-    $ rm -rf tmp-virtualenv
-    $ python -m venv tmp-virtualenv
-    $ tmp-virtualenv/bin/python -m pip install dist/pushover_complete-{new-version}-py2.py3-none-any.whl
-    $ tmp-virtualenv/bin/python
-    >>> import pushover_complete
-    >>> pushover_complete.__version__
-    '{new_version}'
-    $ rm -rf tmp-virtualenv
-
-#. Try a release on the PyPI test server::
-
-    $ twine upload -r test dist/pushover_complete-{new_version}*
-
-   .. note:: This requires a :code:`.pypirc` file in your home folder::
-
-         [distutils]
-         index-servers=
-             pypi
-             test
-
-         [test]
-         repository = https://testpypi.python.org/pypi
-         username = username
-         password = password
-
-         [pypi]
-         username = username
-         password = password
-
-     Registration with PyPI and TestPyPI is required.
-
-#. Test install from the test PyPI::
-
-    $ rm -rf tmp-virtualenv
-    $ python -m venv tmp-virtualenv
-    $ tmp-virtualenv/bin/python -m pip install -i https://testpypi.python.org/pypi pushover_complete
-    $ tmp-virtualenv/bin/python
-    >>> import pushover_complete
-    >>> pushover_complete.__version__
-    '{new_version}'
-    $ rm -rf tmp-virtualenv
-
-#. Check the metadata and such on the test PyPI website
-#. Deep breath
-#. Upload to PyPI! ::
-
-    $ twine upload dist/pushover_complete-{new_version}*
-
-#. Test install from PyPI::
-
-    $ rm -rf tmp-virtualenv
-    $ python -m venv tmp-virtualenv
-    $ tmp-virtualenv/bin/python -m pip install pushover_complete
-    $ tmp-virtualenv/bin/python
-    >>> import pushover_complete
-    >>> pushover_complete.__version__
-    '{new_version}'
-    $ rm -rf tmp-virtualenv
-
-#. Check the metadata and such on the PyPI website
-#. Publish the release branch::
-
-    $ git flow release publish {new_version}
-
-#. Finish the release branch::
-
-    $ git flow release finish {new_version}
-
-#. Push the new tag::
-
-    $ git push --tags
-
-#. Attach the sdist and wheel files to the release on GitHub
 #. Add changelog notes to the release on GitHub
+
+#. Check that the release build has completed successfully and the distributions have been published to PyPI. (You might
+   want to try a test install from PyPI at this point.)
+
 #. Bump the version to the next dev version::
 
     $ bumpversion patch
