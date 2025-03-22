@@ -48,7 +48,7 @@ def generic_callback(request):
     return 200, [], json.dumps(resp_body)
 
 
-def messages_callback(request):  # noqa: PLR0912; it's hard to reduce the number of branches in this mock
+def messages_callback(request):  # noqa: PLR0912 -- it's hard to reduce the number of branches in this mock
     """Mock the `/messages.json` endpoint."""
     resp_body = {"request": TEST_REQUEST_ID}
     headers = {"X-Request-Id": TEST_REQUEST_ID}
@@ -73,14 +73,14 @@ def messages_callback(request):  # noqa: PLR0912; it's hard to reduce the number
         resp_body["status"] = 0
         resp_body["errors"] = ["message cannot be blank"]
     elif qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
+        resp_body["token"] = "invalid"  # noqa: S105 -- not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif qs.get("user") != TEST_USER and qs.get("user") != TEST_GROUP:  # allow TEST_USER or TEST_GROUP
         resp_body["user"] = "invalid"
         resp_body["status"] = 0
         resp_body["errors"] = ["user identifier is not a valid user, group, or subscribed user key"]
-    elif qs.get("priority") == 2:  # noqa: PLR2004; TODO: this should probably be an enum
+    elif qs.get("priority") == 2:  # noqa: PLR2004 -- TODO: this should probably be an enum
         if qs.get("expire") is None:
             resp_body["expire"] = "must be supplied with priority=2"
             resp_body["status"] = 0
@@ -107,7 +107,7 @@ def sounds_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
+        resp_body["token"] = "invalid"  # noqa: S105 -- not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     else:
@@ -127,7 +127,7 @@ def validate_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
+        resp_body["token"] = "invalid"  # noqa: S105 -- not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
 
@@ -178,7 +178,7 @@ def receipt_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
+        resp_body["token"] = "invalid"  # noqa: S105 -- not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif (
@@ -226,7 +226,7 @@ def receipt_cancel_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
+        resp_body["token"] = "invalid"  # noqa: S105 -- not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif (
@@ -251,7 +251,7 @@ def subscription_migrate_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
+        resp_body["token"] = "invalid"  # noqa: S105 -- not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif qs.get("subscription") != TEST_SUBSCRIPTION_CODE:
@@ -279,7 +279,7 @@ def groups_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
+        resp_body["token"] = "invalid"  # noqa: S105 -- not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif request.path_url.split("/")[-1].split(".")[0] != TEST_GROUP:
@@ -317,7 +317,7 @@ def groups_add_user_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
+        resp_body["token"] = "invalid"  # noqa: S105 -- not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif request.path_url.split("/")[-2] != TEST_GROUP:
@@ -344,7 +344,7 @@ def groups_delete_user_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
+        resp_body["token"] = "invalid"  # noqa: S105 -- not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif request.path_url.split("/")[-2] != TEST_GROUP:
@@ -371,7 +371,7 @@ def groups_disable_user_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
+        resp_body["token"] = "invalid"  # noqa: S105 -- not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif request.path_url.split("/")[-2] != TEST_GROUP:
@@ -398,7 +398,7 @@ def groups_enable_user_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
+        resp_body["token"] = "invalid"  # noqa: S105 -- not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif request.path_url.split("/")[-2] != TEST_GROUP:
@@ -425,7 +425,7 @@ def groups_rename_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
+        resp_body["token"] = "invalid"  # noqa: S105 -- not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif request.path_url.split("/")[-2] != TEST_GROUP:
@@ -448,7 +448,7 @@ def licenses_assign_callback(request):
     qs = {k: v[0] for k, v in qs.items()}
 
     if qs.get("token") != TEST_TOKEN:
-        resp_body["token"] = "invalid"  # noqa: S105; not a real secret
+        resp_body["token"] = "invalid"  # noqa: S105 -- not a real secret
         resp_body["status"] = 0
         resp_body["errors"] = ["application token is invalid"]
     elif qs.get("email") is not None and qs.get("email") != TEST_USER_EMAIL:

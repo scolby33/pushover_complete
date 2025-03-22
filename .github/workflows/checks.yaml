@@ -1,0 +1,23 @@
+---
+name: "Checks"
+
+permissions: {}
+
+on:
+  push:
+    branches: [ "master", "develop" ]
+  pull_request:
+    branches: [ "master", "develop" ]
+  workflow_call:
+
+jobs:
+  test:
+    permissions:
+      contents: "read"
+    uses: "./.github/workflows/test.yaml"
+
+  build:
+    permissions:
+      contents: "read"
+    uses: "./.github/workflows/build.yaml"
+...
