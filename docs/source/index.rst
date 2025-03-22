@@ -1,8 +1,3 @@
-.. pushover_complete documentation master file, created by
-   sphinx-quickstart on Fri Apr 15 22:19:38 2016.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 .. only:: prerelease
 
     .. warning:: This is the documentation for a development version of pushover_complete.
@@ -24,7 +19,7 @@ Welcome to :mod:`pushover_complete`
     Development |develop_build| |develop_coverage| |develop_documentation| |develop_pyversions|
     =========== =============== ================== ======================= ====================
 
-    .. |stable_build| image:: https://github.com/scolby33/pushover_complete/actions/workflows/test.yaml/badge.svg?branch=master
+    .. |stable_build| image:: https://github.com/scolby33/pushover_complete/actions/workflows/checks.yaml/badge.svg?branch=master
         :target: https://github.com/scolby33/pushover_complete/actions?query=branch%3Amaster
         :alt: Stable Build Status
     .. |stable_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=master
@@ -37,7 +32,7 @@ Welcome to :mod:`pushover_complete`
         :alt: Stable Supported Python Versions: 2.7, 3.9, 3.10, 3.11, 3.12, 3.13
 
 
-    .. |develop_build| image:: https://github.com/scolby33/pushover_complete/actions/workflows/test.yaml/badge.svg?branch=develop
+    .. |develop_build| image:: https://github.com/scolby33/pushover_complete/actions/workflows/checks.yaml/badge.svg?branch=develop
         :target: https://github.com/scolby33/pushover_complete/actions?query=branch%3Adevelop
         :alt: Development Build Status
     .. |develop_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=develop
@@ -75,7 +70,7 @@ Installation
 
     installation
 
-Installation should be as easy as executing this command in your chosen terminal::
+Installation should be as easy as executing this command in your chosen shell::
 
     $ pip install pushover_complete
 
