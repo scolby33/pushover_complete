@@ -173,7 +173,7 @@ max-args = 6
     "S101", # Allow assert in tests
     "N802", # Allow uppercase function names in tests
     "N803", # Allow uppercase argument names for pytest fixtures
-    "F811",
+    "F811", # Conflicts with pytest using argument names to reference fixtures
 ]
 
 [tool.bumpversion]
