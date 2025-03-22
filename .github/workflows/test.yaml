@@ -1,13 +1,10 @@
 ---
-name: "linting & tests"
+name: "Linting & Tests"
 
 permissions: {}
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master", "develop" ]
+  workflow_call:
 
 jobs:
   package-lint:
@@ -106,3 +103,4 @@ jobs:
         with:
           token: "${{ secrets.CODECOV_TOKEN }}"
           file: ".coverage"
+...

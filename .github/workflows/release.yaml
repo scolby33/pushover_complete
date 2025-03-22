@@ -1,0 +1,66 @@
+---
+name: "Release"
+
+permissions: {}
+
+on:
+  release:
+    types: [ "released" ]
+
+jobs:
+  checks:
+    permissions:
+      contents: "read"
+    uses: "./.github/workflows/checks.yaml"
+
+  publish:
+    permissions:
+      contents: "write"
+      id-token: "write"
+    runs-on: "ubuntu-latest"
+    environment:
+      name: "testpypi"
+      url: "https://test.pypi.org/p/gha_release_test"
+    needs: [ "checks" ]
+    steps:
+      - name: "Download distributions from build artifacts"
+        uses: "actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e"  # v4.2.1
+        with:
+          name: "distributions"
+          path: "dist"
+
+      - name: "Get dist paths"
+        id: "dist-paths"
+        run: |
+          sdist_path=$(find dist -name '*.tar.gz' | head -n1)
+          echo "SDIST_PATH=${sdist_path}" | tee -a "$GITHUB_OUTPUT"
+          echo "SDIST_NAME=${sdist_path#dist/}" | tee -a "$GITHUB_OUTPUT"
+          wheel_path=$(find dist -name '*.whl' | head -n1)
+          echo "WHEEL_PATH=${wheel_path}" | tee -a "$GITHUB_OUTPUT"
+          echo "WHEEL_NAME=${wheel_path#dist/}" | tee -a "$GITHUB_OUTPUT"
+
+      - name: "Upload sdist to release asset"
+        uses: "actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          upload_url: "${{ github.event.release.upload_url }}"
+          asset_path: "${{ steps.dist-paths.outputs.SDIST_PATH }}"
+          asset_name: "${{ steps.dist-paths.outputs.SDIST_NAME }}"
+          asset_content_type: "application/x-gtar"
+      - name: "Upload wheel to release asset"
+        uses: "actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          upload_url: "${{ github.event.release.upload_url }}"
+          asset_path: "${{ steps.dist-paths.outputs.WHEEL_PATH }}"
+          asset_name: "${{ steps.dist-paths.outputs.WHEEL_NAME }}"
+          asset_content_type: "application/x-pywheel+zip"
+
+      - name: "Publish to PyPI"
+        uses: "pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc"  # v1.12.4
+        with:
+          repository-url: "https://test.pypi.org/legacy/"
+          print-hash: true
+...
