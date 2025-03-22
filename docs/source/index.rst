@@ -14,7 +14,8 @@
 Welcome to :mod:`pushover_complete`
 ===================================
 
-:mod:`pushover_complete` is a Python package for interacting with *all* aspects of the `Pushover API <https://pushover.net/api>`_.
+:mod:`pushover_complete` is a Python package for interacting with *all* aspects of the
+`Pushover API <https://pushover.net/api>`_.
 
 .. only:: not latex
 
@@ -23,8 +24,8 @@ Welcome to :mod:`pushover_complete`
     Development |develop_build| |develop_coverage| |develop_documentation| |develop_pyversions|
     =========== =============== ================== ======================= ====================
 
-    .. |stable_build| image:: https://travis-ci.org/scolby33/pushover_complete.svg?branch=master
-        :target: https://travis-ci.org/scolby33/pushover_complete
+    .. |stable_build| image:: https://github.com/scolby33/pushover_complete/actions/workflows/test.yaml/badge.svg?branch=master
+        :target: https://github.com/scolby33/pushover_complete/actions?query=branch%3Amaster
         :alt: Stable Build Status
     .. |stable_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=master
         :target: https://codecov.io/gh/scolby33/pushover_complete/branch/master
@@ -32,12 +33,12 @@ Welcome to :mod:`pushover_complete`
     .. |stable_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=stable
         :target: http://pushover-complete.readthedocs.io/en/stable/?badge=stable
         :alt: Stable Documentation Status
-    .. |stable_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6-blue.svg
-        :alt: Stable Supported Python Versions: 2.7, 3.5, and 3.6
+    .. |stable_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.9%2C%203.10%2C%203.11%2C%203.12%2C%203.13-blue?logo=python
+        :alt: Stable Supported Python Versions: 2.7, 3.9, 3.10, 3.11, 3.12, 3.13
 
 
-    .. |develop_build| image:: https://travis-ci.org/scolby33/pushover_complete.svg?branch=develop
-        :target: https://travis-ci.org/scolby33/pushover_complete
+    .. |develop_build| image:: https://github.com/scolby33/pushover_complete/actions/workflows/test.yaml/badge.svg?branch=develop
+        :target: https://github.com/scolby33/pushover_complete/actions?query=branch%3Adevelop
         :alt: Development Build Status
     .. |develop_coverage| image:: https://codecov.io/github/scolby33/pushover_complete/coverage.svg?branch=develop
         :target: https://codecov.io/gh/scolby33/pushover_complete/branch/develop
@@ -45,8 +46,8 @@ Welcome to :mod:`pushover_complete`
     .. |develop_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=develop
         :target: http://pushover-complete.readthedocs.io/en/develop/?badge=develop
         :alt: Development Documentation Status
-    .. |develop_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.5%2C%203.6%2C%203.7-blue.svg
-        :alt: Development Supported Python Versions: 2.7, 3.5, 3.6, and 3.7
+    .. |develop_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.9%2C%203.10%2C%203.11%2C%203.12%2C%203.13-blue?logo=python
+        :alt: Development Supported Python Versions: 2.7, 3.9, 3.10, 3.11, 3.12, 3.13
 
 To learn more about Pushover and the Pushover API, please visit the Pushover Website, `<https://pushover.net>`_.
 
@@ -87,16 +88,12 @@ Downloading and installing from source goes like this::
 
 If you intend to install in a virtual environment, activate it before running :code:`pip install`.
 
-:mod:`pushover_complete` officially supports Python 2.7, 3.5, 3.6, and 3.7.
-Currently, Python 3.4 passes all test and functions properly as well, but this could change: this version is not officially targeted by development.
-Tox has dropped support for Python 3.3 and, as such, tests are no longer run on this version. Like for Python 3.4, functionality could break for Python 3.3 at any time.
-Additionally, due to changes in Sphinx, the documentation cannot be built with Python 3.3.
+:mod:`pushover_complete` currently supports Python 2.7, 3.9, 3.10, 3.11, 3.12, and 3.13.
+With the exception of Python 2.7 support, which will be removed in the next major version release,
+this package only supports the `currently-supported versions of Python <https://devguide.python.org/versions/#supported-versions>`_.
 
 .. warning::
-    .. deprecated:: 1.1.0 Support for Python 3.5 is deprecated. It will be removed in the next major version release.
-        This doesn't mean that Python 3.5 will stop working immediately, but I will no longer consider failing tests for that version to be critical.
-
-Support for Python 2.x may be dropped in the future, but only in a major version update (e.g. 1.x.y → 2.x.y) and this change will be announced well in advance.
+   .. deprecated:: 1.2.0 Support for Python 2.7 is deprecated. It will be removed in the next major version release.
 
 See :ref:`installation` for further information about installing :mod:`pushover_complete` in all manner of ways.
 
@@ -109,8 +106,10 @@ Roadmap
 
     roadmap
 
-:mod:`pushover_complete` emerged from my frustrating experience with a number of only partially-complete Pushover packages.
-It is my goal to fully support all of Pushover's API endpoints in this package, beginning with the most essential ones and working from there.
+:mod:`pushover_complete` emerged from my frustrating experience with a number of only partially-complete Pushover
+packages.
+It is my goal to fully support all of Pushover's API endpoints in this package, beginning with the most essential ones
+and working from there.
 The current status of progress towards this goal is tracked in the :ref:`roadmap <roadmap>`.
 
 API Reference
