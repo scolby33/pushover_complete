@@ -57,6 +57,9 @@ Repository = "https://github.com/scolby33/pushover_complete"
 Issues = "https://github.com/scolby33/pushover_complete/issues"
 Changelog = "https://pushover-complete.readthedocs.io/en/stable/changelog.html"
 
+[tool.setuptools]
+license-files = ["LICENSE.rst"]
+
 [tool.setuptools.dynamic]
 # https://setuptools.pypa.io/en/stable/userguide/pyproject_config.html#dynamic-metadata
 version = { attr = "pushover_complete.__version__" }
