@@ -1,6 +1,6 @@
 include *.rst
 
-exclude .codecov.yml
+exclude codecov.yml
 exclude .readthedocs.yaml
 
 exclude tox.ini
