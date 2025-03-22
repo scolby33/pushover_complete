@@ -7,4 +7,5 @@ Contributors
 ------------
 
 - Arno Hautala <arno@alum.wpiedu>: image attachment support
-- Your Name <email or twitter handle>: short description of your contribution, if you want
+- Sylvain Pasche <spasche@spasche.net>: TTL support
+- Your Name <email or other handle>: short description of your contribution, if you want

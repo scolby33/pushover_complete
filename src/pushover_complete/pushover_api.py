@@ -124,6 +124,7 @@ class PushoverAPI:
         sound=None,
         # this doesn't change function behavior, it is just passed directly in the request
         html=False,  # noqa: FBT002
+        ttl=None,
         session=None,
     ):
         """
@@ -154,6 +155,8 @@ class PushoverAPI:
         :param sound: A string representing a sound to be played with the message instead of the user's default
         :param html: An integer representing if HTML formatting will be enabled for the message text. Set to 1 to
             enable.
+        :param ttl: An integer representing Time to Live in seconds, after which the message will be automatically
+            deleted.
         :param session: A :class:`requests.Session` object to be used to send HTTP requests. Useful to send multiple
             messages without opening multiple HTTP sessions.
         :type user: str
@@ -170,6 +173,7 @@ class PushoverAPI:
         :type timestamp: int
         :type sound: str
         :type html: int
+        :type ttl: int
         :type session: requests.Session
 
         :returns: Response body interpreted as JSON
@@ -189,6 +193,7 @@ class PushoverAPI:
             "timestamp": timestamp,
             "sound": sound,
             "html": html,
+            "ttl": ttl,
         }
 
         if image is not None:
@@ -237,6 +242,7 @@ class PushoverAPI:
         sound=None,
         # this doesn't change function behavior, it is just passed directly in the request
         html=False,  # noqa: FBT002
+        ttl=None,
     ):
         """
         Send a message via the Pushover API.
@@ -262,6 +268,8 @@ class PushoverAPI:
             Available sounds can be retreived using :meth:`PushoverAPI.get_sounds`.
         :param html: An integer representing if HTML formatting will be enabled for the message text. Set to 1 to
             enable.
+        :param ttl: An integer representing Time to Live in seconds, after which the message will be automatically
+            deleted.
         :type user: str
         :type message: str
         :type device: str or list
@@ -276,6 +284,7 @@ class PushoverAPI:
         :type timestamp: int
         :type sound: str
         :type html: int
+        :type ttl: int
 
         :returns: Response body interpreted as JSON
         :rtype: dict
@@ -295,6 +304,7 @@ class PushoverAPI:
             timestamp,
             sound,
             html,
+            ttl,
         )
 
     def send_messages(self, messages):
@@ -308,7 +318,6 @@ class PushoverAPI:
         :rtype: list[dict]
         """
         sess = requests.Session()
-
         return [self._send_message(session=sess, **message) for message in messages]
 
     def get_sounds(self):
