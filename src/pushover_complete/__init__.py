@@ -9,7 +9,7 @@ __all__ = [
     "PushoverCompleteError",
 ]
 
-__version__ = "1.1.2-dev"
+__version__ = "1.2.0"
 
 __license__ = "MIT License"
 __copyright__ = "Copyright (c) 2024 Scott Colby"
