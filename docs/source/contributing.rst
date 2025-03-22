@@ -181,7 +181,7 @@ The steps for making a release of :code:`pushover_complete` are:
 
 #. Bump the version specifiers::
 
-     $ uv tool run bump-my-version release
+     $ uv tool run bump-my-version bump release
 
 #. Update the changelogs and commit them
 

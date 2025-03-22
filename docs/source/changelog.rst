@@ -15,7 +15,18 @@ Changelog
 Details about this versioning scheme can be found on the `Semver website <http://semver.org/spec/v2.0.0.html>`_.
 Versions postfixed with '-dev' are currently under development and those without a postfix are stable releases.
 
-Changes as of 6 April 2018
+Changes as of 23 March 2025
+
+1.2.0 <23 March 2025>
+^^^^^^^^^^^^^^^^^^^^^
+
+- Major modernization of the project's supporting structures
+- Add `Time To Live (TTL) support (Pull `#14 <https://github.com/scolby33/pushover_complete/pull/14>`_
+- Now supporting Python 2.7 and 3.9 to 3.13
+- Fully replace setup.py with pyproject.toml
+- Use GitHub Actions instead of Travis for CI/CD
+- Use GitHub Actions for trusted publishing to PyPI
+- Various updates to documentation
 
 1.1.1 <6 April 2018>
 ^^^^^^^^^^^^^^^^^^^^
