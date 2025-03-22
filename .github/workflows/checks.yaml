@@ -9,6 +9,9 @@ on:
   pull_request:
     branches: [ "master", "develop" ]
   workflow_call:
+    secrets:
+      CODECOV_TOKEN:
+        required: true
 
 jobs:
   test:

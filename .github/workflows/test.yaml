@@ -5,6 +5,9 @@ permissions: {}
 
 on:
   workflow_call:
+    secrets:
+      CODECOV_TOKEN:
+        required: true
 
 jobs:
   package-lint:
