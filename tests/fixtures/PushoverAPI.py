@@ -1,4 +1,4 @@
-"""Fixtures used for testing pushover_complete."""  # noqa: N999; weird name for fixture module is okay
+"""Fixtures used for testing pushover_complete."""  # noqa: N999 -- weird name for fixture module is okay
 
 import pytest
 

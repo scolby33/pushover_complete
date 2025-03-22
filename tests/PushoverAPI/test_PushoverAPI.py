@@ -1,4 +1,4 @@
-"""Tests for the :mod:`pushover_complete.pushover_api.PushoverAPI` class."""  # noqa: N999; weird name for tests module is okay
+"""Tests for the :mod:`pushover_complete.pushover_api.PushoverAPI` class."""  # noqa: N999 -- weird name for tests module is okay
 
 import re
 from io import BytesIO
@@ -36,7 +36,10 @@ from tests.constants import (
     TEST_USER,
     TEST_USER_EMAIL,
 )
-from tests.fixtures import BadTokenPushoverAPI, PushoverAPI  # noqa: F401; needs to be imported for pytest to find them
+from tests.fixtures import (  # noqa: F401 -- needs to be imported for pytest to find them
+    BadTokenPushoverAPI,
+    PushoverAPI,
+)
 from tests.responses_callbacks import (
     generic_callback,
     groups_add_user_callback,
@@ -64,7 +67,7 @@ def test_generic_get_with_payload(PushoverAPI):
         callback=generic_callback,
         content_type="application/json",
     )
-    resp = PushoverAPI._generic_get("foobar.json", payload={"payload-test": "test"})  # noqa: SLF001; want to test private methods on purpose here
+    resp = PushoverAPI._generic_get("foobar.json", payload={"payload-test": "test"})  # noqa: SLF001 -- want to test private methods on purpose here
 
     assert resp == {"status": 1, "payload-test": "test"}
 
@@ -78,7 +81,7 @@ def test_generic_post_without_payload(PushoverAPI):
         callback=generic_callback,
         content_type="application/json",
     )
-    resp = PushoverAPI._generic_post("foobar.json")  # noqa: SLF001; want to test private methods on purpose here
+    resp = PushoverAPI._generic_post("foobar.json")  # noqa: SLF001 -- want to test private methods on purpose here
 
     assert resp == {"status": 1, "payload-test": False}
 

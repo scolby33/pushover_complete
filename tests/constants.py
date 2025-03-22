@@ -1,6 +1,6 @@
 """Constants used for test cases."""
 
-TEST_TOKEN = "azGDORePK8gMaC0QOYAMyEEuzJnyUi"  # noqa: S105; this is supposed to look like a secret
+TEST_TOKEN = "azGDORePK8gMaC0QOYAMyEEuzJnyUi"  # noqa: S105 -- this is supposed to look like a secret
 TEST_BAD_GENERAL_ID = "1234"
 TEST_USER = "uQiRzpo4DXghDmr9QzzfQu27cmVRsG"
 TEST_USER_EMAIL = "user@example.com"
