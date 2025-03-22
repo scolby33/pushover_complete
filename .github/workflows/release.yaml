@@ -12,6 +12,8 @@ jobs:
     permissions:
       contents: "read"
     uses: "./.github/workflows/checks.yaml"
+    secrets:
+      CODECOV_TOKEN: "${{ secrets.CODECOV_TOKEN }}"
 
   publish:
     permissions:
