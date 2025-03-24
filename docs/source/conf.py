@@ -57,7 +57,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "pushover_complete"
-copyright = "2024, Scott Colby"  # noqa: A001 -- don't care about the builtin here
+copyright = "2025, Scott Colby"  # noqa: A001 -- don't care about the builtin here
 author = "Scott Colby"
 
 # The version info for the project you're documenting, acts as replacement for

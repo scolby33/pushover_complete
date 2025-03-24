@@ -12,4 +12,4 @@ __all__ = [
 __version__ = "1.2.0"
 
 __license__ = "MIT License"
-__copyright__ = "Copyright (c) 2024 Scott Colby"
+__copyright__ = "Copyright (c) 2025 Scott Colby"
