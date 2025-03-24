@@ -70,14 +70,15 @@ The full list of contributors is in :code:`AUTHORS.rst` or
 Changelog
 ---------
 
-Changes as of 23 March 2025
+Changes as of 24 March 2025
 
-1.2.0 <23 March 2025>
+1.2.0 <24 March 2025>
 ^^^^^^^^^^^^^^^^^^^^^
 
 - Major modernization of the project's supporting structures
-- Add `Time To Live (TTL) support (Pull `#14 <https://github.com/scolby33/pushover_complete/pull/14>`_
+- Add Time To Live (TTL) support (`Pull #14 <https://github.com/scolby33/pushover_complete/pull/14>`_)
 - Now supporting Python 2.7 and 3.9 to 3.13
+- Note: this will be the final release supporting Python 2.7
 - Fully replace setup.py with pyproject.toml
 - Use GitHub Actions instead of Travis for CI/CD
 - Use GitHub Actions for trusted publishing to PyPI
