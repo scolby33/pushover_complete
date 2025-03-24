@@ -28,11 +28,12 @@ maintainers = [
 ]
 description = "A Python package for interacting with *all* aspects of the Pushover API."
 readme = "README.rst"
+license = "MIT"
+license-files = ["LICENSE.rst", "AUTHORS.rst"]
 keywords = ["pushover", "message", "push"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 2.7",
@@ -58,7 +59,6 @@ Issues = "https://github.com/scolby33/pushover_complete/issues"
 Changelog = "https://pushover-complete.readthedocs.io/en/stable/changelog.html"
 
 [tool.setuptools]
-license-files = ["LICENSE.rst"]
 
 [tool.setuptools.dynamic]
 # https://setuptools.pypa.io/en/stable/userguide/pyproject_config.html#dynamic-metadata
