@@ -1,11 +1,11 @@
 ---
-name: "Release"
+name: "Prerelease"
 
 permissions: {}
 
 on:
   release:
-    types: [ "released" ]
+    types: [ "prereleased" ]
 
 jobs:
   checks:
@@ -21,8 +21,8 @@ jobs:
       id-token: "write"
     runs-on: "ubuntu-latest"
     environment:
-      name: "pypi"
-      url: "https://pypi.org/project/pushover_complete"
+      name: "testpypi"
+      url: "https://test.pypi.org/project/pushover_complete"
     needs: [ "checks" ]
     steps:
       - name: "Download distributions from build artifacts"
@@ -63,5 +63,6 @@ jobs:
       - name: "Publish to PyPI"
         uses: "pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc"  # v1.12.4
         with:
+          repository-url: "https://test.pypi.org/legacy/"
           print-hash: true
 ...
