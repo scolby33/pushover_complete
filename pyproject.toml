@@ -206,3 +206,27 @@ replace = "__version__ = \"{new_version}\""
 filename = "docs/source/conf.py"
 search = "release = \"{current_version}\""
 replace = "release = \"{new_version}\""
+
+[[tool.bumpversion.files]]
+filename = "src/pushover_complete/__init__.py"
+search = "^__copyright__ = \"Copyright \\(c\\) \\d{{4}}"
+replace = "__copyright__ = \"Copyright (c) {now:%Y}"
+regex = true
+
+[[tool.bumpversion.files]]
+filename = "LICENSE.rst"
+search = "^Copyright \\(c\\) \\d{{4}}"
+replace = "Copyright (c) {now:%Y}"
+regex = true
+
+[[tool.bumpversion.files]]
+filename = "docs/source/license.rst"
+search = "^Copyright \\(c\\) \\d{{4}}"
+replace = "Copyright (c) {now:%Y}"
+regex = true
+
+[[tool.bumpversion.files]]
+filename = "docs/source/conf.py"
+search = "^copyright = \"\\d{{4}}"
+replace = "copyright = \"{now:%Y}"
+regex = true
