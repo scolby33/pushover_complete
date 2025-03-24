@@ -230,3 +230,7 @@ filename = "docs/source/conf.py"
 search = "^copyright = \"\\d{{4}}"
 replace = "copyright = \"{now:%Y}"
 regex = true
+
+[tool.check-wheel-contents]
+toplevel = ["pushover_complete"]
+package = ["src/pushover_complete"]
