@@ -1,0 +1,236 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#static-vs-dynamic-metadata
+# https://setuptools.pypa.io/en/stable/userguide/pyproject_config.html#dynamic-metadata
+# see below in [tool.setuptools.dynamic] table
+dynamic = ["version"]
+
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#basic-information
+name = "pushover_complete"
+
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#dependencies-and-requirements
+dependencies = [
+    "requests",
+    "six",
+    "pathlib2; python_version <\"3.4\""
+]
+requires-python = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*,!=3.7.*,!=3.8.*"
+
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#about-your-project
+authors = [
+    { name = "Scott Colby", email = "scott@scolby.com" }
+]
+maintainers = [
+    { name = "Scott Colby", email = "scott@scolby.com" }
+]
+description = "A Python package for interacting with *all* aspects of the Pushover API."
+readme = "README.rst"
+keywords = ["pushover", "message", "push"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 2.7",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Communications",
+]
+
+[dependency-groups]
+tests = [
+    "tox",
+]
+
+[project.urls]
+Homepage = "https://github.com/scolby33/pushover_complete"
+Documentation = "https://pushover-complete.readthedocs.io"
+Repository = "https://github.com/scolby33/pushover_complete"
+Issues = "https://github.com/scolby33/pushover_complete/issues"
+Changelog = "https://pushover-complete.readthedocs.io/en/stable/changelog.html"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+packages = ["pushover_complete"]
+license-files = ["LICENSE.rst", "AUTHORS.rst"]
+
+[tool.setuptools.dynamic]
+# https://setuptools.pypa.io/en/stable/userguide/pyproject_config.html#dynamic-metadata
+version = { attr = "pushover_complete.__version__" }
+
+[tool.coverage.run]
+branch = true
+source = [
+    "pushover_complete",
+]
+omit = [
+    "tests/*",
+    "docs/*",
+]
+
+[tool.coverage.paths]
+source = [
+    "src/pushover_complete",
+    ".tox/*/lib/python*/site-packages/pushover_complete",
+]
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.doc8]
+max-line-length = 120
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+# See https://docs.astral.sh/ruff/rules
+extend-select = [
+    # "F",  # pyflakes, included by default
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "C90",  # mccabe
+    "I",  # isort
+    "N",  # pep8 naming
+    "D",  # pydocstyle
+    "UP",  # pyupgrade
+    "YTT",  # flake8-2020
+    # "ANN",  # flake8-annotations, can't use because supporting Python 2
+    "ASYNC",  # flake8-async
+    "S",  # flake8-bandit
+    "BLE",  # flake8-blind-except
+    "FBT",  # flake8-boolean-trap
+    "B",  # flake8-bugbear
+    "A",  # flake8-builtins
+    "COM",  # flake8-commas
+    # "CPY",  # flake8-copyright, not using this
+    "C4",  # flake8-comprehensions
+    "DTZ",  # flake8-datetimez"
+    "T100",  # flake8-debugger
+    # "DJ",  # flake8-django, not using Django in this project
+    "EM",  # flake8-errmsg
+    "EXE",  # flake8-executable
+    "FA",  # flake8-future-annotations
+    "ISC",  # flake8-implicit-str-concat
+    "ICN",  # flake8-import-conventions
+    "LOG",  # flake8-logging
+    "G",  # flake8-logging-format
+    "INP",  # flake8-no-pep420
+    "PIE",  # flake8-pie
+    "T20",  # flake8-print
+    "PYI",  # flake8-pyi
+    "PT",  # flake8-pytest-style
+    "Q",  # flake8-quotes
+    "RSE",  # flake8-raise
+    "RET",  # flake8-return
+    "SLF",  # flake8-self
+    "SLOT",  # flake8-slots
+    "SIM",  # flake8-simplify
+    "TID",  # flake8-tidy-imports
+    "TCH",  # flake8-type-checking
+    "INT",  # flake8-gettext
+    "ARG",  # flake8-unused-arguments
+    "PTH",  # flake8-use-pathlib
+    "TD",  # flake8-todos
+    "FIX",  # flake8-fixme
+    "ERA",  # eradicate commented out code
+    "PD",  # pandas-vet
+    "PGH",  # pygrep-hooks
+    "PLC",  # pylint convention
+    "PLE",  # pylint error
+    "PLR",  # pylint refactor
+    "PLW",  # pylint warning
+    "TRY",  # tryceratops
+    "FLY",  # flynt
+    "NPY",  # numpy checks
+    "AIR",  # airflow
+    "PERF",  # perflint
+    "FURB",  # refurb
+    "RUF",  # ruff rules
+]
+ignore = [
+    "D107",  # undocumented-public-init; init methods should be documented in the class docstring
+    "D203",  # one-blank-line-before-class; conflicts with D211, which I want
+    "D212",  # multi-line-summary-first-line; conflicts with D213, which I want
+    "COM812",  # conflicts with ruff formatter
+    "ISC001",  # conflicts with ruff formatter
+]
+
+[tool.ruff.lint.pylint]
+max-args = 6
+
+[tool.ruff.lint.per-file-ignores]
+# Ignore commented-out code in Sphinx configuration file
+"docs/source/conf.py" = ["ERA001"]
+
+"tests/**.py" = [
+    "S101", # Allow assert in tests
+    "N802", # Allow uppercase function names in tests
+    "N803", # Allow uppercase argument names for pytest fixtures
+    "F811", # Conflicts with pytest using argument names to reference fixtures
+]
+
+[tool.bumpversion]
+current_version = "1.2.0"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)(?:-(?P<release>[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+(?P<build>[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?"
+serialize = [
+    "{major}.{minor}.{patch}-{release}+{build}",
+    "{major}.{minor}.{patch}+{build}",
+    "{major}.{minor}.{patch}-{release}",
+    "{major}.{minor}.{patch}",
+]
+commit = true
+
+[tool.bumpversion.parts.release]
+optional_value = "production"
+first_value = "dev"
+values = [
+    "dev",
+    "production",
+]
+
+[[tool.bumpversion.files]]
+filename = "src/pushover_complete/__init__.py"
+search = "__version__ = \"{current_version}\""
+replace = "__version__ = \"{new_version}\""
+
+[[tool.bumpversion.files]]
+filename = "docs/source/conf.py"
+search = "release = \"{current_version}\""
+replace = "release = \"{new_version}\""
+
+[[tool.bumpversion.files]]
+filename = "src/pushover_complete/__init__.py"
+search = "^__copyright__ = \"Copyright \\(c\\) \\d{{4}}"
+replace = "__copyright__ = \"Copyright (c) {now:%Y}"
+regex = true
+
+[[tool.bumpversion.files]]
+filename = "LICENSE.rst"
+search = "^Copyright \\(c\\) \\d{{4}}"
+replace = "Copyright (c) {now:%Y}"
+regex = true
+
+[[tool.bumpversion.files]]
+filename = "docs/source/license.rst"
+search = "^Copyright \\(c\\) \\d{{4}}"
+replace = "Copyright (c) {now:%Y}"
+regex = true
+
+[[tool.bumpversion.files]]
+filename = "docs/source/conf.py"
+search = "^copyright = \"\\d{{4}}"
+replace = "copyright = \"{now:%Y}"
+regex = true
+
+[tool.check-wheel-contents]
+toplevel = ["pushover_complete"]
+package = ["src/pushover_complete"]

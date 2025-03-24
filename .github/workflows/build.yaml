@@ -1,0 +1,52 @@
+---
+name: "Build"
+
+permissions: {}
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    permissions:
+      contents: "read"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Install advancecomp"
+        run: |
+          sudo apt-get install -y advancecomp
+
+      - uses: "actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871"  # v4.2.1
+        with:
+          persist-credentials: false
+
+      - uses: "astral-sh/setup-uv@77c28f02b3322332d4a4446b3177f426da8bf086"  # v3.1.5
+        with:
+          enable-cache: false
+          cache-dependency-glob: "pyproject.toml"
+
+      - name: "Make temporary dist directory"
+        id: "dist-dir"
+        run: |
+          dist_dir=$(mktemp -d dist.XXXXXX)
+          echo "DIST_DIR=${dist_dir}" | tee -a "$GITHUB_OUTPUT"
+
+      - name: "Build sdist and wheel"
+        run: |
+          uv build --out-dir "${{ steps.dist-dir.outputs.DIST_DIR }}" --sdist --wheel
+          advdef --recompress --shrink-insane "${{ steps.dist-dir.outputs.DIST_DIR }}"/*.tar.gz
+          advzip --recompress --shrink-insane "${{ steps.dist-dir.outputs.DIST_DIR }}"/*.whl
+          advzip --test --pedantic "${{ steps.dist-dir.outputs.DIST_DIR }}"/*.whl
+
+      - name: "Check wheel contents"
+        run: |
+          uv tool run check-wheel-contents "${{ steps.dist-dir.outputs.DIST_DIR }}"/*.whl
+
+      - name: "Upload dists to build artifacts"
+        uses: "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"  # v4.6.2
+        with:
+          name: "distributions"
+          path: "${{ steps.dist-dir.outputs.DIST_DIR }}/*"
+          if-no-files-found: "error"
+          compression-level: 0  # dists are already compressed
+...

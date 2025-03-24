@@ -11,9 +11,11 @@
 Installation
 ============
 
-There are many ways to install a Python package like :mod:`pushover_complete`. Here many of those will be explained and the advantages of each will be identified.
+There are many ways to install a Python package like :mod:`pushover_complete`. Here many of those will be explained and
+the advantages of each will be identified.
 
-If you are not yet familiar with virtual environments, stop reading this documentation and take a few moments to learn. Try some searches for "virtualenv," "virtualenvwrapper," and the "venv" standard library module.
+If you are not yet familiar with virtual environments, stop reading this documentation and take a few moments to learn.
+Try some searches for "virtualenv," "virtualenvwrapper," and the "venv" standard library module.
 I promise that they will change your (Python) life.
 
 Where to Get the Code
@@ -22,7 +24,8 @@ Where to Get the Code
 From PyPI
 ^^^^^^^^^
 
-Stable releases of :mod:`pushover_complete` are located on PyPI, the `PYthon Package Index <https://pypi.python.org/pypi>`_.
+Stable releases of :mod:`pushover_complete` are located on PyPI, the
+`PYthon Package Index <https://pypi.python.org/pypi>`_.
 Installation from here is easy and generally the preferred method::
 
     $ pip install pushover_complete
@@ -31,7 +34,8 @@ Installation from here is easy and generally the preferred method::
 From GitHub
 ^^^^^^^^^^^
 
-:code:`pip` is also able to install from remote repositories. Installation from this project's GitHub repo can get you the most recent release::
+:code:`pip` is also able to install from remote repositories. Installation from this project's GitHub repo can get you
+the most recent release::
 
     $ pip install git+https://github.com/scolby33/pushover_complete@master#egg=pushover_complete-latest
 
@@ -41,7 +45,9 @@ To get the latest and greatest version of :mod:`pushover_complete` from the deve
 
     $ pip install git+https://github.com/scolby33/pushover_complete@develop#egg=pushover_complete-latestdev
 
-In both of these cases, the :code:`#egg=pushover_complete-version` part of the URL is mostly arbitrary. The :code:`version` part is only useful for human readability and the :code:`pushover_complete` part is the project name used internally by :code:`pip`.
+In both of these cases, the :code:`#egg=pushover_complete-version` part of the URL is mostly arbitrary. The
+:code:`version` part is only useful for human readability and the :code:`pushover_complete` part is the project name
+used internally by :code:`pip`.
 
 From a Local Copy
 ^^^^^^^^^^^^^^^^^
@@ -56,8 +62,10 @@ Installing like this lets you make changes to a copy of the project and use that
 Installing in Editable Mode
 ---------------------------
 
-:code:`pip` has a :code:`--editable` (a.k.a. :code:`-e`) option that can be used to install from GitHub or a local copy in "editable" mode::
+:code:`pip` has a :code:`--editable` (a.k.a. :code:`-e`) option that can be used to install from GitHub or a local copy
+in "editable" mode::
 
     $ pip install -e .
 
-This, in short, installs the package as a symlink to the source files. That lets you edit the files in the :code:`src` folder and have those changes immediately available.
+This, in short, installs the package as a symlink to the source files. That lets you edit the files in the :code:`src`
+folder and have those changes immediately available.

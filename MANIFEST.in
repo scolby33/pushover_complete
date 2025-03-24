@@ -1,16 +1,12 @@
 include *.rst
 
-include .bumpversion.cfg
-include .codecov.yml
-include .coveragerc
-include tox.ini
+exclude codecov.yml
+exclude .readthedocs.yaml
+
+exclude tox.ini
 
 recursive-include tests *.py
 
-include docs/Makefile
-include docs/make.bat
-include docs/requirements.txt
-include docs/source/conf.py
-recursive-include docs/source *.rst
+prune docs
 
 recursive-exclude * .DS_Store
