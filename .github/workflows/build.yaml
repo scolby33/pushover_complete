@@ -21,24 +21,21 @@ jobs:
           enable-cache: false
           cache-dependency-glob: "pyproject.toml"
 
-      - name: "Check for existing dist/ directory"
+      - name: "Make temporary dist directory"
+        id: "dist-dir"
         run: |
-          if test -e dist
-          then
-            echo "a pre-existing dist directory was detected >&2"
-            exit 1
-          fi
+          dist_dir=$(mktemp -d dist.XXX)
+          echo "DIST_DIR=${dist_dir}" | tee -a "$GITHUB_OUTPUT"
 
       - name: "Build sdist and wheel"
-        id: "build"
         run: |
-          uv build --sdist --wheel
+          uv build --out-dir "${{ steps.dist-dir.outputs.DIST_DIR }}" --sdist --wheel
 
       - name: "Upload dists to build artifacts"
         uses: "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"  # v4.6.2
         with:
           name: "distributions"
-          path: "dist/*"
+          path: "${{ steps.dist-dir.outputs.DIST_DIR }}/*"
           if-no-files-found: "error"
           compression-level: 0  # dists are already compressed
 ...
