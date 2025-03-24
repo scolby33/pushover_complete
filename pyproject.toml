@@ -59,6 +59,8 @@ Issues = "https://github.com/scolby33/pushover_complete/issues"
 Changelog = "https://pushover-complete.readthedocs.io/en/stable/changelog.html"
 
 [tool.setuptools]
+package-dir = { "" = "src" }
+packages = ["pushover_complete"]
 
 [tool.setuptools.dynamic]
 # https://setuptools.pypa.io/en/stable/userguide/pyproject_config.html#dynamic-metadata
