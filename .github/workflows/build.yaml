@@ -28,7 +28,7 @@ jobs:
       - name: "Make temporary dist directory"
         id: "dist-dir"
         run: |
-          dist_dir=$(mktemp -d dist.XXX)
+          dist_dir=$(mktemp -d dist.XXXXXX)
           echo "DIST_DIR=${dist_dir}" | tee -a "$GITHUB_OUTPUT"
 
       - name: "Build sdist and wheel"
