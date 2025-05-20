@@ -1,15 +1,11 @@
 """The PushoverAPI class, containing the main functionality of the pushover_complete package."""
 
+from pathlib import Path
+from urllib.parse import urljoin
+
 import requests
-import six
-from six.moves.urllib.parse import urljoin
 
 from .error import BadAPIRequestError
-
-try:
-    from pathlib import Path
-except ImportError:
-    from pathlib2 import Path  # type: ignore[no-redef]
 
 PUSHOVER_API_URL = "https://api.pushover.net/1/"
 
@@ -198,7 +194,7 @@ class PushoverAPI:
 
         if image is not None:
             # if it's a str, convert to a Path and open it
-            if isinstance(image, six.string_types):
+            if isinstance(image, str):
                 with Path(image).open("rb") as f:
                     attachment = {"attachment": f}
                     return self._generic_post(

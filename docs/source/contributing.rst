@@ -177,22 +177,20 @@ The steps for making a release of :code:`pushover_complete` are:
 
 #. Create a release branch off of :code:`develop`::
 
-     $ git switch -c release/$(uv tool run bump-my-version show --increment release new_version) develop
+     git switch -c release/$(uv tool run bump-my-version show --increment release new_version) develop
 
 #. Bump the version specifiers::
 
-     $ uv tool run bump-my-version bump release
+     uv tool run bump-my-version bump release
 
 #. Update the changelogs and commit them
 
    #. Update the changelog in :code:`docs/source/changelog.rst`, including the last updated date
    #. Update the changelog in :code:`README.rst` to match the changelog in the docs
 
-#. Check that any new intersphinx links have corresponding inventory locations in :code:`docs/source/conf.py`. Run
+#. Check that any new intersphinx links have corresponding inventory locations in :code:`docs/source/conf.py`. Run::
 
-    ::
-
-    $ egrep -rIn --exclude-dir=.eggs --exclude-dir=.tox --exclude-dir=build ':\S+:' .
+    egrep -rIn --exclude-dir=.eggs --exclude-dir=.tox --exclude-dir=build ':\S+:' .
 
    and check for instances of :code:`:meth:`, :code:`:class:`, etc. that are from sources not already included in
    :code:`intersphinx_mapping` in :code:`conf.py`. (There will be a lot of lines, but with :code:`grep` coloring turned
@@ -213,5 +211,5 @@ The steps for making a release of :code:`pushover_complete` are:
 
 #. Bump the version to the next dev version::
 
-    $ bumpversion patch
+    uv tool run bump-my-version bump patch
 

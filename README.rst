@@ -16,8 +16,8 @@ Development |develop_build| |develop_coverage| |develop_documentation| |develop_
 .. |stable_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=stable
     :target: http://pushover-complete.readthedocs.io/en/stable/?badge=stable
     :alt: Stable Documentation Status
-.. |stable_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.9%2C%203.10%2C%203.11%2C%203.12%2C%203.13-blue?logo=python
-    :alt: Stable Supported Python Versions: 2.7, 3.9, 3.10, 3.11, 3.12, 3.13
+.. |stable_pyversions| image:: https://img.shields.io/badge/python-3.9%2C%203.10%2C%203.11%2C%203.12%2C%203.13-blue?logo=python
+    :alt: Stable Supported Python Versions: 3.9, 3.10, 3.11, 3.12, 3.13
 
 
 .. |develop_build| image:: https://github.com/scolby33/pushover_complete/actions/workflows/checks.yaml/badge.svg?branch=develop
@@ -29,8 +29,8 @@ Development |develop_build| |develop_coverage| |develop_documentation| |develop_
 .. |develop_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=develop
     :target: http://pushover-complete.readthedocs.io/en/develop/?badge=develop
     :alt: Development Documentation Status
-.. |develop_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.9%2C%203.10%2C%203.11%2C%203.12%2C%203.13-blue?logo=python
-    :alt: Development Supported Python Versions: 2.7, 3.9, 3.10, 3.11, 3.12, 3.13
+.. |develop_pyversions| image:: https://img.shields.io/badge/python-3.9%2C%203.10%2C%203.11%2C%203.12%2C%203.13-blue?logo=python
+    :alt: Development Supported Python Versions: 3.9, 3.10, 3.11, 3.12, 3.13
 
 To learn more about Pushover and the Pushover API, please visit the Pushover Website, `<https://pushover.net>`_.
 
@@ -53,9 +53,8 @@ Installation should be as easy as executing this command in your chosen shell:
 
     $ pip install pushover_complete
 
-:code:`pushover_complete` currently supports Python 2.7, 3.9, 3.10, 3.11, 3.12, and 3.13.
-With the exception of Python 2.7 support, which will be removed in the next major version release,
-this package only supports the `currently-supported versions of Python <https://devguide.python.org/versions/#supported-versions>`_.
+:code:`pushover_complete` currently supports Python 3.9, 3.10, 3.11, 3.12, and 3.13.
+This package only supports the `currently-supported versions of Python <https://devguide.python.org/versions/#supported-versions>`_.
 
 Contributing
 ------------
@@ -70,7 +69,16 @@ The full list of contributors is in :code:`AUTHORS.rst` or
 Changelog
 ---------
 
-Changes as of 24 March 2025
+Changes as of 20 May 2025
+
+2.0.0 <20 May 2025>
+^^^^^^^^^^^^^^^^^^^
+
+- Harden GitHub Actions configurations by removing some template interpolation and adding constraints to the Python dependencies used in CI (`Pull #21 <https://github.com/scolby33/pushover_complete/pull/21>`_)
+- Change to using pytest-cov for coverage measurements and fix coverage uploading to Codecov (`Pull #22 <https://github.com/scolby33/pushover_complete/pull/22>`_)
+- Minor changes to copyright symbol in license files (`Pull #24 <https://github.com/scolby33/pushover_complete/pull/24>`_)
+- Remove Python 2.7 compatability (`Pull #23 <https://github.com/scolby33/pushover_complete/pull/23>`_)
+
 
 1.2.0 <24 March 2025>
 ^^^^^^^^^^^^^^^^^^^^^
