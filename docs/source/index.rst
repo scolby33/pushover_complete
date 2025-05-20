@@ -28,8 +28,8 @@ Welcome to :mod:`pushover_complete`
     .. |stable_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=stable
         :target: http://pushover-complete.readthedocs.io/en/stable/?badge=stable
         :alt: Stable Documentation Status
-    .. |stable_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.9%2C%203.10%2C%203.11%2C%203.12%2C%203.13-blue?logo=python
-        :alt: Stable Supported Python Versions: 2.7, 3.9, 3.10, 3.11, 3.12, 3.13
+    .. |stable_pyversions| image:: https://img.shields.io/badge/python-3.9%2C%203.10%2C%203.11%2C%203.12%2C%203.13-blue?logo=python
+        :alt: Stable Supported Python Versions: 3.9, 3.10, 3.11, 3.12, 3.13
 
 
     .. |develop_build| image:: https://github.com/scolby33/pushover_complete/actions/workflows/checks.yaml/badge.svg?branch=develop
@@ -41,8 +41,8 @@ Welcome to :mod:`pushover_complete`
     .. |develop_documentation| image:: http://readthedocs.org/projects/pushover-complete/badge/?version=develop
         :target: http://pushover-complete.readthedocs.io/en/develop/?badge=develop
         :alt: Development Documentation Status
-    .. |develop_pyversions| image:: https://img.shields.io/badge/python-2.7%2C%203.9%2C%203.10%2C%203.11%2C%203.12%2C%203.13-blue?logo=python
-        :alt: Development Supported Python Versions: 2.7, 3.9, 3.10, 3.11, 3.12, 3.13
+    .. |develop_pyversions| image:: https://img.shields.io/badge/python-3.9%2C%203.10%2C%203.11%2C%203.12%2C%203.13-blue?logo=python
+        :alt: Development Supported Python Versions: 3.9, 3.10, 3.11, 3.12, 3.13
 
 To learn more about Pushover and the Pushover API, please visit the Pushover Website, `<https://pushover.net>`_.
 
@@ -83,12 +83,8 @@ Downloading and installing from source goes like this::
 
 If you intend to install in a virtual environment, activate it before running :code:`pip install`.
 
-:mod:`pushover_complete` currently supports Python 2.7, 3.9, 3.10, 3.11, 3.12, and 3.13.
-With the exception of Python 2.7 support, which will be removed in the next major version release,
-this package only supports the `currently-supported versions of Python <https://devguide.python.org/versions/#supported-versions>`_.
-
-.. warning::
-   .. deprecated:: 1.2.0 Support for Python 2.7 is deprecated. It will be removed in the next major version release.
+:mod:`pushover_complete` currently supports Python 3.9, 3.10, 3.11, 3.12, and 3.13.
+This package only supports the `currently-supported versions of Python <https://devguide.python.org/versions/#supported-versions>`_.
 
 See :ref:`installation` for further information about installing :mod:`pushover_complete` in all manner of ways.
 
