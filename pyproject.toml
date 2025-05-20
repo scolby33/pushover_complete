@@ -49,6 +49,39 @@ classifiers = [
 tests = [
     "tox",
 ]
+# the ci group is used to create constraints-ci.txt in order to pin the
+# requirements used by GitHub Actions and tox
+ci = [
+    # used in test.yaml
+    "tox",
+    "tox-uv",
+
+    # used by tox
+    # coverage envs and py env
+    "coverage[toml]",
+    # manifest env
+    "check-manifest",
+    # pyroma env
+    "pygments",
+    "pyroma",
+    # ruff env
+    "ruff",
+    # mypy env
+    "mypy[install-types]",
+    # pydoclint env
+    "pydoclint",
+    # docstr-coverage env
+    "docstr-coverage",
+    # doc8 env
+    "doc8",
+    # py env
+    "pytest",
+    "responses",
+    "requests-toolbelt",
+
+    # used in build.yaml
+    "check-wheel-contents",
+]
 
 [project.urls]
 Homepage = "https://github.com/scolby33/pushover_complete"

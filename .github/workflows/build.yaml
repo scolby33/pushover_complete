@@ -41,10 +41,11 @@ jobs:
           advzip --test --pedantic "$DIST_DIR"/*.whl
 
       - name: "Check wheel contents"
-        run: |
-          uv tool run check-wheel-contents "${{ steps.dist-dir.outputs.DIST_DIR }}"/*.whl
         env:
           DIST_DIR: "${{ steps.dist-dir.outputs.DIST_DIR }}"
+        run: >
+          uv tool run --constraints constraints-ci.txt
+          check-wheel-contents "$DIST_DIR"/*.whl
 
       - name: "Upload dists to build artifacts"
         uses: "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"  # v4.6.2
