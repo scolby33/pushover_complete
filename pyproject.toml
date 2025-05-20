@@ -246,14 +246,14 @@ regex = true
 
 [[tool.bumpversion.files]]
 filename = "LICENSE.rst"
-search = "^Copyright \\(c\\) \\d{{4}}"
-replace = "Copyright (c) {now:%Y}"
+search = "^Copyright \\|copy\\| \\d{{4}}"
+replace = "Copyright |copy| {now:%Y}"
 regex = true
 
 [[tool.bumpversion.files]]
 filename = "docs/source/license.rst"
-search = "^Copyright \\(c\\) \\d{{4}}"
-replace = "Copyright (c) {now:%Y}"
+search = "^Copyright \\|copy\\| \\d{{4}}"
+replace = "Copyright |copy| {now:%Y}"
 regex = true
 
 [[tool.bumpversion.files]]
