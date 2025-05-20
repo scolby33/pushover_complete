@@ -1,3 +1,5 @@
+.. |copy| unicode:: U+A9
+
 .. only:: prerelease
 
     .. warning:: This is the documentation for a development version of pushover_complete.
@@ -15,7 +17,7 @@ This software is licensed under the MIT License. The full text of this license i
 
 MIT License
 
-Copyright © 2025 Scott Colby
+Copyright |copy| 2025 Scott Colby
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
