@@ -3,6 +3,8 @@ include *.rst
 exclude codecov.yml
 exclude .readthedocs.yaml
 
+exclude constraints-ci.txt
+
 exclude tox.ini
 
 recursive-include tests *.py
