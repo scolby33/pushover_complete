@@ -69,7 +69,16 @@ The full list of contributors is in :code:`AUTHORS.rst` or
 Changelog
 ---------
 
-Changes as of 24 March 2025
+Changes as of 20 May 2025
+
+2.0.0 <20 May 2025>
+^^^^^^^^^^^^^^^^^^^
+
+- Harden GitHub Actions configurations by removing some template interpolation and adding constraints to the Python dependencies used in CI (`Pull #21 <https://github.com/scolby33/pushover_complete/pull/21>`_)
+- Change to using pytest-cov for coverage measurements and fix coverage uploading to Codecov (`Pull #22 <https://github.com/scolby33/pushover_complete/pull/22>`_)
+- Minor changes to copyright symbol in license files (`Pull #24 <https://github.com/scolby33/pushover_complete/pull/24>`_)
+- Remove Python 2.7 compatability (`Pull #23 <https://github.com/scolby33/pushover_complete/pull/23>`_)
+
 
 1.2.0 <24 March 2025>
 ^^^^^^^^^^^^^^^^^^^^^
