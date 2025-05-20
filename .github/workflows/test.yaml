@@ -111,6 +111,6 @@ jobs:
           disable_search: true
           disable_telem: true
           fail_ci_if_error: true
-          files: ".coverage"
+          files: "coverage.xml"
           token: "${{ secrets.CODECOV_TOKEN }}"
 ...
