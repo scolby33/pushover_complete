@@ -59,6 +59,7 @@ ci = [
     # used by tox
     # coverage envs and py env
     "coverage[toml]",
+    "pytest-cov",
     # manifest env
     "check-manifest",
     # pyroma env
