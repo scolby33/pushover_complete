@@ -32,15 +32,19 @@ jobs:
           echo "DIST_DIR=${dist_dir}" | tee -a "$GITHUB_OUTPUT"
 
       - name: "Build sdist and wheel"
+        env:
+          DIST_DIR: "${{ steps.dist-dir.outputs.DIST_DIR }}"
         run: |
-          uv build --out-dir "${{ steps.dist-dir.outputs.DIST_DIR }}" --sdist --wheel
-          advdef --recompress --shrink-insane "${{ steps.dist-dir.outputs.DIST_DIR }}"/*.tar.gz
-          advzip --recompress --shrink-insane "${{ steps.dist-dir.outputs.DIST_DIR }}"/*.whl
-          advzip --test --pedantic "${{ steps.dist-dir.outputs.DIST_DIR }}"/*.whl
+          uv build --out-dir "$DIST_DIR" --sdist --wheel
+          advdef --recompress --shrink-insane "$DIST_DIR"/*.tar.gz
+          advzip --recompress --shrink-insane "$DIST_DIR"/*.whl
+          advzip --test --pedantic "$DIST_DIR"/*.whl
 
       - name: "Check wheel contents"
         run: |
           uv tool run check-wheel-contents "${{ steps.dist-dir.outputs.DIST_DIR }}"/*.whl
+        env:
+          DIST_DIR: "${{ steps.dist-dir.outputs.DIST_DIR }}"
 
       - name: "Upload dists to build artifacts"
         uses: "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"  # v4.6.2
