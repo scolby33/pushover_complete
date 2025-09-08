@@ -1,5 +1,7 @@
 include *.rst
 
+include src/**/py.typed
+
 exclude codecov.yml
 exclude .readthedocs.yaml
 
