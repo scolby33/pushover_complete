@@ -44,8 +44,61 @@ circumstances, particularly when many requests are to be made at one time.
     .. automethod:: _generic_post
 
 
+Helper Types
+^^^^^^^^^^^^
+
+.. module:: pushover_complete.apibase
+.. autodata:: ResponseStatusSuccess
+.. autodata:: ResponseStatusError
+.. autotypeddict:: SuccessResponse
+.. autotypeddict:: ErrorResponse
+
+
+.. module:: pushover_complete.message_api
+.. autotypeddict:: MessageRequest
+.. autotypeddict:: MultiMessageRequest
+.. autotypeddict:: MessageResponse
+.. autodata:: SoundName
+.. autodata:: SoundDescription
+.. autodata:: SoundsResponse
+.. autotypeddict:: LimitsResponse
+
+.. module:: pushover_complete.user_group_validation_api
+.. autotypeddict:: UserValidationResponse
+
+.. module:: pushover_complete.receipt_and_callback_api
+.. autodata:: AcknowledgeStatusAcknowledged
+.. autodata:: AcknowledgeStatusUnacknowledged
+.. autodata:: AcknowledgeStatus
+.. autodata:: ExpiredStatusExpired
+.. autodata:: ExpiredStatusUnexpired
+.. autodata:: ExpiredStatus
+.. autodata:: CallbackStatusCalledBack
+.. autodata:: CallbackStatusNotCalledBack
+.. autodata:: CallbackStatus
+.. autotypeddict:: ReceiptResponse
+
+.. module:: pushover_complete.subscription_api
+.. autotypeddict:: UserSubscriptionRequest
+.. autotypeddict:: MultiUserSubscriptionRequest
+.. autotypeddict:: SubscriptionResponse
+
+.. module:: pushover_complete.groups_api
+.. autotypeddict:: GroupCreateResponse
+.. autotypeddict:: GroupUser
+.. autotypeddict:: GroupInfoResponse
+.. autotypeddict:: GroupListInfo
+.. autotypeddict:: GroupsListResponse
+
+.. module:: pushover_complete.licensing_api
+.. autotypeddict:: LicenseResponse
+
+
 Exceptions and Errors
 ---------------------
+
+.. module:: pushover_complete
+   :no-index:
 
 .. autoexception:: PushoverCompleteError
 .. autoexception:: BadAPIRequestError

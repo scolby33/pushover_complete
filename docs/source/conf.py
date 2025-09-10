@@ -37,9 +37,14 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.coverage",
     "sphinx.ext.viewcode",
+    "sphinx_autodoc_typehints",
+    "sphinx_toolbox.more_autodoc.autotypeddict",
     # 'releases',
     # 'sphinx.ext.githubpages'
 ]
+
+# sphinx_autodoc_typehints configuration
+always_document_param_types = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
