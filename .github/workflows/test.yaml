@@ -10,6 +10,21 @@ on:
         required: true
 
 jobs:
+  ascii-lint:
+    permissions:
+      contents: "read"
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871"  # v4.2.1
+        with:
+          persist-credentials: false
+      - name: "Install ripgrep"
+        run: >
+          sudo apt-get update &&
+          sudo apt-get install -y ripgrep &&
+          sudo rm -rf /var/lib/apt/lists/*
+      - name: "Check for non-ASCII characters"
+        run: "! rg --no-ignore --hidden --follow -- '[^[:ascii:]]'"
   package-lint:
     permissions:
       contents: "read"
