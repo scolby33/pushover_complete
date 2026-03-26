@@ -30,6 +30,7 @@ from tests.constants import (
     TEST_REQUEST_ID,
     TEST_SUBSCRIBED_USER_KEY,
     TEST_SUBSCRIPTION_CODE,
+    TEST_TAG,
     TEST_TITLE,
     TEST_URL,
     TEST_URL_TITLE,
@@ -52,6 +53,7 @@ from tests.responses_callbacks import (
     messages_callback,
     receipt_callback,
     receipt_cancel_callback,
+    receipt_cancel_by_tag_callback,
     sounds_callback,
     subscription_migrate_callback,
     validate_callback,
@@ -387,6 +389,35 @@ def test_PushoverAPI_raises_error_on_bad_receipt_cancel(PushoverAPI):
     )
     with pytest.raises(BadAPIRequestError):
         PushoverAPI.cancel_receipt("r" + TEST_BAD_GENERAL_ID)
+
+
+@responses.activate
+def test_PushoverAPI_cancels_by_tag(PushoverAPI):
+    """Test cancelling all active emergency-priority receipts by tag."""
+    url_re = re.compile(r"https://api\.pushover\.net/1/receipts/cancel_by_tag/[a-zA-Z0-9_-]+\.json")
+    responses.add_callback(
+        responses.POST,
+        url_re,
+        callback=receipt_cancel_by_tag_callback,
+        content_type="application/json",
+    )
+    resp = PushoverAPI.cancel_by_tag(TEST_TAG)
+
+    assert resp == {"status": 1, "request": TEST_REQUEST_ID}
+
+
+@responses.activate
+def test_PushoverAPI_raises_error_on_bad_tag_cancel(PushoverAPI):
+    """Test the cancelling with a tag that has no active receipts."""
+    url_re = re.compile(r"https://api\.pushover\.net/1/receipts/cancel_by_tag/[a-zA-Z0-9_-]+\.json")
+    responses.add_callback(
+        responses.POST,
+        url_re,
+        callback=receipt_cancel_by_tag_callback,
+        content_type="application/json",
+    )
+    with pytest.raises(BadAPIRequestError):
+        PushoverAPI.cancel_by_tag(TEST_BAD_GENERAL_ID)
 
 
 @responses.activate

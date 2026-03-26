@@ -11,6 +11,7 @@ TEST_TITLE = "Backup finished - SQL1"
 TEST_MESSAGE = 'Backup of database "example" finished in 16 minutes.'
 TEST_REQUEST_ID = "e460545a8b333d0da2f3602aff3133d6"
 TEST_RECEIPT_ID = "rLqVuqTRh62UzxtmqiaLzQmVcPgiCy"
+TEST_TAG = "server-down"
 TEST_URL = "twitter://direct_message?screen_name=someuser"
 TEST_URL_TITLE = "Reply to @someuser"
 TEST_SUBSCRIPTION_CODE = "Forum-f504h08fhlasdfj"
