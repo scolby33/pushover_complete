@@ -364,6 +364,24 @@ class PushoverAPI:
         """
         return self._generic_post("receipts/{}/cancel.json", receipt)
 
+    def cancel_by_tag(self, tag):
+        """
+        Cancel all active emergency-priority messages with the given tag.
+
+        If your application is not capable of storing receipt identifiers, you can instead
+        send a ``tags`` parameter when creating an emergency-priority message and use this
+        method to cancel all matching receipts at once.
+
+        .. seealso:: :meth:`PushoverAPI.cancel_receipt`
+
+        :param tag: The tag for which all active emergency-priority receipts will be cancelled
+        :type tag: str
+
+        :returns: Response body interpreted as JSON
+        :rtype: dict
+        """
+        return self._generic_post("receipts/cancel_by_tag/{}.json", tag)
+
     def _migrate_to_subscription(self, user, subscription_code, device=None, sound=None, session=None):
         """
         Migrates a user key to a subscription key.

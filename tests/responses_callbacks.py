@@ -18,6 +18,7 @@ from tests.constants import (
     TEST_REQUEST_ID,
     TEST_SUBSCRIBED_USER_KEY,
     TEST_SUBSCRIPTION_CODE,
+    TEST_TAG,
     TEST_TOKEN,
     TEST_USER,
     TEST_USER_EMAIL,
@@ -235,6 +236,45 @@ def receipt_cancel_callback(request):
         resp_body["receipt"] = "not found"
         resp_body["status"] = 0
         resp_body["errors"] = ["receipt not found; may be invalid or expired"]
+    else:
+        resp_body["status"] = 1
+
+    return 200 if resp_body["status"] == 1 else 400, headers, json.dumps(resp_body)
+
+
+def receipt_cancel_by_tag_callback(request):
+    r"""
+    Mock the /receipts/cancel_by_tag/{tag}.json endpoint.
+
+    Best used like so::
+
+        url_re = re.compile(r'https://api\.pushover\.net/1/receipts/cancel_by_tag/[a-zA-Z0-9_-]+\.json')
+        responses.add_callback(
+            responses.POST,
+            url_re,
+            callback=receipt_cancel_by_tag_callback,
+            content_type='application/json'
+        )
+
+    in order to capture all calls to the endpoint.
+    """
+    resp_body = {"request": TEST_REQUEST_ID}
+    headers = {"X-Request-Id": TEST_REQUEST_ID}
+
+    req_body = getattr(request, "body", None)
+    qs = parse_qs(req_body)
+    qs = {k: v[0] for k, v in qs.items()}
+
+    if qs.get("token") != TEST_TOKEN:
+        resp_body["token"] = "invalid"  # noqa: S105 -- not a real secret
+        resp_body["status"] = 0
+        resp_body["errors"] = ["application token is invalid"]
+    elif (
+        request.path_url.split("/")[-1].split(".")[0] != TEST_TAG
+    ):  # get the tag from a url of the form /1/receipts/cancel_by_tag/{tag}.json
+        resp_body["tag"] = "not found"
+        resp_body["status"] = 0
+        resp_body["errors"] = ["tag not found or no active receipts for this tag"]
     else:
         resp_body["status"] = 1
 
